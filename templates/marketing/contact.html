@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact | MagicAfro{% endblock %}
+
+{% block content %}
+<div class="bg-white py-20 lg:py-32 relative overflow-hidden">
+    <!-- Background Decor -->
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-cream rounded-full blur-3xl opacity-50 -z-10"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-50 -z-10"></div>
+
+    <div class="container mx-auto px-4 max-w-6xl">
+        <div class="flex flex-col lg:flex-row items-stretch gap-16">
+            <!-- Info Section -->
+            <div class="lg:w-1/3 bg-primary p-12 lg:p-16 rounded-[60px] text-white flex flex-col justify-between overflow-hidden relative group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 -mr-12 -mt-12 rounded-full blur-2xl group-hover:bg-white/10 transition"></div>
+                <div class="relative z-10">
+                    <h2 class="text-4xl lg:text-5xl font-black mb-12">Parlons <br><span class="text-accent opacity-80">beauté</span>.</h2>
+                    <div class="space-y-12">
+                        <div class="flex items-start space-x-6">
+                            <div class="text-accent text-2xl mt-1"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <h4 class="font-black text-xs tracking-widest uppercase mb-2 opacity-50">Adresse</h4>
+                                <p class="font-medium text-lg">Abidjan, Côte d'Ivoire <br>Rue des Jardins, Cocody</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-6">
+                            <div class="text-accent text-2xl mt-1"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <h4 class="font-black text-xs tracking-widest uppercase mb-2 opacity-50">Téléphone</h4>
+                                <p class="font-medium text-lg">228 90 56 78 48 / 228 99 79 46 29</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-6">
+                            <div class="text-accent text-2xl mt-1"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <h4 class="font-black text-xs tracking-widest uppercase mb-2 opacity-50">Email</h4>
+                                <p class="font-medium text-lg">businessriztech@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-16 mt-16 border-t border-white/10 flex space-x-6 text-2xl relative z-10">
+                    <a href="#" class="hover:text-accent transition opacity-80"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-accent transition opacity-80"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="hover:text-accent transition opacity-80"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="lg:w-2/3 flex flex-col justify-center py-10">
+                <div class="max-w-xl">
+                    <div class="inline-flex items-center px-4 py-2 bg-orange-50 rounded-full border border-orange-100 mb-8">
+                        <span class="text-[10px] font-black text-orange-600 uppercase tracking-widest">Une question ?</span>
+                    </div>
+                    <h1 class="text-5xl font-black text-primary mb-6">Contactez-nous</h1>
+                    <p class="text-gray-500 text-lg font-medium mb-12">Remplissez le formulaire ci-dessous et notre équipe vous répondra sous 24h.</p>
+                    
+                    <form class="space-y-8">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                            <div class="space-y-4">
+                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block ml-4">Nom complet</label>
+                                <input type="text" placeholder="Sophie Koné" class="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 focus:bg-white focus:ring-2 focus:ring-accent/20 focus:border-accent transition outline-none font-medium">
+                            </div>
+                            <div class="space-y-4">
+                                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block ml-4">Email</label>
+                                <input type="email" placeholder="sophie@gmail.com" class="w-full bg-gray-50 border border-gray-100 rounded-2xl px-6 py-4 focus:bg-white focus:ring-2 focus:ring-accent/20 focus:border-accent transition outline-none font-medium">
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest block ml-4">Votre message</label>
+                            <textarea rows="5" placeholder="Dites-nous tout..." class="w-full bg-gray-50 border border-gray-100 rounded-[30px] px-6 py-6 focus:bg-white focus:ring-2 focus:ring-accent/20 focus:border-accent transition outline-none font-medium resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto px-12 py-5 gradient-brown text-white font-black rounded-full shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform flex items-center justify-center group">
+                            Envoyer le message <i class="fa-solid fa-paper-plane ml-3 text-sm group-hover:translate-x-1 transition"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Boutique | MagicAfro{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="bg-cream py-12">
+    <div class="container mx-auto px-4">
+        <nav class="flex text-sm text-gray-500 mb-4 items-center space-x-2">
+            <a href="{% url 'products:home' %}" class="hover:text-primary transition">Accueil</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <a href="{% url 'products:product_list' %}" class="{% if not category %}text-primary font-bold{% else %}hover:text-primary{% endif %} transition">Boutique</a>
+            {% if category %}
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                <span class="text-primary font-bold">{{ category.name }}</span>
+            {% endif %}
+        </nav>
+        <h1 class="text-4xl font-extrabold text-primary">
+            {% if category %}{{ category.name }}{% else %}Tous les Produits{% endif %}
+        </h1>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 py-12">
+    <div class="flex flex-col lg:flex-row gap-12">
+        
+        <!-- Sidebar Filters -->
+        <aside class="w-full lg:w-1/4 space-y-10">
+            <!-- Categories Filter -->
+            <div>
+                <h3 class="text-xl font-bold mb-6 flex items-center">
+                    <span class="w-8 h-8 rounded-lg gradient-brown text-white flex items-center justify-center mr-3 text-sm">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </span>
+                    Catégories
+                </h3>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="{% url 'products:product_list' %}" class="flex items-center justify-between p-3 rounded-xl {% if not category %}bg-primary text-white shadow-lg{% else %}bg-gray-50 text-gray-600 hover:bg-cream transition{% endif %} group">
+                            <span class="font-medium">Toutes les catégories</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] opacity-50 group-hover:translate-x-1 transition"></i>
+                        </a>
+                    </li>
+                    {% for cat in categories %}
+                    <li>
+                        <a href="{% url 'products:product_list_by_category' cat.slug %}" class="flex items-center justify-between p-3 rounded-xl {% if category.slug == cat.slug %}bg-primary text-white shadow-lg{% else %}bg-gray-50 text-gray-600 hover:bg-cream transition{% endif %} group">
+                            <span class="font-medium">{{ cat.name }}</span>
+                            <i class="fa-solid fa-chevron-right text-[10px] opacity-50 group-hover:translate-x-1 transition"></i>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Promotion Banner -->
+            <div class="gradient-promo p-8 rounded-3xl text-white relative overflow-hidden shadow-xl">
+                <div class="relative z-10">
+                    <p class="text-[10px] font-bold uppercase tracking-widest mb-2 opacity-80">Offre Limitée</p>
+                    <h4 class="text-2xl font-bold mb-4">-30% sur les soins du corps</h4>
+                    <a href="#" class="inline-block bg-white text-orange-500 px-6 py-2 rounded-full text-sm font-bold shadow-lg hover:scale-105 transition">En profiter</a>
+                </div>
+                <i class="fa-solid fa-leaf absolute -bottom-4 -right-4 text-7xl opacity-10"></i>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="w-full lg:w-3/4">
+            <!-- Toolbar -->
+            <div class="flex flex-col sm:row justify-between items-center bg-gray-50 p-4 rounded-2xl mb-8 gap-4">
+                <span class="text-gray-500 text-sm font-medium">Affichage de <strong>{{ products.start_index }}-{{ products.end_index }}</strong> sur <strong>{{ products.paginator.count }}</strong> produits</span>
+                <div class="flex items-center space-x-4">
+                    <label class="text-gray-500 text-sm font-medium whitespace-nowrap">Trier par :</label>
+                    <select class="bg-white border-0 focus:ring-2 focus:ring-accent rounded-xl px-4 py-2 text-sm font-medium shadow-sm outline-none">
+                        <option>Plus récents</option>
+                        <option>Prix croissant</option>
+                        <option>Prix décroissant</option>
+                        <option>Mieux notés</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for prod in products %}
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 card-hover group flex flex-col h-full">
+                    <div class="relative aspect-square overflow-hidden bg-gray-100 p-8">
+                        {% if prod.badge %}
+                        <span class="absolute top-4 left-4 {% if prod.badge == 'PROMO' %}gradient-promo{% else %}gradient-brown{% endif %} text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest z-10">
+                            {{ prod.get_badge_display }}
+                        </span>
+                        {% endif %}
+                        
+                        <img src="{{ prod.get_primary_image|default:'https://via.placeholder.com/300' }}" alt="{{ prod.name }}" class="w-full h-full object-contain group-hover:scale-110 transition duration-500">
+                        <a href="{% url 'products:product_detail' prod.slug %}" class="absolute inset-0 z-10"></a>
+                        
+                        <!-- Quick actions -->
+                        <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center space-x-2 z-20">
+                             <a href="{% url 'products:product_detail' prod.slug %}" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary shadow-lg hover:bg-primary hover:text-white transition"><i class="fa-regular fa-eye"></i></a>
+                        </div>
+                        
+                        <button type="button" onclick="addToCart('{{ prod.id }}')" class="absolute bottom-4 right-4 w-12 h-12 gradient-brown text-white rounded-full shadow-lg flex items-center justify-center transform translate-y-20 group-hover:translate-y-0 transition duration-300 hover:scale-110 z-30">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <span class="text-[10px] text-accent font-bold uppercase tracking-widest mb-1">{{ prod.category.name }}</span>
+                        <h3 class="font-bold text-lg mb-2 group-hover:text-primary transition-colors">
+                            <a href="{% url 'products:product_detail' prod.slug %}">{{ prod.name }}</a>
+                        </h3>
+                        
+                        <div class="flex items-center space-x-1 text-sm text-yellow-500 mb-4">
+                            {% for i in "12345" %}
+                                <i class="fa-solid fa-star {% if forloop.counter > prod.rating_avg %}text-gray-200{% endif %}"></i>
+                            {% endfor %}
+                            <span class="text-gray-400 text-xs ml-2">({{ prod.rating_avg }})</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between mt-auto">
+                            <div class="flex flex-col">
+                                {% if prod.old_price %}
+                                    <span class="text-gray-400 text-sm line-through">{{ prod.old_price }} FCFA</span>
+                                {% endif %}
+                                <span class="text-xl font-extrabold text-primary">{{ prod.price }} FCFA</span>
+                            </div>
+                            <button class="text-gray-300 hover:text-red-500 transition hover:scale-125"><i class="fa-regular fa-heart text-xl"></i></button>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-span-full py-20 text-center">
+                    <i class="fa-solid fa-box-open text-6xl text-gray-200 mb-4"></i>
+                    <p class="text-gray-500">Aucun produit trouvé dans cette catégorie.</p>
+                    <a href="{% url 'products:product_list' %}" class="mt-4 inline-block text-accent font-bold hover:underline">Voir tous les produits</a>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if products.has_other_pages %}
+            <div class="mt-16 flex justify-center">
+                <nav class="flex items-center space-x-2">
+                    {% if products.has_previous %}
+                        <a href="?page={{ products.previous_page_number }}{% if category %}&category={{ category.slug }}{% endif %}" class="w-12 h-12 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition shadow-sm"><i class="fa-solid fa-chevron-left"></i></a>
+                    {% else %}
+                        <button class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-200 cursor-not-allowed"><i class="fa-solid fa-chevron-left"></i></button>
+                    {% endif %}
+
+                    {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                            <span class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-lg shadow-primary/20">{{ i }}</span>
+                        {% elif i > products.number|add:'-3' and i < products.number|add:'3' %}
+                            <a href="?page={{ i }}{% if category %}&category={{ category.slug }}{% endif %}" class="w-12 h-12 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-600 hover:bg-cream transition font-bold shadow-sm">{{ i }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}{% if category %}&category={{ category.slug }}{% endif %}" class="w-12 h-12 rounded-full bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition shadow-sm"><i class="fa-solid fa-chevron-right"></i></a>
+                    {% else %}
+                        <button class="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-200 cursor-not-allowed"><i class="fa-solid fa-chevron-right"></i></button>
+                    {% endif %}
+                </nav>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+</div>
+{% endblock %}

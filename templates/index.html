@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-[#FFF4E8] relative overflow-hidden pt-12 pb-24 lg:pt-20 lg:pb-32">
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+            <!-- Text Content -->
+            <div class="lg:w-1/2 text-center lg:text-left">
+                <div class="inline-flex items-center bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-orange-100 mb-8 animate-bounce-slow">
+                    <i class="fa-solid fa-wand-magic-sparkles text-orange-400 mr-2 text-sm"></i>
+                    <span class="text-[10px] font-bold text-orange-600 uppercase tracking-widest">Nouvelle Collection 2024</span>
+                </div>
+                
+                <h1 class="text-6xl lg:text-[84px] font-black text-primary leading-[0.95] mb-8">
+                    Magique • <br>
+                    <span class="text-orange-600">Naturel</span> • <br>
+                    Fière
+                </h1>
+                
+                <p class="text-gray-500 text-lg lg:text-xl font-medium mb-12 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    Découvrez notre sélection exclusive de produits capillaires et cosmétiques adaptés aux cheveux texturés et peaux mates. Des soins authentiques pour révéler votre éclat naturel.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 mb-16">
+                    <a href="{% url 'products:product_list' %}" class="w-full sm:w-auto px-10 py-5 bg-primary text-white text-lg font-black rounded-[20px] shadow-2xl shadow-primary/30 hover:bg-primary-dark transition-all flex items-center justify-center group">
+                        Découvrir <i class="fa-solid fa-arrow-right ml-3 group-hover:translate-x-1 transition"></i>
+                    </a>
+                    <a href="{% url 'marketing:about' %}" class="w-full sm:w-auto px-10 py-5 bg-white/50 backdrop-blur-sm border border-gray-200 text-lg font-black rounded-[20px] hover:bg-white transition flex items-center justify-center group">
+                        <i class="fa-solid fa-play mr-3 text-sm opacity-50 group-hover:scale-110 transition"></i>
+                        Notre Histoire
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-8 border-t border-orange-100 pt-12 max-w-md mx-auto lg:mx-0">
+                    <div>
+                        <div class="text-3xl font-black text-primary mb-1">15K+</div>
+                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Clients satisfaits</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-primary mb-1">500+</div>
+                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Produits</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-primary mb-1">4.9<span class="text-orange-400">★</span></div>
+                        <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Note moyenne</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Content -->
+            <div class="lg:w-1/2 relative">
+                <!-- Main Image Wrapper -->
+                <div class="relative z-10 rounded-[40px] overflow-hidden shadow-2xl group animate-fade-in-up">
+                    {% with hero_prod=products.0 %}
+                    <img src="{{ hero_prod.get_primary_image }}" alt="{{ hero_prod.name }}" class="w-full object-cover">
+                    <a href="{% url 'products:product_detail' hero_prod.slug %}" class="absolute inset-0 z-20"></a>
+                    {% endwith %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+
+                <!-- Floating Badge 1: Livraison -->
+                <div class="absolute -top-8 -right-8 z-20 bg-white p-6 rounded-[30px] shadow-2xl flex items-center space-x-4 animate-float">
+                    <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-500 text-xl">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <div class="text-[13px] font-black text-primary leading-none mb-1">Livraison 24h</div>
+                        <div class="text-[11px] font-bold text-gray-400 uppercase">Express</div>
+                    </div>
+                </div>
+
+                <!-- Floating Badge 2: Naturel -->
+                <div class="absolute -bottom-8 -left-8 z-20 bg-white p-6 rounded-[30px] shadow-2xl flex items-center space-x-4 animate-float-delayed">
+                    <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-500 text-xl">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <div>
+                        <div class="text-[13px] font-black text-primary leading-none mb-1">100% Naturel</div>
+                        <div class="text-[11px] font-bold text-gray-400 uppercase">Sans paraben</div>
+                    </div>
+                </div>
+
+                <!-- Decorative elements -->
+                <div class="absolute -top-20 -right-20 w-80 h-80 bg-orange-200/20 rounded-full blur-3xl -z-10"></div>
+                <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-extrabold text-primary inline-block relative">
+                Explorer par Univers
+                <span class="block w-1/2 h-1 bg-accent mx-auto mt-2 rounded-full"></span>
+            </h2>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+            {% for cat in categories %}
+            <a href="{% url 'products:product_list_by_category' cat.slug %}" class="group text-center">
+                <div class="w-32 h-32 mx-auto rounded-full bg-cream border-4 border-white shadow-lg overflow-hidden mb-4 group-hover:scale-110 transition duration-500 flex items-center justify-center p-4">
+                    <i class="fa-solid {{ cat.icon }} text-4xl text-primary opacity-20 group-hover:opacity-100 transition duration-500"></i>
+                </div>
+                <h4 class="font-bold text-gray-700 uppercase text-[10px] tracking-widest group-hover:text-accent transition">{{ cat.name }}</h4>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Bestsellers Section -->
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="flex items-end justify-between mb-12">
+            <div>
+                <h2 class="text-4xl font-extrabold text-primary mb-2">Nos Best-Sellers</h2>
+                <p class="text-gray-500">Les incontournables plébiscités par notre communauté</p>
+            </div>
+            <a href="{% url 'products:product_list' %}" class="text-accent font-bold hover:underline flex items-center">
+                Tout voir <i class="fa-solid fa-chevron-right ml-2 text-sm"></i>
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for prod in best %}
+            <!-- Product Card -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 card-hover group h-full flex flex-col">
+                <div class="relative aspect-square overflow-hidden bg-gray-100 p-8">
+                    <span class="absolute top-4 left-4 gradient-brown text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest z-10">{% if prod.badge %}{{ prod.get_badge_display }}{% else %}Bestseller{% endif %}</span>
+                    <img src="{{ prod.get_primary_image|default:'https://via.placeholder.com/300' }}" alt="{{ prod.name }}" class="w-full h-full object-contain group-hover:scale-110 transition duration-500">
+                    <a href="{% url 'products:product_detail' prod.slug %}" class="absolute inset-0 z-10"></a>
+                    <button type="button" onclick="addToCart('{{ prod.id }}')" class="absolute bottom-4 right-4 w-12 h-12 bg-white text-primary rounded-full shadow-lg flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300 z-20">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center space-x-1 text-sm text-yellow-500 mb-2">
+                        {% for i in "12345" %}
+                            <i class="fa-solid fa-star {% if forloop.counter > prod.rating_avg %}text-gray-200{% endif %}"></i>
+                        {% endfor %}
+                        <span class="text-gray-400 text-xs ml-2">({{ prod.rating_avg }})</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
+                        <a href="{% url 'products:product_detail' prod.slug %}">{{ prod.name }}</a>
+                    </h3>
+                    <p class="text-gray-400 text-sm mb-4">{{ prod.description|truncatechars:60 }}</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-xl font-extrabold text-primary">{{ prod.price }} FCFA</span>
+                        <button class="text-gray-300 hover:text-red-500 transition"><i class="fa-regular fa-heart text-xl"></i></button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Rituels de Soin Section -->
+<section id="rituels" class="py-24 bg-white overflow-hidden scroll-mt-20 border-t border-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center mb-16 px-4">
+            <span class="text-accent font-bold tracking-widest text-sm uppercase mb-3 block">Expertise & Bien-être</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-6">Nos Rituels de Soin</h2>
+            <p class="text-gray-500 text-lg">Suivez nos guides pas à pas pour magnifier vos cheveux et votre peau naturellement.</p>
+        </div>
+
+        <div class="flex justify-center mb-12">
+            <div class="inline-flex bg-cream p-1 rounded-2xl">
+                <button onclick="toggleRituel('cheveux')" id="btn-rituel-cheveux" class="px-8 py-3 rounded-xl font-bold text-sm bg-primary text-white shadow-lg transition duration-300">RITUEL CAPILLAIRE</button>
+                <button onclick="toggleRituel('corps')" id="btn-rituel-corps" class="px-8 py-3 rounded-xl font-bold text-sm text-gray-500 hover:text-primary transition duration-300">RITUEL CORPS</button>
+            </div>
+        </div>
+
+        <div class="relative max-w-6xl mx-auto">
+            <!-- Rituel Cheveux -->
+            <div id="rituel-cheveux" class="grid grid-cols-1 lg:grid-cols-2 items-center gap-16 animate-fade-in transition-all">
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-accent/20 rounded-[40px] transform translate-x-6 translate-y-6 -z-10 transition group-hover:translate-x-4"></div>
+                    <img src="{{ MEDIA_URL }}products/woman_braiding_hair_1773231371852.png" class="rounded-[40px] shadow-2xl w-full h-[500px] object-cover">
+                </div>
+                <div class="space-y-8">
+                    <div class="flex items-start space-x-6">
+                        <span class="w-12 h-12 rounded-full gradient-brown text-white flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg">1</span>
+                        <div>
+                            <h4 class="text-xl font-bold text-primary mb-2">Bain d'huiles précieux</h4>
+                            <p class="text-gray-500 leading-relaxed text-sm">Appliquez notre mélange d'huiles sur vos longueurs avant le shampoing. Laissez poser 30 minutes pour une hydratation intense.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-6">
+                        <span class="w-12 h-12 rounded-full gradient-brown text-white flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg">2</span>
+                        <div>
+                            <h4 class="text-xl font-bold text-primary mb-2">Nettoyage respectueux</h4>
+                            <p class="text-gray-500 leading-relaxed text-sm">Utilisez le shampoing doux sans sulfates. Massez le cuir chevelu pour stimuler la circulation sans agresser les pointes.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-6">
+                        <span class="w-12 h-12 rounded-full gradient-brown text-white flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg">3</span>
+                        <div>
+                            <h4 class="text-xl font-bold text-primary mb-2">Scellage au Karité</h4>
+                            <p class="text-gray-500 leading-relaxed text-sm">Terminez avec le beurre de karité pour sceller l'eau dans la fibre. Vos boucles resteront souples et définies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rituel Corps -->
+            <div id="rituel-corps" class="hidden grid grid-cols-1 lg:grid-cols-2 items-center gap-16 animate-fade-in transition-all">
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-primary/10 rounded-[40px] transform translate-x-6 translate-y-6 -z-10 transition group-hover:translate-x-4"></div>
+                    <img src="{{ MEDIA_URL }}products/applying_hair_product_1773231491698.png" class="rounded-[40px] shadow-2xl w-full h-[500px] object-cover">
+                </div>
+                <div class="space-y-8">
+                    <div class="flex items-start space-x-6">
+                        <span class="w-12 h-12 rounded-full bg-accent text-white flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg">1</span>
+                        <div>
+                            <h4 class="text-xl font-bold text-primary mb-2">Exfoliation Suivie</h4>
+                            <p class="text-gray-500 leading-relaxed text-sm">Éliminez les peaux mortes avec notre gommage doux. Préparez votre peau à recevoir les soins nourrissants.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-6">
+                        <span class="w-12 h-12 rounded-full bg-accent text-white flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg">2</span>
+                        <div>
+                            <h4 class="text-xl font-bold text-primary mb-2">Nutrition au Karité</h4>
+                            <p class="text-gray-500 leading-relaxed text-sm">Appliquez le beurre sur peau humide. Sa texture magique pénètre sans laisser de film gras pour une peau satinée.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-6">
+                        <span class="w-12 h-12 rounded-full bg-accent text-white flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg">3</span>
+                        <div>
+                            <h4 class="text-xl font-bold text-primary mb-2">Éclat Divin</h4>
+                            <p class="text-gray-500 leading-relaxed text-sm">Quelques gouttes de sérum vitamine C sur le visage et le décolleté pour un teint radieux toute la journée.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function toggleRituel(type) {
+    const caps = document.getElementById('rituel-cheveux');
+    const corps = document.getElementById('rituel-corps');
+    const btnCaps = document.getElementById('btn-rituel-cheveux');
+    const btnCorps = document.getElementById('btn-rituel-corps');
+
+    if (type === 'cheveux') {
+        caps.classList.remove('hidden');
+        corps.classList.add('hidden');
+        btnCaps.classList.add('bg-primary', 'text-white', 'shadow-lg');
+        btnCaps.classList.remove('text-gray-500');
+        btnCorps.classList.remove('bg-primary', 'text-white', 'shadow-lg');
+        btnCorps.classList.add('text-gray-500');
+    } else {
+        corps.classList.remove('hidden');
+        caps.classList.add('hidden');
+        btnCorps.classList.add('bg-primary', 'text-white', 'shadow-lg');
+        btnCorps.classList.remove('text-gray-500');
+        btnCaps.classList.remove('bg-primary', 'text-white', 'shadow-lg');
+        btnCaps.classList.add('text-gray-500');
+    }
+}
+</script>
+
+<!-- Flash Sale Section -->
+<section class="py-12 gradient-brown text-white relative overflow-hidden">
+    <div class="container mx-auto px-4 flex flex-col md:row items-center justify-between relative z-10 gap-8">
+        <div class="text-center md:text-left">
+            <h2 class="text-4xl font-extrabold mb-2 flex items-center justify-center md:justify-start">
+                Ventes Flash ! 🔥
+            </h2>
+            <p class="text-orange-100">Offre limitée sur une sélection de soins premium</p>
+        </div>
+        
+        <!-- Countdown -->
+        <div class="flex space-x-6 text-center">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 w-20">
+                <span class="block text-2xl font-bold">02</span>
+                <span class="text-[10px] uppercase opacity-70">Jours</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 w-20">
+                <span class="block text-2xl font-bold">14</span>
+                <span class="text-[10px] uppercase opacity-70">Heures</span>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 w-20">
+                <span class="block text-2xl font-bold">35</span>
+                <span class="text-[10px] uppercase opacity-70">Min</span>
+            </div>
+        </div>
+        
+        <a href="{% url 'products:product_list' %}" class="bg-white text-primary px-10 py-4 rounded-full font-bold shadow-lg btn-hover whitespace-nowrap">Profiter des offres</a>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-extrabold text-primary mb-2 italic">Ce que nos Magic Queens disent...</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for t in testimonials %}
+            <div class="bg-cream/40 p-8 rounded-[40px] relative">
+                <div class="absolute -top-4 left-8 text-6xl text-accent opacity-20"><i class="fa-solid fa-quote-left"></i></div>
+                <div class="flex items-center space-x-4 mb-6">
+                    <img src="{{ t.image.url|default:'https://via.placeholder.com/60' }}" alt="{{ t.name }}" class="w-16 h-16 rounded-full border-4 border-white shadow-md">
+                    <div>
+                        <h4 class="font-bold">{{ t.name }}</h4>
+                        <div class="flex text-yellow-500 text-xs">
+                            {% for i in "12345" %}
+                                <i class="fa-solid fa-star {% if forloop.counter > t.rating %}text-gray-200{% endif %}"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 italic text-sm leading-relaxed">
+                    "{{ t.comment }}"
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-20 bg-cream">
+    <div class="container mx-auto px-4 max-w-4xl text-center">
+        <h2 class="text-4xl font-extrabold text-primary mb-4">Rejoignez le Club MagicAfro</h2>
+        <p class="text-gray-600 mb-10">Inscrivez-vous à notre newsletter et recevez 10% de réduction sur votre première commande !</p>
+        
+        <form class="flex flex-col sm:row gap-4 max-w-2xl mx-auto shadow-2xl p-2 bg-white rounded-full">
+            <input type="email" placeholder="Votre adresse e-mail" class="flex-grow px-8 py-4 bg-transparent focus:outline-none text-gray-700" required>
+            <button type="submit" class="gradient-brown text-white px-10 py-4 rounded-full font-bold whitespace-nowrap transition-all duration-300 hover:scale-105 active:scale-95">S'abonner</button>
+        </form>
+        <p class="text-[10px] text-gray-400 mt-6 uppercase tracking-wider">Désinscription possible à tout moment. Voir notre politique de confidentialité.</p>
+    </div>
+</section>
+{% endblock %}

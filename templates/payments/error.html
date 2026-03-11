@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Erreur de Paiement | MagicAfro{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-24 text-center">
+    <div class="container mx-auto px-4 max-w-2xl">
+        <div class="bg-white rounded-[60px] shadow-2xl p-12 md:p-20 relative overflow-hidden">
+            <div class="w-24 h-24 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8">
+                <i class="fa-solid fa-triangle-exclamation text-4xl"></i>
+            </div>
+            <h1 class="text-4xl font-extrabold text-primary mb-4">Oups ! Une erreur est survenue</h1>
+            <p class="text-gray-500 mb-6">Nous n'avons pas pu initier votre paiement via CinetPay.</p>
+            <div class="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-10 font-medium">
+                {{ error }}
+            </div>
+            <a href="{% url 'orders:checkout' %}" class="inline-block gradient-brown text-white px-10 py-4 rounded-2xl font-bold">Réessayer</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

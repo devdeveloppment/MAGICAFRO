@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}Mon Profil | MagicAfro{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-16 lg:py-24 min-h-screen">
+    <div class="container mx-auto px-4 max-w-5xl">
+        <div class="bg-white rounded-[40px] shadow-sm overflow-hidden flex flex-col md:flex-row">
+            <!-- Sidebar Profile -->
+            <div class="w-full md:w-80 bg-primary p-12 text-white">
+                <div class="text-center mb-10">
+                    <div class="w-24 h-24 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center mx-auto mb-6 text-3xl font-bold">
+                        {{ user.email|first|upper }}
+                    </div>
+                    <h2 class="text-xl font-bold mb-1">{{ user.get_full_name|default:"Client MagicAfro" }}</h2>
+                    <p class="text-white/50 text-xs italic">{{ user.email }}</p>
+                </div>
+                
+                <nav class="space-y-2">
+                    <button onclick="switchProfileTab('overview')" id="tab-btn-overview" class="w-full text-left px-6 py-4 rounded-2xl bg-white/10 font-bold border-l-4 border-accent transition-all">
+                        <i class="fa-solid fa-gauge-high mr-3 opacity-70"></i> Vue d'ensemble
+                    </button>
+                    <button onclick="switchProfileTab('orders')" id="tab-btn-orders" class="w-full text-left px-6 py-4 rounded-2xl hover:bg-white/5 text-white/70 hover:text-white transition-all font-medium">
+                        <i class="fa-solid fa-bag-shopping mr-3 opacity-70"></i> Mes Commandes
+                    </button>
+                    <button onclick="switchProfileTab('addresses')" id="tab-btn-addresses" class="w-full text-left px-6 py-4 rounded-2xl hover:bg-white/5 text-white/70 hover:text-white transition-all font-medium">
+                        <i class="fa-solid fa-location-dot mr-3 opacity-70"></i> Mes Adresses
+                    </button>
+                    <div class="pt-6 mt-6 border-t border-white/10">
+                        <a href="{% url 'admin:logout' %}?next=/" class="w-full text-left px-6 py-4 rounded-2xl text-red-300 hover:bg-red-500/10 transition-all font-medium flex items-center">
+                            <i class="fa-solid fa-right-from-bracket mr-3"></i> Déconnexion
+                        </a>
+                    </div>
+                </nav>
+            </div>
+            
+            <!-- Main Content Profile -->
+            <div class="flex-grow p-8 md:p-16">
+                <!-- Overview Tab -->
+                <div id="profile-overview" class="profile-tab-content">
+                    <h1 class="text-3xl font-extrabold text-primary mb-8">Bonjour, {{ user.first_name|default:"bienvenue" }} !</h1>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+                        <div class="bg-cream/30 p-8 rounded-3xl border border-cream h-full flex flex-col justify-between">
+                            <div>
+                                <i class="fa-solid fa-shopping-bag text-accent text-2xl mb-4"></i>
+                                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Commandes</h4>
+                                <p class="text-3xl font-black text-primary">{{ orders.count }}</p>
+                            </div>
+                            <button onclick="switchProfileTab('orders')" class="text-accent text-xs font-bold mt-4 hover:underline">Voir l'historique</button>
+                        </div>
+                        <div class="bg-gray-50 p-8 rounded-3xl border border-gray-100 h-full flex flex-col justify-between">
+                            <div>
+                                <i class="fa-solid fa-heart text-red-400 text-2xl mb-4"></i>
+                                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Favoris Boutique</h4>
+                                <p class="text-3xl font-black text-dark">0</p>
+                            </div>
+                            <a href="{% url 'products:product_list' %}" class="text-gray-400 text-xs font-bold mt-4 hover:underline">Découvrir</a>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <h3 class="text-xl font-bold text-dark border-b border-gray-100 pb-4">Activité récente</h3>
+                        {% if orders %}
+                            <div class="space-y-4">
+                                {% for order in orders|slice:":3" %}
+                                <div class="flex items-center justify-between p-6 bg-white border border-gray-100 rounded-2xl hover:shadow-md transition">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-primary">
+                                            <i class="fa-solid fa-box text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-sm">Commande #{{ order.id }}</p>
+                                            <p class="text-[10px] text-gray-400 uppercase">{{ order.created_at|date:"d F Y" }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-black text-primary text-sm">{{ order.total }} FCFA</p>
+                                        <span class="text-[10px] font-bold uppercase {% if order.payment_status %}text-success{% else %}text-warning{% endif %}">
+                                            {% if order.payment_status %}Payée{% else %}En attente{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="py-16 text-center bg-gray-50 rounded-[40px] border border-dashed border-gray-200">
+                                <i class="fa-solid fa-ghost text-4xl text-gray-200 mb-4 block"></i>
+                                <p class="text-gray-400 italic text-sm">Aucune activité récente à afficher.</p>
+                                <a href="{% url 'products:product_list' %}" class="mt-6 inline-block bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition">Faire ma première commande</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div id="profile-orders" class="profile-tab-content hidden">
+                    <h2 class="text-2xl font-extrabold text-primary mb-8">Historique de mes commandes</h2>
+                    {% if orders %}
+                        <div class="space-y-6">
+                            {% for order in orders %}
+                            <div class="border border-gray-100 rounded-3xl overflow-hidden bg-white shadow-sm">
+                                <div class="bg-gray-50 p-6 flex justify-between items-center flex-wrap gap-4">
+                                    <div class="flex gap-8">
+                                        <div>
+                                            <p class="text-[10px] font-bold text-gray-400 uppercase">Numéro</p>
+                                            <p class="font-bold text-sm">#{{ order.id }}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] font-bold text-gray-400 uppercase">Date</p>
+                                            <p class="font-bold text-sm">{{ order.created_at|date:"d/m/Y" }}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] font-bold text-gray-400 uppercase">Total</p>
+                                            <p class="font-black text-primary text-sm">{{ order.total }} FCFA</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase {% if order.status == 'DELIVERED' %}bg-success/10 text-success{% else %}bg-primary/10 text-primary{% endif %}">
+                                        {{ order.get_status_display }}
+                                    </span>
+                                </div>
+                                <div class="p-6">
+                                    {% for item in order.items.all %}
+                                    <div class="flex items-center space-x-4 {% if not forloop.last %}mb-4 pb-4 border-b border-gray-50{% endif %}">
+                                        <div class="w-16 h-16 bg-gray-50 rounded-xl p-2 flex-shrink-0">
+                                            <img src="{{ item.product.get_primary_image|default:'https://via.placeholder.com/80' }}" class="w-full h-full object-contain">
+                                        </div>
+                                        <div class="flex-grow">
+                                            <p class="font-bold text-sm">{{ item.product.name }}</p>
+                                            <p class="text-xs text-gray-400">Quantité: {{ item.quantity }}</p>
+                                        </div>
+                                        <p class="font-bold text-sm">{{ item.unit_price }} FCFA</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-gray-400 italic">Vous n'avez pas encore passé de commande.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Addresses Tab -->
+                <div id="profile-addresses" class="profile-tab-content hidden">
+                    <h2 class="text-2xl font-extrabold text-primary mb-8">Mes Adresses</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="border-2 border-dashed border-gray-200 rounded-[40px] p-10 flex flex-col items-center justify-center text-center group hover:border-accent transition cursor-pointer">
+                            <div class="w-16 h-16 rounded-full bg-gray-50 text-gray-300 flex items-center justify-center text-2xl mb-4 group-hover:bg-accent/10 group-hover:text-accent transition">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                            <p class="font-bold text-gray-400 group-hover:text-primary transition">Ajouter une adresse</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchProfileTab(tab) {
+    // Hide all contents
+    document.querySelectorAll('.profile-tab-content').forEach(c => c.classList.add('hidden'));
+    // Show selected content
+    document.getElementById('profile-' + tab).classList.remove('hidden');
+    
+    // Reset buttons
+    const btns = ['overview', 'orders', 'addresses'];
+    btns.forEach(b => {
+        const btn = document.getElementById('tab-btn-' + b);
+        btn.classList.remove('bg-white/10', 'font-bold', 'border-l-4', 'border-accent');
+        btn.classList.add('text-white/70', 'font-medium');
+    });
+    
+    // Active button
+    const activeBtn = document.getElementById('tab-btn-' + tab);
+    activeBtn.classList.add('bg-white/10', 'font-bold', 'border-l-4', 'border-accent');
+    activeBtn.classList.remove('text-white/70', 'font-medium');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Notre Histoire | MagicAfro{% endblock %}
+
+{% block content %}
+<div class="bg-white py-20 lg:py-32 overflow-hidden">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            <!-- Image Section -->
+            <div class="lg:w-1/2 relative">
+                <div class="relative z-10 rounded-[60px] overflow-hidden shadow-2xl skew-y-1">
+                    <img src="{{ MEDIA_URL }}products/hero_woman_hair_touch_1773231294569.png" alt="L'histoire de MagicAfro" class="w-full object-cover aspect-[4/5]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+                </div>
+                <!-- Decorative element -->
+                <div class="absolute -top-10 -left-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl -z-10"></div>
+                <div class="absolute -bottom-10 -right-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+                <div class="absolute top-1/2 -right-12 w-24 h-24 gradient-brown rounded-3xl rotate-12 -z-10 opacity-20"></div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="lg:w-1/2">
+                <div class="inline-flex items-center px-4 py-2 bg-orange-50 rounded-full border border-orange-100 mb-8">
+                    <span class="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">Plus qu'une boutique</span>
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-black text-primary leading-tight mb-8">
+                    Notre <span class="text-orange-600">Histoire</span> & <br> Nos Valeurs
+                </h1>
+                
+                <div class="space-y-6 text-gray-600 text-lg leading-relaxed font-medium">
+                    <p>
+                        MagicAfro est né d'une volonté simple mais profonde : célébrer la beauté plurielle et authentique des cheveux texturés et des peaux mates.
+                    </p>
+                    <p>
+                        Face à un marché cosmétique souvent uniformisé, nous avons choisi de mettre en lumière l'excellence des soins naturels, hérités de savoir-faire ancestraux et sublimés par la science moderne.
+                    </p>
+                    <p>
+                        Chacun de nos produits est sélectionné avec une exigence absolue de qualité, de pureté et d'efficacité. Nous croyons que le soin de soi est un rituel sacré qui mérite ce qu'il y a de plus précieux.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-8 mt-16 pb-12 border-b border-gray-100">
+                    <div>
+                        <div class="text-accent text-3xl mb-4"><i class="fa-solid fa-earth-africa"></i></div>
+                        <h3 class="font-black text-primary uppercase text-xs tracking-widest mb-2">Héritage</h3>
+                        <p class="text-gray-400 text-sm">Puisé dans les richesses naturelles du continent.</p>
+                    </div>
+                    <div>
+                        <div class="text-accent text-3xl mb-4"><i class="fa-solid fa-flask-vial"></i></div>
+                        <h3 class="font-black text-primary uppercase text-xs tracking-widest mb-2">Expertise</h3>
+                        <p class="text-gray-400 text-sm">Des formulations testées et approuvées.</p>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <a href="{% url 'products:product_list' %}" class="inline-flex items-center space-x-4 group">
+                        <span class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-xl group-hover:scale-110 transition shadow-xl shadow-primary/20">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </span>
+                        <span class="text-primary font-black uppercase tracking-widest text-sm group-hover:text-accent transition">Visiter la boutique</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

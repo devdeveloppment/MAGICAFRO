@@ -1,0 +1,416 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MagicAfro | Boutique de Produits Capillaires & Cosmétiques{% endblock %}</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#8B4513',
+                            light: '#D2691E',
+                            dark: '#5D2E0C',
+                        },
+                        accent: '#D2691E',
+                        promo: {
+                            start: '#FF6B6B',
+                            end: '#FF8E53',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .bg-cream { background-color: #FDF5E6; }
+        .bg-dark { background-color: #111827; }
+        .gradient-brown { background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%); }
+        .gradient-promo { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); }
+        
+        /* Animations */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 6s ease-in-out 3s infinite; }
+
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-slow { animation: bounce-slow 4s ease-in-out infinite; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fadeIn 1s ease-out forwards; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Hover effects */
+        .card-hover:hover {
+            transform: translateY(-8px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-white text-gray-900 overflow-x-hidden">
+
+    <!-- Promotional Bar (Marquee) -->
+    <div class="bg-dark text-white py-2 overflow-hidden whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em]">
+        <div class="animate-marquee inline-block">
+            ✨ -15% sur votre première commande avec le code BIENVENUE15 &nbsp;&nbsp;&nbsp;&nbsp; 💖 Échantillons gratuits dans chaque commande &nbsp;&nbsp;&nbsp;&nbsp; 🚚 Livraison GRATUITE dès 49€ d'achat &nbsp;&nbsp;&nbsp;&nbsp; ✨ -15% sur votre première commande avec le code BIENVENUE15
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-8">
+            <!-- Logo -->
+            <a href="{% url 'products:home' %}" class="flex items-center space-x-3 flex-shrink-0">
+                <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/10 shadow-xl bg-white flex items-center justify-center p-0.5">
+                    <img src="{% static 'img/logo.png' %}" alt="MagicAfro Logo" class="w-full h-full object-cover rounded-full">
+                </div>
+                <div>
+                    <span class="text-2xl font-black text-primary tracking-tight block leading-none">MagicAfro</span>
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Magique • Naturel • Fière</span>
+                </div>
+            </a>
+
+            <!-- Search Bar Central -->
+            <div class="hidden md:flex flex-grow max-w-xl mx-auto">
+                <form action="{% url 'products:product_list' %}" method="get" class="w-full relative group">
+                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 group-focus-within:text-accent transition">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input type="text" name="q" placeholder="Rechercher un produit..." class="w-full bg-gray-50 border border-gray-100 rounded-full pl-12 pr-4 py-3 text-sm font-medium focus:bg-white focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition">
+                </form>
+            </div>
+
+            <!-- Icons -->
+            <div class="flex items-center space-x-8 text-gray-700 flex-shrink-0">
+                <div class="flex flex-col items-center group cursor-pointer">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'accounts:profile' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
+                    {% else %}
+                        <a href="{% url 'admin:index' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
+                    {% endif %}
+                    <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Compte</span>
+                </div>
+                <div class="flex flex-col items-center group cursor-pointer">
+                    <a href="#" class="text-xl hover:text-accent transition relative">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Favoris</span>
+                </div>
+                <div class="flex flex-col items-center group cursor-pointer" id="cart-btn">
+                    <button class="text-xl hover:text-accent transition relative">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span id="cart-counter" class="absolute -top-1 -right-1 bg-dark text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{{ cart|length }}</span>
+                    </button>
+                    <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Panier</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <div class="bg-white border-t border-gray-50">
+            <nav class="container mx-auto px-4 flex items-center justify-center space-x-8 py-3 overflow-x-auto no-scrollbar whitespace-nowrap">
+                <a href="{% url 'products:home' %}" class="text-xs font-bold text-dark hover:text-accent transition">Accueil</a>
+                <a href="{% url 'products:product_list_by_category' 'cheveux' %}" class="text-xs font-bold text-gray-500 hover:text-accent transition flex items-center">Cheveux <i class="fa-solid fa-chevron-down text-[8px] ml-1.5 opacity-50"></i></a>
+                <a href="{% url 'products:product_list_by_category' 'soins-du-corps' %}" class="text-xs font-bold text-gray-500 hover:text-accent transition flex items-center">Soins Corps <i class="fa-solid fa-chevron-down text-[8px] ml-1.5 opacity-50"></i></a>
+                <a href="{% url 'products:product_list_by_category' 'maquillage' %}" class="text-xs font-bold text-gray-500 hover:text-accent transition">Maquillage</a>
+                <a href="{% url 'products:product_list_by_category' 'perruques' %}" class="text-xs font-bold text-gray-500 hover:text-accent transition">Perruques</a>
+                <a href="{% url 'products:product_list' %}?promo=true" class="text-xs font-bold text-orange-500 hover:text-accent transition flex items-center animate-pulse">Promotions 🔥</a>
+                <a href="{% url 'blog:post_list' %}" class="text-xs font-bold text-gray-500 hover:text-accent transition">Blog</a>
+                <a href="{% url 'marketing:contact' %}" class="text-xs font-bold text-gray-500 hover:text-accent transition">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="space-y-6">
+                    <a href="{% url 'products:home' %}" class="flex items-center space-x-3 group">
+                        <div class="w-12 h-12 rounded-full overflow-hidden bg-white flex items-center justify-center p-0.5 shadow-lg group-hover:scale-110 transition-transform">
+                            <img src="{% static 'img/logo.png' %}" alt="MagicAfro Logo" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <span class="text-2xl font-bold text-white">MagicAfro</span>
+                    </a>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        La destination luxe pour les soins capillaires textures et la cosmétique inclusive. Nous célébrons toutes les beautés naturelles.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-accent transition"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <!-- Boutique -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">BOUTIQUE</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="{% url 'products:product_list' %}" class="hover:text-white transition">Tous les produits</a></li>
+                        <li><a href="#" class="hover:text-white transition">Nouveautés</a></li>
+                        <li><a href="#" class="hover:text-white transition">Meilleures ventes</a></li>
+                        <li><a href="#" class="hover:text-white transition">Cartes Cadeaux</a></li>
+                        <li><a href="#" class="hover:text-white transition">Offres spéciales</a></li>
+                    </ul>
+                </div>
+
+                <!-- Informations -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">INFORMATIONS</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="{% url 'marketing:about' %}" class="hover:text-white transition">À propos de nous</a></li>
+                        <li><a href="#" class="hover:text-white transition">Expédition & Livraisons</a></li>
+                        <li><a href="#" class="hover:text-white transition">Retours & Remboursements</a></li>
+                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                        <li><a href="{% url 'marketing:contact' %}" class="hover:text-accent transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">CONTACT</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-start space-x-3">
+                            <i class="fa-solid fa-location-dot text-accent mt-1"></i>
+                            <span>123 Avenue de la Beauté, 75008 Paris, France</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fa-solid fa-phone text-accent"></i>
+                            <span>228 90 56 78 48 / 228 99 79 46 29</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fa-solid fa-envelope text-accent"></i>
+                            <span>businessriztech@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-800 mb-8">
+            
+            <div class="flex flex-col md:row justify-between items-center text-xs text-gray-500 gap-4">
+                <p>© 2026 MagicAfro Store. Tous droits réservés.</p>
+                <div class="flex items-center space-x-6">
+                    <span class="flex items-center space-x-2"><i class="fa-brands fa-cc-visa text-lg"></i><span>Visa</span></span>
+                    <span class="flex items-center space-x-2"><i class="fa-brands fa-cc-mastercard text-lg"></i><span>MasterCard</span></span>
+                    <span class="flex items-center space-x-2"><i class="fa-brands fa-cc-paypal text-lg"></i><span>PayPal</span></span>
+                    <span class="flex items-center space-x-2"><i class="fa-solid fa-mobile-screen-button text-lg"></i><span>Apple Pay</span></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar (Drawer) -->
+    <div id="cart-drawer" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="cart-overlay"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl flex flex-col">
+            <div class="p-6 border-b flex items-center justify-between">
+                <h3 class="text-xl font-bold">Votre Panier (<span id="cart-title-count">{{ cart|length }}</span>)</h3>
+                <button id="close-cart" class="text-2xl text-gray-400 hover:text-black"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div id="cart-items-container" class="flex-grow p-6 overflow-y-auto">
+                {% if cart %}
+                    <div class="space-y-6">
+                        {% for item in cart %}
+                        <div class="flex space-x-4 border-b border-gray-100 pb-6">
+                            <div class="w-20 h-20 bg-gray-50 rounded-xl p-2 flex-shrink-0">
+                                <img src="{{ item.product.get_primary_image|default:'https://via.placeholder.com/80' }}" class="w-full h-full object-contain">
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="font-bold text-sm">{{ item.product.name }}</h4>
+                                <p class="text-accent font-bold text-sm">{{ item.price }} FCFA</p>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-xs text-gray-400">Qté: {{ item.quantity }}</span>
+                                    <a href="{% url 'orders:cart_remove' item.product.id %}" class="text-xs text-red-400 hover:text-red-600 underline">Supprimer</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="h-full flex flex-col items-center justify-center text-center">
+                        <i class="fa-solid fa-bag-shopping text-6xl text-gray-200 mb-4"></i>
+                        <p class="text-gray-500">Votre panier est vide.</p>
+                        <a href="{% url 'products:product_list' %}" class="mt-6 gradient-brown text-white px-8 py-3 rounded-full font-bold">Découvrir nos produits</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="p-6 border-t bg-gray-50">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-medium text-gray-500 uppercase text-xs tracking-widest">Total</span>
+                    <span id="cart-drawer-total" class="text-2xl font-extrabold text-primary">{{ cart.get_total_price }} FCFA</span>
+                </div>
+                {% if cart %}
+                    <a href="{% url 'orders:checkout' %}" class="block w-full text-center gradient-brown text-white py-4 rounded-full font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition">Passer la commande</a>
+                {% else %}
+                    <button disabled class="w-full bg-gray-300 text-white py-4 rounded-full font-bold cursor-not-allowed">Passer la commande</button>
+                {% endif %}
+                <p class="text-[10px] text-center text-gray-400 mt-4">TVA incluse. Frais de port calculés à l'étape suivante.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50" id="menu-overlay"></div>
+        <div class="absolute left-0 top-0 bottom-0 w-4/5 bg-white flex flex-col">
+            <div class="p-6 border-b flex items-center justify-between bg-primary text-white">
+                <span class="text-xl font-bold">Menu</span>
+                <button id="close-menu" class="text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 space-y-6">
+                <a href="{% url 'products:product_list_by_category' 'cheveux' %}" class="block text-lg font-medium hover:text-accent">CHEVEUX</a>
+                <a href="{% url 'products:product_list_by_category' 'soins-du-corps' %}" class="block text-lg font-medium hover:text-accent">SOINS CORPS</a>
+                <a href="{% url 'products:product_list_by_category' 'maquillage' %}" class="block text-lg font-medium hover:text-accent">MAQUILLAGE</a>
+                <a href="{% url 'marketing:about' %}" class="block text-lg font-medium hover:text-accent">NOTRE HISTOIRE</a>
+                <hr>
+                <a href="{% url 'accounts:profile' %}" class="flex items-center space-x-4 text-gray-600">
+                    <i class="fa-regular fa-user text-xl"></i>
+                    <span>Mon Compte</span>
+                </a>
+                <a href="#" class="flex items-center space-x-4 text-gray-600">
+                    <i class="fa-regular fa-heart text-xl"></i>
+                    <span>Mes Favoris</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cart Toggle
+        const cartBtn = document.getElementById('cart-btn');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const closeCart = document.getElementById('close-cart');
+        const cartOverlay = document.getElementById('cart-overlay');
+
+        if (cartBtn) cartBtn.addEventListener('click', () => cartDrawer.classList.remove('hidden'));
+        if (closeCart) closeCart.addEventListener('click', () => cartDrawer.classList.add('hidden'));
+        if (cartOverlay) cartOverlay.addEventListener('click', () => cartDrawer.classList.add('hidden'));
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenu = document.getElementById('close-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        if (menuBtn) menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        if (closeMenu) closeMenu.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        if (menuOverlay) menuOverlay.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+
+        // Search Bar Toggle
+        const searchBtn = document.getElementById('search-btn');
+        const searchBar = document.getElementById('search-bar');
+        const closeSearch = document.getElementById('close-search');
+
+        if (searchBtn) searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('hidden');
+            if (!searchBar.classList.contains('hidden')) {
+                searchBar.querySelector('input').focus();
+            }
+        });
+        if (closeSearch) closeSearch.addEventListener('click', () => searchBar.classList.add('hidden'));
+
+        // Wishlist Toggle (Frontend only for now)
+        document.querySelectorAll('.fa-heart').forEach(heart => {
+            heart.parentElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.querySelector('.fa-heart').classList.toggle('fa-solid');
+                this.querySelector('.fa-heart').classList.toggle('fa-regular');
+                this.querySelector('.fa-heart').classList.toggle('text-red-500');
+                
+                // Optional: animation
+                this.classList.add('scale-125');
+                setTimeout(() => this.classList.remove('scale-125'), 200);
+            });
+        });
+
+        // AJAX Add to Cart
+        function addToCart(productId, quantity = 1) {
+            const formData = new FormData();
+            formData.append('quantity', quantity);
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            fetch(`/orders/cart/add/${productId}/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Update counter
+                    const counter = document.getElementById('cart-counter');
+                    counter.innerText = data.cart_count;
+                    
+                    // Show drawer
+                    cartDrawer.classList.remove('hidden');
+                    
+                    // Reload cart content (could be optimized with a dedicated partial view)
+                    location.reload(); 
+                }
+            });
+        }
+
+        // Intercept detail page form if exists
+        const detailForm = document.querySelector('form[action*="cart/add"]');
+        if (detailForm) {
+            detailForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const productId = this.action.split('/').filter(Boolean).pop();
+                const quantity = this.querySelector('input[name="quantity"]')?.value || 1;
+                addToCart(productId, quantity);
+            });
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

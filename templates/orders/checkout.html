@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Finaliser ma commande | MagicAfro{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-16 lg:py-24">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <h1 class="text-4xl font-extrabold text-primary mb-12 flex items-center">
+            <span class="w-1.5 h-10 gradient-brown rounded-full mr-4"></span>
+            Checkout
+        </h1>
+
+        <form action="." method="post" class="flex flex-col lg:row gap-16">
+            {% csrf_token %}
+            
+            <!-- Information Form -->
+            <div class="lg:w-2/3 space-y-12">
+                <div class="bg-white rounded-[40px] shadow-sm p-10 md:p-16">
+                    <h3 class="text-2xl font-bold text-primary mb-10 flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-cream text-accent flex items-center justify-center text-sm mr-4">1</span>
+                        Informations de livraison
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-2">Nom complet</label>
+                            {{ form.full_name }}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-2">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-2">Téléphone</label>
+                            {{ form.phone }}
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-2">Adresse de livraison</label>
+                            {{ form.street_address }}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-2">Code Postal</label>
+                            {{ form.postal_code }}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 ml-2">Ville</label>
+                            {{ form.city }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[40px] shadow-sm p-10 md:p-16">
+                    <h3 class="text-2xl font-bold text-primary mb-10 flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-cream text-accent flex items-center justify-center text-sm mr-4">2</span>
+                        Méthode de Paiement
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <input type="radio" name="payment_method" value="CINETPAY" id="pay_cinet" checked class="peer hidden">
+                            <label for="pay_cinet" class="flex items-center justify-between p-6 bg-gray-50 rounded-2xl border-2 border-transparent cursor-pointer peer-checked:border-accent peer-checked:bg-accent/5 transition-all">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-accent"><i class="fa-solid fa-mobile-screen"></i></div>
+                                    <div>
+                                        <p class="font-bold text-primary">CinetPay (Mobile Money)</p>
+                                        <p class="text-xs text-gray-400">Orange, MTN, Moov, Wave...</p>
+                                    </div>
+                                </div>
+                                <div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center peer-checked:border-accent">
+                                    <div class="w-3 h-3 rounded-full bg-accent scale-0 peer-checked:scale-100 transition"></div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="relative">
+                            <input type="radio" name="payment_method" value="STRIPE" id="pay_stripe" class="peer hidden">
+                            <label for="pay_stripe" class="flex items-center justify-between p-6 bg-gray-50 rounded-2xl border-2 border-transparent cursor-pointer peer-checked:border-accent peer-checked:bg-accent/5 transition-all">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-accent"><i class="fa-solid fa-credit-card"></i></div>
+                                    <div>
+                                        <p class="font-bold text-primary">Carte Bancaire (Stripe)</p>
+                                        <p class="text-xs text-gray-400">Paiement ultra-sécurisé par carte</p>
+                                    </div>
+                                </div>
+                                <div class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center peer-checked:border-accent">
+                                    <div class="w-3 h-3 rounded-full bg-accent scale-0 peer-checked:scale-100 transition"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="lg:w-1/3">
+                <div class="bg-primary text-white rounded-[40px] p-10 shadow-2xl shadow-primary/30 sticky top-28">
+                    <h3 class="text-xl font-bold mb-8">Ma Commande</h3>
+                    
+                    <div class="max-h-60 overflow-y-auto mb-8 pr-2 space-y-4 custom-scrollbar">
+                        {% for item in cart %}
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-white/5 rounded-xl p-2 flex-shrink-0">
+                                <img src="https://via.placeholder.com/100" class="w-full h-full object-contain">
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-xs font-bold line-clamp-1">{{ item.product.name }}</h4>
+                                <p class="text-gray-400 text-xs">x {{ item.quantity }}</p>
+                            </div>
+                            <span class="text-sm font-bold">{{ item.total_price }} FCFA</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="space-y-4 mb-10 pt-6 border-t border-white/10">
+                        <div class="flex justify-between text-gray-400 text-sm">
+                            <span>Sous-total</span>
+                            <span>{{ cart.get_total_price }} FCFA</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400 text-sm">
+                            <span>Livraison</span>
+                            <span class="text-green-400">Gratuit</span>
+                        </div>
+                        <div class="flex justify-between items-baseline pt-4">
+                            <span class="font-bold text-lg">TOTAL</span>
+                            <span class="text-3xl font-extrabold">{{ cart.get_total_price }} FCFA</span>
+                        </div>
+                    </div>
+
+                    <p class="text-[10px] text-gray-400 mb-6 leading-relaxed">
+                        En cliquant sur "Confirmer", vous acceptez nos conditions générales de vente. Vos données sont traitées de manière sécurisée conformément à notre politique de confidentialité.
+                    </p>
+
+                    <button type="submit" class="w-full h-16 bg-accent text-white rounded-2xl font-extrabold text-lg flex items-center justify-center space-x-3 shadow-xl shadow-accent/20 hover:scale-105 transition-all active:scale-95">
+                        <span>Confirmer & Payer</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    
+                    <div class="mt-8 flex items-center justify-center space-x-4 grayscale opacity-40 invert scale-75">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" class="h-4">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" class="h-4">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+</style>
+{% endblock %}

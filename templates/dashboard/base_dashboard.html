@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | MagicAfro Admin</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B4513',
+                        accent: '#D2691E',
+                        dark: '#111827',
+                        success: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-item-active {
+            background-color: rgba(210, 105, 30, 0.1);
+            color: #D2691E;
+            border-right: 4px solid #D2691E;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50 flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-100 flex-shrink-0 flex flex-col hidden lg:flex">
+        <div class="p-6 border-b border-gray-50 flex items-center space-x-3">
+            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white text-sm">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <span class="text-xl font-bold text-primary tracking-tight">MagicAfro <span class="text-xs font-normal text-gray-400">Admin</span></span>
+        </div>
+        
+        <nav class="flex-grow py-6 overflow-y-auto">
+            <div class="px-6 mb-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Menu Principal</div>
+            <ul class="space-y-1">
+                <li>
+                    <a href="{% url 'dashboard:home' %}" class="flex items-center px-6 py-3 text-sm font-medium transition-all group {% if segment == 'dashboard' %}sidebar-item-active{% else %}text-gray-500 hover:bg-gray-50 hover:text-primary{% endif %}">
+                        <i class="fa-solid fa-chart-line w-5 mr-3"></i>
+                        Vues d'ensemble
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:order_list' %}" class="flex items-center px-6 py-3 text-sm font-medium transition-all group {% if segment == 'orders' %}sidebar-item-active{% else %}text-gray-500 hover:bg-gray-50 hover:text-primary{% endif %}">
+                        <i class="fa-solid fa-shopping-bag w-5 mr-3"></i>
+                        Commandes
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:product_list' %}" class="flex items-center px-6 py-3 text-sm font-medium transition-all group {% if segment == 'products' %}sidebar-item-active{% else %}text-gray-500 hover:bg-gray-50 hover:text-primary{% endif %}">
+                        <i class="fa-solid fa-box w-5 mr-3"></i>
+                        Produits
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:customer_list' %}" class="flex items-center px-6 py-3 text-sm font-medium transition-all group {% if segment == 'customers' %}sidebar-item-active{% else %}text-gray-500 hover:bg-gray-50 hover:text-primary{% endif %}">
+                        <i class="fa-solid fa-users w-5 mr-3"></i>
+                        Clients
+                    </a>
+                </li>
+            </ul>
+
+            <div class="px-6 mt-10 mb-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Ventes</div>
+            <ul class="space-y-1">
+                <li>
+                    <a href="{% url 'dashboard:promotion_list' %}" class="flex items-center px-6 py-3 text-sm font-medium transition-all group {% if segment == 'promotions' %}sidebar-item-active{% else %}text-gray-500 hover:bg-gray-50 hover:text-primary{% endif %}">
+                        <i class="fa-solid fa-tags w-5 mr-3"></i>
+                        Promotions
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard:report_list' %}" class="flex items-center px-6 py-3 text-sm font-medium transition-all group {% if segment == 'reports' %}sidebar-item-active{% else %}text-gray-500 hover:bg-gray-50 hover:text-primary{% endif %}">
+                        <i class="fa-solid fa-file-invoice-dollar w-5 mr-3"></i>
+                        Rapports
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-gray-50">
+            <a href="{% url 'products:home' %}" class="flex items-center text-xs font-bold text-gray-400 hover:text-primary transition uppercase tracking-widest">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Voir la boutique
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Interface -->
+    <div class="flex-grow flex flex-col min-w-0 overflow-hidden">
+        <!-- Top bar -->
+        <header class="bg-white border-b border-gray-100 px-8 py-4 flex items-center justify-between flex-shrink-0">
+            <div class="flex items-center space-x-4">
+                <button class="lg:hidden text-gray-500 text-xl"><i class="fa-solid fa-bars"></i></button>
+                <div class="relative hidden md:block">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
+                    <input type="text" placeholder="Rechercher..." class="bg-gray-50 border-0 rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-accent w-64">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <button class="text-gray-400 hover:text-primary relative"><i class="fa-regular fa-bell"></i><span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span></button>
+                <div class="flex items-center space-x-3 border-l pl-6">
+                    <div class="text-right">
+                        <div class="text-xs font-bold text-dark">{{ request.user.get_full_name|default:request.user.email }}</div>
+                        <div class="text-[10px] text-gray-400 uppercase font-bold tracking-tighter">Administrateur</div>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-accent/10 border-2 border-accent/20 flex items-center justify-center text-accent font-bold">
+                        {{ request.user.email|first|upper }}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Space -->
+        <main class="flex-grow overflow-y-auto p-8">
+            {% block dashboard_content %}{% endblock %}
+        </main>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

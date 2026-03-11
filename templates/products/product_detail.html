@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} | MagicAfro{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-thumb.active { border-color: #D2691E; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 py-8">
+    <div class="container mx-auto px-4">
+        <nav class="flex text-sm text-gray-400 mb-8 items-center space-x-2">
+            <a href="{% url 'products:home' %}" class="hover:text-primary transition">Accueil</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <a href="{% url 'products:product_list' %}" class="hover:text-primary transition">Boutique</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <a href="{% url 'products:product_list_by_category' product.category.slug %}" class="hover:text-primary transition">{{ product.category.name }}</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <span class="text-gray-600 font-bold">{{ product.name }}</span>
+        </nav>
+
+        <div class="bg-white rounded-[40px] shadow-sm overflow-hidden p-6 md:p-12">
+            <div class="flex flex-col lg:flex-row gap-16">
+                <!-- Product Images -->
+                <div class="lg:w-1/2">
+                    <div class="relative aspect-square rounded-3xl overflow-hidden bg-gray-50 mb-6 group">
+                        {% if product.badge %}
+                        <span class="absolute top-6 left-6 {% if product.badge == 'PROMO' %}gradient-promo{% else %}gradient-brown{% endif %} text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest z-10 shadow-lg">
+                            {{ product.get_badge_display }}
+                        </span>
+                        {% endif %}
+                        <img src="{{ product.get_primary_image|default:'https://via.placeholder.com/600' }}" id="main-product-image" alt="{{ product.name }}" class="w-full h-full object-contain p-12 transition duration-500">
+                    </div>
+                    
+                    <!-- Thumbnails -->
+                    <div class="flex space-x-4">
+                        {% for img in product.images.all %}
+                        <div class="w-20 h-20 rounded-2xl border-2 {% if img.is_feature %}border-accent active{% else %}border-transparent{% endif %} p-2 cursor-pointer bg-white transition product-thumb hover:border-accent/30" onclick="document.getElementById('main-product-image').src='{{ img.image.url }}'; document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active', 'border-accent')); this.classList.add('active', 'border-accent');">
+                            <img src="{{ img.image.url }}" class="w-full h-full object-contain">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="lg:w-1/2 flex flex-col">
+                    <div class="mb-4">
+                        <span class="text-accent font-bold uppercase tracking-widest text-sm mb-2 block">{{ product.category.name }}</span>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-primary mb-4 leading-tight">{{ product.name }}</h1>
+                        
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="flex text-yellow-500 text-sm">
+                                {% for i in "12345" %}
+                                    <i class="fa-solid fa-star {% if forloop.counter > product.rating_avg %}text-gray-200{% endif %}"></i>
+                                {% endfor %}
+                            </div>
+                            <span class="text-gray-400 text-sm font-medium border-l pl-4">{{ product.rating_avg }} (48 avis clients)</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <div class="flex items-baseline space-x-4">
+                            <span class="text-4xl font-extrabold text-primary">{{ product.price }} FCFA</span>
+                            {% if product.old_price %}
+                            <span class="text-xl text-gray-400 line-through font-medium">{{ product.old_price }} FCFA</span>
+                            <span class="text-green-500 font-bold bg-green-50 px-3 py-1 rounded-full text-xs">-{{ product.discount_percent }}%</span>
+                            {% endif %}
+                        </div>
+                        <p class="text-gray-400 text-xs mt-2 uppercase font-bold tracking-tighter">TVA incluse | Livraison gratuite dès 30.000 FCFA</p>
+                    </div>
+
+                    <p class="text-gray-600 leading-relaxed mb-10 text-lg">
+                        {{ product.description }}
+                    </p>
+
+                    <!-- Selection & Add to Cart -->
+                    <div class="mt-auto space-y-6">
+                        <form id="add-to-cart-form" action="{% url 'orders:cart_add' product.id %}" method="post" class="flex items-center space-x-6">
+                            {% csrf_token %}
+                            <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 h-14">
+                                <button type="button" onclick="const input = document.getElementById('qty-input'); if(input.value > 1) input.value--" class="w-10 h-10 flex items-center justify-center text-primary font-bold hover:scale-125 transition">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <input type="number" id="qty-input" name="quantity" value="1" min="1" class="w-12 bg-transparent text-center font-bold text-lg outline-none">
+                                <button type="button" onclick="document.getElementById('qty-input').value++" class="w-10 h-10 flex items-center justify-center text-primary font-bold hover:scale-125 transition">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                            <button type="submit" class="flex-grow h-14 gradient-brown text-white font-bold rounded-full shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition duration-300 transform active:scale-95 flex items-center justify-center space-x-3">
+                                <i class="fa-solid fa-bag-shopping"></i>
+                                <span>Ajouter au panier</span>
+                            </button>
+                            <button type="button" onclick="this.querySelector('i').classList.toggle('fa-solid'); this.querySelector('i').classList.toggle('fa-regular'); this.querySelector('i').classList.toggle('text-red-500'); this.classList.add('scale-125'); setTimeout(()=>this.classList.remove('scale-125'),200);" class="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 hover:border-red-100 transition duration-300">
+                                <i class="fa-regular fa-heart text-xl"></i>
+                            </button>
+                        </form>
+
+                        <div class="grid grid-cols-2 gap-4 py-8 border-t border-b border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-accent"><i class="fa-solid fa-truck-fast"></i></div>
+                                <span class="text-xs font-bold text-gray-700">LIVRAISON 48H</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-accent"><i class="fa-solid fa-shield-check"></i></div>
+                                <span class="text-xs font-bold text-gray-700">PAIEMENT SÉCURISÉ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="mt-20">
+            <h2 class="text-3xl font-extrabold text-primary mb-12 flex items-center">
+                <span class="w-2 h-8 gradient-brown rounded-full mr-4"></span>
+                Vous aimerez aussi
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {% for item in related %}
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 card-hover group h-full flex flex-col">
+                    <div class="relative aspect-square overflow-hidden bg-gray-50 p-6">
+                        <img src="{{ item.get_primary_image|default:'https://via.placeholder.com/300' }}" alt="{{ item.name }}" class="w-full h-full object-contain group-hover:scale-110 transition duration-500">
+                        <a href="{% url 'products:product_detail' item.slug %}" class="absolute inset-0 z-10"></a>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-gray-800 mb-1">{{ item.name }}</h3>
+                        <p class="text-primary font-extrabold">{{ item.price }} FCFA</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

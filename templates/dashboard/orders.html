@@ -1,0 +1,93 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="mb-8">
+    <h1 class="text-2xl font-extrabold text-dark tracking-tight">Suivi des Commandes</h1>
+    <p class="text-sm text-gray-400 font-medium">Gérez vos expéditions et suivez les paiements clients.</p>
+</div>
+
+<div class="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden min-h-[600px] flex flex-col">
+    <div class="p-8 border-b border-gray-50 flex items-center justify-between">
+        <div class="flex items-center space-x-6">
+            <a href="?status=" class="text-sm font-bold {% if not current_status %}text-accent border-b-2 border-accent{% else %}text-gray-400 hover:text-dark{% endif %} pb-2 transition">Toutes ({{ count_all }})</a>
+            <a href="?status=PENDING" class="text-sm font-bold {% if current_status == 'PENDING' %}text-accent border-b-2 border-accent{% else %}text-gray-400 hover:text-dark{% endif %} pb-2 transition">En attente ({{ count_pending }})</a>
+            <a href="?status=PAID" class="text-sm font-bold {% if current_status == 'PAID' %}text-accent border-b-2 border-accent{% else %}text-gray-400 hover:text-dark{% endif %} pb-2 transition">Payées ({{ count_paid }})</a>
+            <a href="?status=SHIPPED" class="text-sm font-bold {% if current_status == 'SHIPPED' %}text-accent border-b-2 border-accent{% else %}text-gray-400 hover:text-dark{% endif %} pb-2 transition">Expédiées ({{ count_shipped }})</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="text-xs font-bold text-gray-500 hover:text-dark transition flex items-center"><i class="fa-solid fa-download mr-2"></i> Exporter CSV</button>
+        </div>
+    </div>
+
+    <div class="overflow-x-auto flex-grow">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <tr>
+                    <th class="px-8 py-4">Commande</th>
+                    <th class="px-8 py-4 italic">Date</th>
+                    <th class="px-8 py-4">Client</th>
+                    <th class="px-8 py-4">Paiement</th>
+                    <th class="px-8 py-4 text-center">Statut Logistique</th>
+                    <th class="px-8 py-4 text-right">Total</th>
+                    <th class="px-8 py-4 text-right">Détails</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                {% for order in orders %}
+                <tr class="hover:bg-gray-50/50 transition duration-150">
+                    <td class="px-8 py-5">
+                        <div class="text-sm font-black text-dark">#{{ order.id }}</div>
+                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{{ order.payment_method }}</div>
+                    </td>
+                    <td class="px-8 py-5 text-xs text-gray-500 font-medium">
+                        {{ order.created_at|date:"d M Y" }}<br>
+                        <span class="text-[10px] opacity-70">{{ order.created_at|date:"H:i" }}</span>
+                    </td>
+                    <td class="px-8 py-5">
+                        <div class="text-sm font-semibold text-dark">{{ order.full_name }}</div>
+                        <div class="text-[10px] text-gray-400 font-medium">{{ order.city }}</div>
+                    </td>
+                    <td class="px-8 py-5">
+                        {% if order.payment_status %}
+                            <div class="flex items-center text-success space-x-2">
+                                <i class="fa-solid fa-check-circle text-xs"></i>
+                                <span class="text-xs font-bold uppercase">Payé</span>
+                            </div>
+                        {% else %}
+                            <div class="flex items-center text-warning space-x-2">
+                                <i class="fa-solid fa-clock text-xs"></i>
+                                <span class="text-xs font-bold uppercase">En attente</span>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td class="px-8 py-5 text-center">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider 
+                        {% if order.status == 'DELIVERED' %}bg-success/10 text-success
+                        {% elif order.status == 'SHIPPED' %}bg-accent/10 text-accent
+                        {% elif order.status == 'PROCESSING' %}bg-primary/10 text-primary
+                        {% elif order.status == 'PENDING' %}bg-warning/10 text-warning
+                        {% else %}bg-gray-100 text-gray-500{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                    </td>
+                    <td class="px-8 py-5 text-right text-sm font-black text-primary">{{ order.total }} FCFA</td>
+                    <td class="px-8 py-5 text-right">
+                        <a href="#" class="w-8 h-8 rounded-lg bg-gray-50 text-gray-400 hover:bg-dark hover:text-white transition inline-flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-eye text-xs"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="px-8 py-10 text-center text-gray-400 italic">Aucune commande enregistrée.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="p-8 border-t border-gray-50 bg-gray-50/20 text-center text-xs text-gray-400 font-medium">
+        Affichage de {{ orders.count }} commandes récentes
+    </div>
+</div>
+{% endblock %}

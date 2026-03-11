@@ -1,0 +1,56 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="mb-8">
+    <h1 class="text-2xl font-extrabold text-dark tracking-tight">Gestion des Clients</h1>
+    <p class="text-sm text-gray-400 font-medium">Consultez la liste de vos clients et leur historique d'achat.</p>
+</div>
+
+<div class="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <tr>
+                    <th class="px-8 py-4">Client</th>
+                    <th class="px-8 py-4">Email</th>
+                    <th class="px-8 py-4 text-center">Commandes</th>
+                    <th class="px-8 py-4 text-center">Statut Compte</th>
+                    <th class="px-8 py-4 text-right">Détails</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                {% for customer in customers %}
+                <tr class="hover:bg-gray-50/50 transition duration-150">
+                    <td class="px-8 py-5">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                                {{ customer.email|first|upper }}
+                            </div>
+                            <div class="text-sm font-bold text-dark">{{ customer.get_full_name|default:customer.username }}</div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-5 text-sm text-gray-500">{{ customer.email }}</td>
+                    <td class="px-8 py-5 text-center text-sm font-black text-accent">{{ customer.order_count }}</td>
+                    <td class="px-8 py-5 text-center">
+                        {% if customer.is_active %}
+                            <span class="px-3 py-1 bg-green-50 text-success text-[10px] font-bold rounded-full uppercase tracking-wider">Actif</span>
+                        {% else %}
+                            <span class="px-3 py-1 bg-gray-100 text-gray-400 text-[10px] font-bold rounded-full uppercase tracking-wider">Inactif</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-8 py-5 text-right">
+                        <button class="w-8 h-8 rounded-lg bg-gray-50 text-gray-400 hover:bg-dark hover:text-white transition inline-flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-eye text-xs"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-8 py-10 text-center text-gray-400 italic">Aucun client enregistré.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

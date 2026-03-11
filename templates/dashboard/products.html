@@ -1,0 +1,94 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="flex items-center justify-between mb-8">
+    <div>
+        <h1 class="text-2xl font-extrabold text-dark tracking-tight">Gestion des Produits</h1>
+        <p class="text-sm text-gray-400 font-medium">Consultez et gérez l'ensemble de votre catalogue.</p>
+    </div>
+    <a href="{% url 'dashboard:product_create' %}" class="bg-accent text-white px-8 py-3 rounded-full font-bold shadow-xl shadow-accent/40 hover:scale-105 transition transform active:scale-95 duration-300">
+        <i class="fa-solid fa-plus mr-2"></i> Nouveau Produit
+    </a>
+</div>
+
+<div class="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+    <div class="p-8 border-b border-gray-50 bg-gray-50/30 flex items-center space-x-4">
+        <div class="flex-grow relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i class="fa-solid fa-filter text-xs"></i></span>
+            <input type="text" placeholder="Filtrer par nom ou SKU..." class="bg-white border-0 rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-accent w-full max-w-sm shadow-sm">
+        </div>
+        <select class="bg-white border-0 rounded-xl px-4 py-2 text-sm focus:ring-1 focus:ring-accent shadow-sm">
+            <option>Toutes les catégories</option>
+            <option>Cheveux</option>
+            <option>Soins Corps</option>
+            <option>Maquillage</option>
+        </select>
+    </div>
+    
+    <div class="overflow-x-auto flex-grow">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <tr>
+                    <th class="px-8 py-4">Produit</th>
+                    <th class="px-8 py-4 text-center">Catégorie</th>
+                    <th class="px-8 py-4 text-center">Prix</th>
+                    <th class="px-8 py-4 text-center">Stock</th>
+                    <th class="px-8 py-4 text-center">Statut</th>
+                    <th class="px-8 py-4 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                {% for prod in products %}
+                <tr class="hover:bg-gray-50/50 transition duration-150">
+                    <td class="px-8 py-5">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-2xl bg-gray-100 flex-shrink-0 p-1 flex items-center justify-center overflow-hidden">
+                                {% if prod.get_primary_image %}
+                                    <img src="{{ prod.get_primary_image }}" class="w-full h-full object-contain">
+                                {% else %}
+                                    <i class="fa-solid fa-box-open text-gray-300"></i>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold text-dark">{{ prod.name }}</div>
+                                <div class="text-[10px] text-gray-400 uppercase tracking-tighter">REF: {{ prod.id|stringformat:"05d" }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-5 text-center">
+                        <span class="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{{ prod.category.name }}</span>
+                    </td>
+                    <td class="px-8 py-5 text-center text-sm font-black text-primary">{{ prod.price }} FCFA</td>
+                    <td class="px-8 py-5 text-center">
+                        <div class="inline-block px-3 py-1 rounded-full text-[10px] font-bold 
+                            {% if prod.stock <= 5 %}bg-red-50 text-danger{% elif prod.stock <= 20 %}bg-orange-50 text-warning{% else %}bg-green-50 text-success{% endif %}">
+                            {{ prod.stock }} EN STOCK
+                        </div>
+                    </td>
+                    <td class="px-8 py-5 text-center">
+                        <div class="flex items-center justify-center space-x-2">
+                            <div class="w-2 h-2 rounded-full {% if prod.is_active %}bg-success animate-pulse{% else %}bg-gray-300{% endif %}"></div>
+                            <span class="text-xs font-bold {% if prod.is_active %}text-gray-700{% else %}text-gray-400{% endif %}">{% if prod.is_active %}Actif{% else %}Inactif{% endif %}</span>
+                        </div>
+                    </td>
+                    <td class="px-8 py-5 text-right">
+                        <div class="flex items-center justify-end space-x-2">
+                            <a href="{% url 'dashboard:product_edit' prod.id %}" class="w-8 h-8 rounded-lg bg-gray-50 text-gray-500 hover:bg-primary hover:text-white transition flex items-center justify-center shadow-sm">
+                                <i class="fa-solid fa-pen text-[10px]"></i>
+                            </a>
+                            <a href="{% url 'dashboard:product_delete' prod.id %}" class="w-8 h-8 rounded-lg bg-gray-50 text-gray-500 hover:bg-danger hover:text-white transition flex items-center justify-center shadow-sm">
+                                <i class="fa-solid fa-trash text-[10px]"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-8 py-10 text-center text-gray-400 italic">Aucun produit dans le catalogue.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
