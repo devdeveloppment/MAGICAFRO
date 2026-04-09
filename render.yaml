@@ -1,6 +1,7 @@
 services:
   - type: web
     name: magicafro
+    plan: free
     env: python
     buildCommand: "./build.sh"
     startCommand: "gunicorn config.wsgi:application"
@@ -28,5 +29,6 @@ services:
 
 databases:
   - name: magicdb
+    plan: free
     databaseName: magicdb
     user: magicuser
