@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: magicafro
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn config.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: magicdb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "*"
+      - key: CINETPAY_API_KEY
+        sync: false
+      - key: CINETPAY_SECRET_KEY
+        sync: false
+      - key: CINETPAY_SITE_ID
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+
+databases:
+  - name: magicdb
+    databaseName: magicdb
+    user: postgres
