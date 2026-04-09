@@ -44,7 +44,7 @@ CINETPAY_SITE_ID = env('CINETPAY_SITE_ID')
 STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '.pythonanywhere.com', '.render.com'])
 
 
 # Application definition
@@ -106,10 +106,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# Use PostgreSQL if DATABASE_URL is provided, otherwise fallback to SQLite (useful for PythonAnywhere free)
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=f'postgres://{env("DB_USER")}:{env("DB_PASSWORD")}@{env("DB_HOST")}:{env("DB_PORT")}/{env("DB_NAME")}')
+    'default': env.db('DATABASE_URL', default=f'sqlite:////{BASE_DIR}/db.sqlite3')
 }
 
 
