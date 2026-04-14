@@ -73,6 +73,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Cloudinary - DOIT être avant les apps locales
+    'cloudinary_storage',
+    'cloudinary',
+    
     # Third-party apps
     'crispy_forms',
     'crispy_tailwind',
