@@ -60,8 +60,12 @@ class Product(models.Model):
         if not img:
             img = self.images.first()
         
-        if img:
-            return img.image.url
+        if img and img.image:
+            try:
+                if img.image.storage.exists(img.image.name):
+                    return img.image.url
+            except Exception:
+                pass
             
         # Fallback beauty images to keep the UI premium even without content
         fallbacks = [
