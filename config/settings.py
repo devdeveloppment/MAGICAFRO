@@ -63,7 +63,15 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': env('CLOUDINARY_API_SECRET', default='34UlVr91CaT41OgZX2KlfrxLR5A'),
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' if CLOUDINARY_STORAGE['CLOUD_NAME'] else 'django.core.files.storage.FileSystemStorage'
+# Django 5.x : utiliser STORAGES au lieu de DEFAULT_FILE_STORAGE (déprécié)
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
