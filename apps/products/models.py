@@ -60,28 +60,15 @@ class Product(models.Model):
 
     @property
     def get_primary_image(self):
-        img = self.images.filter(is_feature=True).first()
-        if not img:
-            img = self.images.first()
+        # Image principale ou première image
+        img = self.images.filter(is_feature=True).first() or self.images.first()
         
         if img and img.image:
-            try:
-                if img.image.storage.exists(img.image.name):
-                    return img.image.url
-            except Exception:
-                pass
+            # On retourne l'URL sans tester exists() car Railway/Cloudinary gèrent différemment
+            return img.image.url
             
-        # Fallback beauty images to keep the UI premium even without content
-        fallbacks = [
-            'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop', # Serum
-            'https://images.unsplash.com/photo-1596462502278-27bfaf41039a?q=80&w=400&auto=format&fit=crop', # Cream
-            'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=400&auto=format&fit=crop', # Oil
-            'https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=400&auto=format&fit=crop', # Soap
-        ]
-        import zlib
-        # Use name to pick a stable fallback per product
-        idx = zlib.adler32(self.name.encode()) % len(fallbacks)
-        return fallbacks[idx]
+        # Fallback automatique vers Unsplash si aucune image n'est liée
+        return f"https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80&sig={self.id}"
 
     @property
     def discount_percent(self):
