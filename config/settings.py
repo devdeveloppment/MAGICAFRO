@@ -58,9 +58,9 @@ CSRF_COOKIE_SECURE = True
 
 # Cloudinary Settings
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default=''),
-    'API_KEY': env('CLOUDINARY_API_KEY', default=''),
-    'API_SECRET': env('CLOUDINARY_API_SECRET', default=''),
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default='dtenc1xut'),
+    'API_KEY': env('CLOUDINARY_API_KEY', default='289417356726777'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET', default='34UlVr91CaT41OgZX2KlfrxLR5A'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' if CLOUDINARY_STORAGE['CLOUD_NAME'] else 'django.core.files.storage.FileSystemStorage'
