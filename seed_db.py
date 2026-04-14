@@ -21,12 +21,11 @@ def seed_data():
     
     # Categories
     categories = [
-        {'name': 'Shampooings', 'icon': 'fa-soap', 'order': 1},
-        {'name': 'Masques', 'icon': 'fa-mask', 'order': 2},
-        {'name': 'Huiles', 'icon': 'fa-droplet', 'order': 3},
-        {'name': 'Beurres', 'icon': 'fa-jar', 'order': 4},
-        {'name': 'Maquillage', 'icon': 'fa-brush', 'order': 5},
-        {'name': 'Accessoires', 'icon': 'fa-hat-wizard', 'order': 6},
+        {'name': 'Cheveux', 'icon': 'fa-crown', 'order': 1},
+        {'name': 'Soins du Corps', 'icon': 'fa-spa', 'order': 2},
+        {'name': 'Maquillage', 'icon': 'fa-brush', 'order': 3},
+        {'name': 'Perruques', 'icon': 'fa-user-tie', 'order': 4},
+        {'name': 'Accessoires', 'icon': 'fa-hat-wizard', 'order': 5},
     ]
     
     cat_objs = []
@@ -44,7 +43,7 @@ def seed_data():
             'name': 'Beurre de Karité Brut',
             'price': 24.90,
             'old_price': 29.90,
-            'category': cat_objs[3],
+            'category': cat_objs[1], # Soins du Corps
             'badge': 'BEST',
             'desc': 'Hydratant et nourrissant peaux & cheveux. 100% naturel.'
         },
@@ -52,7 +51,7 @@ def seed_data():
             'name': 'Huile d\'Avocat Pure',
             'price': 15.90,
             'old_price': 19.90,
-            'category': cat_objs[2],
+            'category': cat_objs[0], # Cheveux
             'badge': 'PROMO',
             'desc': 'Stimule la pousse et fortifie.'
         },
@@ -60,17 +59,25 @@ def seed_data():
             'name': 'Shampooing Solide Hibiscus',
             'price': 12.50,
             'old_price': None,
-            'category': cat_objs[0],
+            'category': cat_objs[0], # Cheveux
             'badge': 'NEW',
             'desc': 'Cheveux ternes et fatigués.'
         },
         {
-            'name': 'Kit de Pinceaux Bambou',
-            'price': 39.00,
+            'name': 'Perruque Lace Front',
+            'price': 150000.00,
+            'old_price': 180000.00,
+            'category': cat_objs[3], # Perruques
+            'badge': 'BEST',
+            'desc': 'Fibre haute qualité, aspect ultra naturel.'
+        },
+        {
+            'name': 'Rouge à Lèvres Velours',
+            'price': 8500.00,
             'old_price': None,
-            'category': cat_objs[5],
-            'badge': 'NEW',
-            'desc': 'Application douce et précise.'
+            'category': cat_objs[2], # Maquillage
+            'badge': None,
+            'desc': 'Finition mate, longue tenue.'
         },
     ]
     
