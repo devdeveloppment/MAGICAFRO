@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from orders.models import Order
 from products.models import Product, Category
 from django.db.models import Sum, Count
@@ -7,7 +9,28 @@ from django.utils import timezone
 from datetime import timedelta
 from .forms import ProductForm
 
-@staff_member_required
+def dashboard_login(request):
+    if request.user.is_authenticated and request.user.is_staff:
+        return redirect('dashboard:home')
+    
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
+        
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect('dashboard:home')
+        else:
+            messages.error(request, "E-mail ou mot de passe incorrect, ou accès refusé.")
+            
+    return render(request, 'dashboard/login.html')
+
+def dashboard_logout(request):
+    logout(request)
+    return redirect('dashboard:login')
+
+@login_required(login_url='dashboard:login')
 def dashboard_home(request):
     # Stats
     total_sales = Order.objects.filter(payment_status=True).aggregate(Sum('total'))['total__sum'] or 0
@@ -48,7 +71,7 @@ def dashboard_home(request):
     }
     return render(request, 'dashboard/index.html', context)
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def order_list(request):
     status_filter = request.GET.get('status')
     orders = Order.objects.all().order_by('-created_at')
@@ -67,7 +90,7 @@ def order_list(request):
     }
     return render(request, 'dashboard/orders.html', context)
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def product_list(request):
     products = Product.objects.all().order_by('-created_at')
     context = {
@@ -76,7 +99,7 @@ def product_list(request):
     }
     return render(request, 'dashboard/products.html', context)
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -97,7 +120,7 @@ def product_create(request):
     }
     return render(request, 'dashboard/product_form.html', context)
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def product_edit(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -122,7 +145,7 @@ def product_edit(request, pk):
     }
     return render(request, 'dashboard/product_form.html', context)
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
@@ -130,7 +153,7 @@ def product_delete(request, pk):
         return redirect('dashboard:product_list')
     return render(request, 'dashboard/product_confirm_delete.html', {'product': product})
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def customer_list(request):
     from django.contrib.auth import get_user_model
     User = get_user_model()
@@ -142,14 +165,14 @@ def customer_list(request):
     }
     return render(request, 'dashboard/customers.html', context)
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def promotion_list(request):
     context = {
         'segment': 'promotions'
     }
     return render(request, 'dashboard/promotions.html', context)
 
-@staff_member_required
+@login_required(login_url='dashboard:login')
 def report_list(request):
     context = {
         'segment': 'reports'
