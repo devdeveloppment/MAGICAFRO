@@ -15,4 +15,5 @@ urlpatterns = [
     path('customers/', views.customer_list, name='customer_list'),
     path('promotions/', views.promotion_list, name='promotion_list'),
     path('reports/', views.report_list, name='report_list'),
+    path('debug-images/', views.debug_images, name='debug_images'),
 ]

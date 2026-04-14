@@ -2,12 +2,35 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
 from orders.models import Order
 from products.models import Product, Category
 from django.db.models import Sum, Count
 from django.utils import timezone
 from datetime import timedelta
 from .forms import ProductForm
+
+def debug_images(request):
+    """Page de diagnostic pour vérifier le stockage des images."""
+    from products.models import ProductImage
+    from django.conf import settings
+    
+    images = ProductImage.objects.all().order_by('-id')[:10]
+    data = {
+        'DEFAULT_FILE_STORAGE': settings.DEFAULT_FILE_STORAGE,
+        'CLOUDINARY_CLOUD_NAME': settings.CLOUDINARY_STORAGE.get('CLOUD_NAME', 'NON DEFINI'),
+        'images': [
+            {
+                'id': img.id,
+                'product': img.product.name,
+                'image_name': str(img.image),
+                'image_url': img.image.url if img.image else 'AUCUNE IMAGE',
+                'is_feature': img.is_feature,
+            }
+            for img in images
+        ]
+    }
+    return JsonResponse(data, json_dumps_params={'ensure_ascii': False, 'indent': 2})
 
 def dashboard_login(request):
     if request.user.is_authenticated and request.user.is_staff:
