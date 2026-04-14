@@ -128,11 +128,19 @@ def product_create(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save()
-            image = form.cleaned_data.get('image')
+            image = request.FILES.get('image')  # Lire directement depuis request.FILES
             if image:
                 from products.models import ProductImage
-                ProductImage.objects.create(product=product, image=image, is_feature=True)
+                try:
+                    pi = ProductImage(product=product, is_feature=True)
+                    pi.image.save(image.name, image, save=True)
+                    print(f"[OK] Image sauvegardée: {pi.image.url}")
+                except Exception as e:
+                    print(f"[ERREUR] Impossible de sauvegarder l'image: {e}")
+                    messages.warning(request, f"Produit créé mais l'image n'a pas pu être sauvegardée: {e}")
             return redirect('dashboard:product_list')
+        else:
+            print(f"[FORM ERRORS] {form.errors}")
     else:
         form = ProductForm()
     
@@ -150,12 +158,18 @@ def product_edit(request, pk):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             product = form.save()
-            image = form.cleaned_data.get('image')
+            image = request.FILES.get('image')  # Lire directement depuis request.FILES
             if image:
                 from products.models import ProductImage
-                # Delete old images if replaced, or just add a new one as feature
+                # Supprimer les anciennes images et créer une nouvelle
                 product.images.all().delete()
-                ProductImage.objects.create(product=product, image=image, is_feature=True)
+                try:
+                    pi = ProductImage(product=product, is_feature=True)
+                    pi.image.save(image.name, image, save=True)
+                    print(f"[OK] Image modifiée sauvegardée: {pi.image.url}")
+                except Exception as e:
+                    print(f"[ERREUR] Impossible de sauvegarder l'image: {e}")
+                    messages.warning(request, f"Produit modifié mais l'image n'a pas pu être sauvegardée: {e}")
             return redirect('dashboard:product_list')
     else:
         form = ProductForm(instance=product)
