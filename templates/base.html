@@ -126,7 +126,12 @@
             <div class="flex items-center space-x-8 text-gray-700 flex-shrink-0">
                 <div class="flex flex-col items-center group cursor-pointer">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'accounts:profile' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
+                        <div class="flex flex-col items-center">
+                            <a href="{% url 'accounts:profile' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
+                            {% if user.is_staff %}
+                                <a href="{% url 'dashboard:home' %}" class="text-[8px] text-accent font-bold hover:underline">DASHBOARD</a>
+                            {% endif %}
+                        </div>
                     {% else %}
                         <a href="/admin/" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
                     {% endif %}
