@@ -106,14 +106,28 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
-# Use PostgreSQL if DATABASE_URL is provided, otherwise fallback to SQLite
-database_url = env('DATABASE_URL', default=f'sqlite:////{BASE_DIR}/db.sqlite3')
-if database_url.startswith('postgres://'):
-    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+# Priority: DATABASE_URL from environment (Railway/Production)
+# Fallback: Local SQLite
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
-DATABASES = {
-    'default': env.db_url_config(database_url)
-}
+if DATABASE_URL:
+    # Handle the postgres:// vs postgresql:// issue directly
+    if DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    
+    DATABASES = {
+        'default': env.db_url_config(DATABASE_URL)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+# Debug print to verify DB type (safe for logs)
+print(f"DATABASE CONFIGURED: {'PostgreSQL' if 'postgresql' in str(DATABASES['default'].get('ENGINE', '')) else 'SQLite'}")
 
 
 # Password validation
