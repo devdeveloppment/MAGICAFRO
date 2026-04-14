@@ -30,19 +30,19 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-dummy-key-for-build')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env('DEBUG', default=False)
 
 # CinetPay Settings
-CINETPAY_API_KEY = env('CINETPAY_API_KEY')
-CINETPAY_SECRET_KEY = env('CINETPAY_SECRET_KEY')
-CINETPAY_SITE_ID = env('CINETPAY_SITE_ID')
+CINETPAY_API_KEY = env('CINETPAY_API_KEY', default='')
+CINETPAY_SECRET_KEY = env('CINETPAY_SECRET_KEY', default='')
+CINETPAY_SITE_ID = env('CINETPAY_SITE_ID', default='')
 
 # Stripe Settings
-STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY')
-STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLISHABLE_KEY', default='')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY', default='')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '.pythonanywhere.com', '.render.com'])
 
