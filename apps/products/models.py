@@ -48,7 +48,11 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
+            import uuid
             self.slug = slugify(self.name)
+            # Check if slug exists
+            if Product.objects.filter(slug=self.slug).exists():
+                self.slug = f"{self.slug}-{str(uuid.uuid4())[:4]}"
         if not self.slug:
             import uuid
             self.slug = f"prod-{str(uuid.uuid4())[:8]}"
