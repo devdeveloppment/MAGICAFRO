@@ -128,12 +128,12 @@
                     {% if user.is_authenticated %}
                         <a href="{% url 'accounts:profile' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
                     {% else %}
-                        <a href="{% url 'admin:index' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
+                        <a href="/admin/" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
                     {% endif %}
                     <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Compte</span>
                 </div>
                 <div class="flex flex-col items-center group cursor-pointer">
-                    <a href="#" class="text-xl hover:text-accent transition relative">
+                    <a href="{% url 'products:product_list' %}" class="text-xl hover:text-accent transition relative">
                         <i class="fa-solid fa-heart"></i>
                     </a>
                     <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Favoris</span>
