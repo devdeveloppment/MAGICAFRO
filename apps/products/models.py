@@ -60,14 +60,19 @@ class Product(models.Model):
 
     @property
     def get_primary_image(self):
-        # Image principale ou première image
+        # Image principale ou première image liée
         img = self.images.filter(is_feature=True).first() or self.images.first()
         
         if img and img.image:
-            # On retourne l'URL sans tester exists() car Railway/Cloudinary gèrent différemment
-            return img.image.url
+            try:
+                # Si nous sommes sur Cloudinary, l'URL contiendra "res.cloudinary.com"
+                url = img.image.url
+                return url
+            except Exception:
+                pass
             
-        # Fallback automatique vers Unsplash si aucune image n'est liée
+        # Si aucune image n'est trouvée, on utilise une image thématique magnifique
+        # Nous utilisons self.id pour que chaque produit ait sa propre image de secours stable
         return f"https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80&sig={self.id}"
 
     @property
