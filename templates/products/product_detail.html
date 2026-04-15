@@ -78,9 +78,9 @@
 
                     <!-- Selection & Add to Cart -->
                     <div class="mt-auto space-y-6">
-                        <form id="add-to-cart-form" action="{% url 'orders:cart_add' product.id %}" method="post" class="flex items-center space-x-6">
+                        <form id="add-to-cart-form" action="{% url 'orders:cart_add' product.id %}" method="post" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
                             {% csrf_token %}
-                            <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 h-14">
+                            <div class="flex items-center justify-between bg-gray-100 rounded-full px-6 py-2 h-14 sm:w-32">
                                 <button type="button" onclick="const input = document.getElementById('qty-input'); if(input.value > 1) input.value--" class="w-10 h-10 flex items-center justify-center text-primary font-bold hover:scale-125 transition">
                                     <i class="fa-solid fa-minus"></i>
                                 </button>
@@ -89,13 +89,15 @@
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>
-                            <button type="submit" class="flex-grow h-14 gradient-brown text-white font-bold rounded-full shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition duration-300 transform active:scale-95 flex items-center justify-center space-x-3">
-                                <i class="fa-solid fa-bag-shopping"></i>
-                                <span>Ajouter au panier</span>
-                            </button>
-                            <button type="button" onclick="this.querySelector('i').classList.toggle('fa-solid'); this.querySelector('i').classList.toggle('fa-regular'); this.querySelector('i').classList.toggle('text-red-500'); this.classList.add('scale-125'); setTimeout(()=>this.classList.remove('scale-125'),200);" class="w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 hover:border-red-100 transition duration-300">
-                                <i class="fa-regular fa-heart text-xl"></i>
-                            </button>
+                            <div class="flex items-center gap-4 flex-grow">
+                                <button type="submit" class="flex-grow h-14 gradient-brown text-white font-bold rounded-full shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition duration-300 transform active:scale-95 flex items-center justify-center space-x-3">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                    <span>Ajouter au panier</span>
+                                </button>
+                                <button type="button" onclick="this.querySelector('i').classList.toggle('fa-solid'); this.querySelector('i').classList.toggle('fa-regular'); this.querySelector('i').classList.toggle('text-red-500'); this.classList.add('scale-125'); setTimeout(()=>this.classList.remove('scale-125'),200);" class="w-14 h-14 rounded-full border border-gray-200 flex-shrink-0 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 hover:border-red-100 transition duration-300">
+                                    <i class="fa-regular fa-heart text-xl"></i>
+                                </button>
+                            </div>
                         </form>
 
                         <div class="grid grid-cols-2 gap-4 py-8 border-t border-b border-gray-100">
