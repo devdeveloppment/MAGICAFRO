@@ -1,48 +1,145 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Blog | MagicAfro{% endblock %}
+{% block title %}Le Journal MagicAfro | Conseils & Rituels Beauté{% endblock %}
 
 {% block content %}
-<div class="bg-gray-50 py-20 lg:py-32">
-    <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto text-center mb-16">
-            <h1 class="text-5xl lg:text-7xl font-black text-primary leading-tight mb-8">
-                Le <span class="text-orange-600">Journal</span> MagicAfro
+<!-- Blog Hero / Featured Post -->
+<div class="bg-primary text-white py-20 lg:py-32 overflow-hidden relative">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595475824519-75894f275e53?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-20"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl">
+            <div class="inline-flex items-center px-4 py-2 bg-accent/20 backdrop-blur-md rounded-full border border-white/10 mb-8">
+                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-accent">À LA UNE</span>
+            </div>
+            <h1 class="text-5xl lg:text-7xl font-black leading-[1.1] mb-8">
+                Les secrets d'un <br> <span class="text-accent italic">rituel nocturne</span> <br> régénérant.
             </h1>
-            <p class="text-gray-500 text-lg lg:text-xl font-medium leading-relaxed">
-                Conseils experts, rituels de soin et actualités de la beauté afro.
+            <p class="text-xl text-gray-300 mb-12 max-w-2xl leading-relaxed">
+                Découvrez comment optimiser le renouvellement cellulaire de vos cheveux et de votre peau pendant votre sommeil avec nos huiles précieuses.
             </p>
+            <div class="flex items-center space-x-6">
+                <a href="#" class="px-10 py-5 bg-white text-primary font-black rounded-full hover:bg-accent hover:text-white transition shadow-xl">Lire l'article</a>
+                <div class="hidden sm:flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center">
+                        <i class="fa-solid fa-play text-xs text-accent"></i>
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-widest">Voir la vidéo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-gray-50 py-24">
+    <div class="container mx-auto px-4">
+        <!-- Filter Bar -->
+        <div class="flex flex-col lg:flex-row justify-between items-center mb-16 gap-8">
+            <div class="flex items-center space-x-4 overflow-x-auto no-scrollbar pb-4 lg:pb-0 w-full lg:w-auto">
+                <a href="#" class="px-6 py-2 bg-primary text-white rounded-full text-xs font-black uppercase tracking-widest">Tout</a>
+                <a href="#" class="px-6 py-2 bg-white text-gray-400 border border-gray-100 rounded-full text-xs font-black uppercase tracking-widest hover:border-accent hover:text-accent transition">Cheveux</a>
+                <a href="#" class="px-6 py-2 bg-white text-gray-400 border border-gray-100 rounded-full text-xs font-black uppercase tracking-widest hover:border-accent hover:text-accent transition">Peau</a>
+                <a href="#" class="px-6 py-2 bg-white text-gray-400 border border-gray-100 rounded-full text-xs font-black uppercase tracking-widest hover:border-accent hover:text-accent transition">Rituels</a>
+            </div>
+            <div class="relative w-full lg:w-80">
+                <input type="text" placeholder="Rechercher un article..." class="w-full bg-white border border-gray-100 rounded-full px-6 py-3 pl-12 text-sm focus:ring-2 focus:ring-accent/20 outline-none transition">
+                <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 text-xs"></i>
+            </div>
         </div>
 
+        <!-- Blog Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            <!-- Mockup Post 1 -->
-            <div class="bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-xl transition group border border-gray-100">
-                <div class="aspect-video overflow-hidden">
-                    <img src="{% static 'img/shampooing_solide_hibiscus_1773185717660.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            <!-- Post 1 -->
+            <div class="bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="{% static 'img/woman_braiding_hair_1773231371852.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest text-primary">
+                        Tendance 2026
+                    </div>
                 </div>
-                <div class="p-8">
-                    <span class="text-[10px] font-black text-orange-600 uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full mb-4 inline-block">Cheveux</span>
-                    <h3 class="text-xl font-bold text-primary mb-4 group-hover:text-accent transition">Comment hydrater ses boucles au quotidien ?</h3>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">Découvrez les gestes essentiels pour garder des cheveux souples et brillants toute l'année...</p>
-                    <a href="#" class="text-primary font-black uppercase text-[10px] tracking-widest flex items-center group-hover:translate-x-2 transition">
-                        Lire la suite <i class="fa-solid fa-arrow-right ml-2 text-[8px]"></i>
+                <div class="p-10">
+                    <div class="flex items-center space-x-4 mb-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        <span>15 Avril 2026</span>
+                        <span class="w-1 h-1 bg-accent rounded-full"></span>
+                        <span class="text-accent">Routine</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-primary mb-6 group-hover:text-accent transition leading-tight">
+                        5 coiffures protectrices pour faire pousser vos cheveux.
+                    </h3>
+                    <p class="text-gray-500 mb-8 line-clamp-2 leading-relaxed">
+                        Apprenez comment protéger vos pointes et accélérer la pousse naturelle grâce à nos techniques exclusives...
+                    </p>
+                    <a href="#" class="inline-flex items-center text-primary font-black text-[11px] uppercase tracking-[0.2em] group-hover:translate-x-2 transition">
+                        Découvrir <i class="fa-solid fa-arrow-right ml-3 text-[10px]"></i>
                     </a>
                 </div>
             </div>
-            <!-- Mockup Post 2 -->
-            <div class="bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-xl transition group border border-gray-100">
-                <div class="aspect-video overflow-hidden">
-                    <img src="{% static 'img/beurre_karite_brut_1773185667118.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+
+            <!-- Post 2 -->
+            <div class="bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="{% static 'img/huile_avocat_pure_1773185688071.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                 </div>
-                <div class="p-8">
-                    <span class="text-[10px] font-black text-orange-600 uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full mb-4 inline-block">Rituel</span>
-                    <h3 class="text-xl font-bold text-primary mb-4 group-hover:text-accent transition">Le bain d'huile : l'allié des peaux mates</h3>
-                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">Pourquoi intégrer l'huile d'avocat dans votre routine corps pour un éclat naturel...</p>
-                    <a href="#" class="text-primary font-black uppercase text-[10px] tracking-widest flex items-center group-hover:translate-x-2 transition">
-                        Lire la suite <i class="fa-solid fa-arrow-right ml-2 text-[8px]"></i>
+                <div class="p-10">
+                    <div class="flex items-center space-x-4 mb-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        <span>12 Avril 2026</span>
+                        <span class="w-1 h-1 bg-accent rounded-full"></span>
+                        <span class="text-accent">Ingrédients</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-primary mb-6 group-hover:text-accent transition leading-tight">
+                        Pourquoi l'huile d'avocat est votre meilleure alliée ?
+                    </h3>
+                    <p class="text-gray-500 mb-8 line-clamp-2 leading-relaxed">
+                        Riche en vitamines A, D et E, découvrez comment cet or vert transforme l'élasticité de votre peau...
+                    </p>
+                    <a href="#" class="inline-flex items-center text-primary font-black text-[11px] uppercase tracking-[0.2em] group-hover:translate-x-2 transition">
+                        Découvrir <i class="fa-solid fa-arrow-right ml-3 text-[10px]"></i>
                     </a>
                 </div>
+            </div>
+
+            <!-- Post 3 -->
+            <div class="bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100">
+                <div class="relative h-72 overflow-hidden">
+                    <img src="{% static 'img/applying_hair_product_1773231491698.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                </div>
+                <div class="p-10">
+                    <div class="flex items-center space-x-4 mb-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                        <span>08 Avril 2026</span>
+                        <span class="w-1 h-1 bg-accent rounded-full"></span>
+                        <span class="text-accent">Conseils</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-primary mb-6 group-hover:text-accent transition leading-tight">
+                        Comment diagnostiquer votre porosité capillaire.
+                    </h3>
+                    <p class="text-gray-500 mb-8 line-clamp-2 leading-relaxed">
+                        Le test du verre d'eau et autres astuces pour enfin comprendre ce dont vos boucles ont réellement besoin...
+                    </p>
+                    <a href="#" class="inline-flex items-center text-primary font-black text-[11px] uppercase tracking-[0.2em] group-hover:translate-x-2 transition">
+                        Découvrir <i class="fa-solid fa-arrow-right ml-3 text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Load More -->
+        <div class="mt-20 text-center">
+            <button class="px-12 py-5 border-2 border-primary text-primary font-black rounded-full hover:bg-primary hover:text-white transition uppercase text-xs tracking-widest">Charger plus d'articles</button>
+        </div>
+    </div>
+</div>
+
+<!-- Newsletter -->
+<div class="bg-cream py-24">
+    <div class="container mx-auto px-4">
+        <div class="bg-primary rounded-[60px] p-12 lg:p-24 text-center text-white relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <h2 class="text-4xl lg:text-5xl font-black mb-8">Ne manquez aucun <span class="text-accent italic">conseil</span> magique.</h2>
+                <p class="text-gray-300 mb-12 text-lg">Inscrivez-vous à notre newsletter pour recevoir nos rituels bien-être et nos offres exclusives directement dans votre boîte mail.</p>
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="votre@email.com" class="flex-grow bg-white/10 border border-white/20 rounded-full px-8 py-5 text-white placeholder-gray-400 focus:bg-white/20 outline-none transition">
+                    <button type="submit" class="px-12 py-5 bg-accent text-white font-black rounded-full shadow-xl shadow-accent/20 hover:scale-105 transition active:scale-95">S'abonner</button>
+                </form>
             </div>
         </div>
     </div>
