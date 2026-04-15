@@ -33,10 +33,8 @@ class Cart:
 
     def __iter__(self):
         product_ids = self.cart.keys()
-        # Prefetch images and category for performance
-        products = Product.objects.filter(id__in=product_ids).select_related('category').prefetch_related(
-            Prefetch('images', queryset=ProductImage.objects.filter(is_feature=True), to_attr='feature_images')
-        )
+        # Simpler iteration for safety
+        products = Product.objects.filter(id__in=product_ids).select_related('category')
         cart = self.cart.copy()
         
         for product in products:

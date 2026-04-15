@@ -1,17 +1,16 @@
 from django import template
-import locale
 
 register = template.Library()
 
 @register.filter
 def currency_xof(value):
+    if value is None or value == "":
+        return "0 FCFA"
     try:
-        # Format with thousand separator and FCFA suffix
-        if value is None:
-            return "0 FCFA"
-        
-        # Simple formatting for FCFA
-        formatted_value = "{:,.0f}".format(float(value)).replace(",", " ")
-        return f"{formatted_value} FCFA"
-    except (ValueError, TypeError):
+        # Just convert to int/float and add FCFA
+        num = float(value)
+        # Format with spaces as thousand separator manually to avoid locale issues
+        formatted = "{:,.0f}".format(num).replace(",", " ")
+        return f"{formatted} FCFA"
+    except:
         return f"{value} FCFA"
