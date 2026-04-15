@@ -11,7 +11,7 @@
     <div class="relative h-[400px] lg:h-[500px] flex items-center overflow-hidden bg-primary">
         {% if category %}
             <div class="absolute inset-0 bg-black/40 z-10"></div>
-            <img src="https://images.unsplash.com/photo-1595475824519-75894f275e53?auto=format&fit=crop&q=80" class="absolute inset-0 w-full h-full object-cover">
+            <img src="{% if category.image %}{{ category.image.url }}{% else %}https://images.unsplash.com/photo-1595475824519-75894f275e53?auto=format&fit=crop&q=80{% endif %}" class="absolute inset-0 w-full h-full object-cover">
         {% else %}
             <div class="absolute inset-0 bg-[#FFF4E8] z-0"></div>
             <div class="absolute -top-24 -right-24 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl"></div>
