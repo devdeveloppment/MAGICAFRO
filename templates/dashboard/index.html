@@ -1,5 +1,4 @@
 {% extends 'dashboard/base_dashboard.html' %}
-{% load currency_tags %}
 
 {% block dashboard_content %}
 <div class="mb-8">
@@ -37,7 +36,7 @@
             </div>
             <span class="text-[10px] font-bold text-success bg-success/10 px-2 py-1 rounded-full">+12%</span>
         </div>
-        <div class="text-2xl font-black text-dark tracking-tight">{{ total_sales|currency_xof }}</div>
+        <div class="text-2xl font-black text-dark tracking-tight">{{ total_sales|floatformat:0 }} FCFA</div>
         <div class="text-xs text-gray-400 font-bold uppercase tracking-wider">Ventes Totales</div>
     </div>
 
@@ -111,7 +110,7 @@
                                 {{ order.get_status_display }}
                             </span>
                         </td>
-                        <td class="px-8 py-5 text-right text-sm font-black text-primary">{{ order.total|currency_xof }}</td>
+                        <td class="px-8 py-5 text-right text-sm font-black text-primary">{{ order.total|floatformat:0 }} FCFA</td>
                     </tr>
                     {% empty %}
                     <tr>
