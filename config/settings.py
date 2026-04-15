@@ -33,7 +33,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-dummy-key-for-build')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', default=False)
+DEBUG = env('DEBUG', default=True)
 
 # CinetPay Settings
 CINETPAY_API_KEY = env('CINETPAY_API_KEY', default='')
