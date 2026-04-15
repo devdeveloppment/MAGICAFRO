@@ -72,7 +72,7 @@
             {% if products %}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 lg:gap-16">
                 {% for product in products %}
-                <div class="group" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|mul:50 }}">
+                <div class="group" data-aos="fade-up">
                     <div class="bg-white rounded-[50px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100">
                         <div class="relative h-96 overflow-hidden bg-gray-50 flex items-center justify-center p-12">
                             <img src="{{ product.get_primary_image }}" alt="{{ product.name }}" class="w-full h-full object-contain transition duration-700 group-hover:scale-110">
