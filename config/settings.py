@@ -188,18 +188,10 @@ CACHES = {
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'fr'
-
-TIME_ZONE = 'Africa/Abidjan'
-
+LANGUAGE_CODE = 'fr-fr'
+TIME_ZONE = 'Europe/Paris'
 USE_I18N = True
-
 USE_TZ = True
-
-# Formating
-USE_THOUSAND_SEPARATOR = True
-THOUSAND_SEPARATOR = ' '
-NUMBER_GROUPING = 3
 
 
 # Static files (CSS, JavaScript, Images)
