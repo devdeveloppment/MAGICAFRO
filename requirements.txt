@@ -1,4 +1,4 @@
-﻿amqp==5.3.1
+amqp==5.3.1
 asgiref==3.11.0
 attrs==25.4.0
 billiard==4.2.4
@@ -52,7 +52,7 @@ pandas==3.0.1
 phonenumbers==8.13.55
 Pillow==11.1.0
 prompt_toolkit==3.0.52
-psycopg-binary==3.3.2
+psycopg2-binary==2.9.10
 pycryptodome==3.23.0
 PyJWT==2.11.0
 pypng==0.20220715.0
