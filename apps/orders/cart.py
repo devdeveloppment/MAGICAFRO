@@ -32,16 +32,20 @@ class Cart:
 
     def __iter__(self):
         product_ids = self.cart.keys()
-        products = Product.objects.filter(id__in=product_ids)
+        # Prefetch images and category for performance
+        products = Product.objects.filter(id__in=product_ids).select_related('category').prefetch_related(
+            Prefetch('images', queryset=ProductImage.objects.filter(is_feature=True), to_attr='feature_images')
+        )
         cart = self.cart.copy()
         
         for product in products:
             cart[str(product.id)]['product'] = product
 
         for item in cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
-            yield item
+            if 'product' in item: # Ensure product exists in cart
+                item['price'] = Decimal(item['price'])
+                item['total_price'] = item['price'] * item['quantity']
+                yield item
 
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())

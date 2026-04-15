@@ -36,14 +36,14 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    old_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=12, decimal_places=2) # Increased max_digits for large FCFA values
+    old_price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     stock = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     badge = models.CharField(max_length=10, choices=BADGE_CHOICES, null=True, blank=True)
     rating_avg = models.FloatField(default=0.0)
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
@@ -60,19 +60,20 @@ class Product(models.Model):
 
     @property
     def get_primary_image(self):
-        # Image principale ou première image liée
-        img = self.images.filter(is_feature=True).first() or self.images.first()
+        # PERFORMANCE OPTIMIZATION: Check for prefetched feature_images first
+        if hasattr(self, 'feature_images') and self.feature_images:
+            img = self.feature_images[0]
+        else:
+            # Fallback if not prefetched
+            img = self.images.filter(is_feature=True).first() or self.images.first()
         
         if img and img.image:
             try:
-                # Si nous sommes sur Cloudinary, l'URL contiendra "res.cloudinary.com"
-                url = img.image.url
-                return url
+                return img.image.url
             except Exception:
                 pass
             
-        # Si aucune image n'est trouvée, on utilise une image thématique magnifique
-        # Nous utilisons self.id pour que chaque produit ait sa propre image de secours stable
+        # Image stable par ID pour éviter les changements brusques
         return f"https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80&sig={self.id}"
 
     @property

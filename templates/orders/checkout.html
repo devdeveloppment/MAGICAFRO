@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load currency_tags %}
 
 {% block title %}Finaliser ma commande | MagicAfro{% endblock %}
 
@@ -107,7 +108,7 @@
                                 <h4 class="text-xs font-bold line-clamp-1">{{ item.product.name }}</h4>
                                 <p class="text-gray-400 text-xs">x {{ item.quantity }}</p>
                             </div>
-                            <span class="text-sm font-bold">{{ item.total_price }} FCFA</span>
+                            <span class="text-sm font-bold">{{ item.total_price|currency_xof }}</span>
                         </div>
                         {% endfor %}
                     </div>
@@ -115,7 +116,7 @@
                     <div class="space-y-4 mb-10 pt-6 border-t border-white/10">
                         <div class="flex justify-between text-gray-400 text-sm">
                             <span>Sous-total</span>
-                            <span>{{ cart.get_total_price }} FCFA</span>
+                            <span>{{ cart.get_total_price|currency_xof }}</span>
                         </div>
                         <div class="flex justify-between text-gray-400 text-sm">
                             <span>Livraison</span>
@@ -123,7 +124,7 @@
                         </div>
                         <div class="flex justify-between items-baseline pt-4">
                             <span class="font-bold text-lg">TOTAL</span>
-                            <span class="text-3xl font-extrabold">{{ cart.get_total_price }} FCFA</span>
+                            <span class="text-3xl font-extrabold">{{ cart.get_total_price|currency_xof }}</span>
                         </div>
                     </div>
 

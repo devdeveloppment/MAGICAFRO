@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load currency_tags %}
 
 {% block title %}Mon Profil | MagicAfro{% endblock %}
 
@@ -75,7 +76,7 @@
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <p class="font-black text-primary text-sm">{{ order.total }} FCFA</p>
+                                        <p class="font-black text-primary text-sm">{{ order.total|currency_xof }}</p>
                                         <span class="text-[10px] font-bold uppercase {% if order.payment_status %}text-success{% else %}text-warning{% endif %}">
                                             {% if order.payment_status %}Payée{% else %}En attente{% endif %}
                                         </span>
@@ -112,7 +113,7 @@
                                         </div>
                                         <div>
                                             <p class="text-[10px] font-bold text-gray-400 uppercase">Total</p>
-                                            <p class="font-black text-primary text-sm">{{ order.total }} FCFA</p>
+                                            <p class="font-black text-primary text-sm">{{ order.total|currency_xof }}</p>
                                         </div>
                                     </div>
                                     <span class="px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase {% if order.status == 'DELIVERED' %}bg-success/10 text-success{% else %}bg-primary/10 text-primary{% endif %}">
@@ -129,7 +130,7 @@
                                             <p class="font-bold text-sm">{{ item.product.name }}</p>
                                             <p class="text-xs text-gray-400">Quantité: {{ item.quantity }}</p>
                                         </div>
-                                        <p class="font-bold text-sm">{{ item.unit_price }} FCFA</p>
+                                        <p class="font-bold text-sm">{{ item.unit_price|currency_xof }}</p>
                                     </div>
                                     {% endfor %}
                                 </div>

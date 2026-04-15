@@ -1,4 +1,5 @@
 {% extends 'dashboard/base_dashboard.html' %}
+{% load currency_tags %}
 
 {% block dashboard_content %}
 <div class="flex items-center justify-between mb-8">
@@ -51,7 +52,7 @@
                     <td class="px-6 py-4 text-left">
                         <span class="text-xs font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">{{ prod.category.name }}</span>
                     </td>
-                    <td class="px-6 py-4 text-left text-sm font-black text-primary">{{ prod.price }} FCFA</td>
+                    <td class="px-6 py-4 text-left text-sm font-black text-primary">{{ prod.price|currency_xof }}</td>
                     <td class="px-8 py-5 text-center">
                         <div class="inline-block px-3 py-1 rounded-full text-[10px] font-bold 
                             {% if prod.stock <= 5 %}bg-red-50 text-danger{% elif prod.stock <= 20 %}bg-orange-50 text-warning{% else %}bg-green-50 text-success{% endif %}">

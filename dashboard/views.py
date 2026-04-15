@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from orders.models import Order
 from products.models import Product, Category
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Prefetch, Q
 from django.utils import timezone
 from datetime import timedelta
 from .forms import ProductForm
@@ -64,8 +64,10 @@ def dashboard_home(request):
     # Recent orders
     recent_orders = Order.objects.all().order_by('-created_at')[:10]
     
-    # Low stock products
-    low_stock_products = Product.objects.filter(stock__lte=5).order_by('stock')[:5]
+    # Low stock products - Optimize with select_related
+    low_stock_products = Product.objects.filter(stock__lte=5).select_related('category').prefetch_related(
+        Prefetch('images', queryset=ProductImage.objects.filter(is_feature=True), to_attr='feature_images')
+    ).order_by('stock')[:5]
     
     # Sales Data for Chart (last 7 days)
     today = timezone.now().date()
@@ -115,7 +117,10 @@ def order_list(request):
 
 @login_required(login_url='dashboard:login')
 def product_list(request):
-    products = Product.objects.all().order_by('-created_at')
+    # Optimize with select_related and prefetch_related
+    products = Product.objects.all().select_related('category').prefetch_related(
+        Prefetch('images', queryset=ProductImage.objects.filter(is_feature=True), to_attr='feature_images')
+    ).order_by('-created_at')
     context = {
         'products': products,
         'segment': 'products'

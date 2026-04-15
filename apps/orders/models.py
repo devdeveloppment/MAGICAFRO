@@ -26,10 +26,10 @@ class Order(models.Model):
     city = models.CharField(max_length=100, default='')
     total = models.DecimalField(max_digits=12, decimal_places=2, default=0.0)
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='CINETPAY')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
-    payment_status = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING', db_index=True)
+    payment_status = models.BooleanField(default=False, db_index=True)
     transaction_id = models.CharField(max_length=100, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
