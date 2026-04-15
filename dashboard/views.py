@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from orders.models import Order
-from products.models import Product, Category
+from products.models import Product, Category, ProductImage
 from django.db.models import Sum, Count, Prefetch, Q
 from django.utils import timezone
 from datetime import timedelta

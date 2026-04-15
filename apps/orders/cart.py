@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
-from products.models import Product
+from django.db.models import Prefetch
+from products.models import Product, ProductImage
 
 class Cart:
     def __init__(self, request):
