@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load currency_tags %}
 
 {% block title %}Mon Panier | MagicAfro{% endblock %}
 
@@ -37,7 +36,7 @@
                                             </div>
                                             <div>
                                                 <h4 class="font-extrabold text-primary text-lg mb-1">{{ item.product.name }}</h4>
-                                                <p class="text-accent font-bold">{{ item.price|currency_xof }}</p>
+                                                <p class="text-accent font-bold">{{ item.price }} FCFA</p>
                                                 <p class="text-gray-400 text-xs mt-1 uppercase tracking-tighter">{{ item.product.category.name }}</p>
                                             </div>
                                         </div>
@@ -48,7 +47,7 @@
                                         </div>
                                     </td>
                                     <td class="px-8 py-8 text-right">
-                                        <span class="font-extrabold text-primary text-xl">{{ item.total_price|currency_xof }}</span>
+                                        <span class="font-extrabold text-primary text-xl">{{ item.total_price }} FCFA</span>
                                     </td>
                                     <td class="px-8 py-8 text-right">
                                         <a href="{% url 'orders:cart_remove' item.product.id %}" class="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 hover:border-red-100 transition duration-300 ml-auto">
@@ -80,7 +79,7 @@
                     <div class="space-y-6 mb-8">
                         <div class="flex justify-between items-center text-gray-300">
                             <span class="text-sm uppercase tracking-widest font-medium">Sous-total</span>
-                            <span class="font-bold text-white">{{ cart.get_total_price|currency_xof }}</span>
+                            <span class="font-bold text-white">{{ cart.get_total_price }} FCFA</span>
                         </div>
                         <div class="flex justify-between items-center text-gray-300">
                             <span class="text-sm uppercase tracking-widest font-medium">Livraison</span>
@@ -88,7 +87,7 @@
                         </div>
                         <div class="pt-6 border-t border-white/10 flex justify-between items-baseline">
                             <span class="text-lg font-bold">TOTAL</span>
-                            <span class="text-4xl font-extrabold">{{ cart.get_total_price|currency_xof }}</span>
+                            <span class="text-4xl font-extrabold">{{ cart.get_total_price }} FCFA</span>
                         </div>
                     </div>
 

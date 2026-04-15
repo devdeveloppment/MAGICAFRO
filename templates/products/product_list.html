@@ -119,9 +119,9 @@
                         <div class="flex items-center justify-between mt-auto">
                             <div class="flex flex-col">
                                 {% if prod.old_price %}
-                                    <span class="text-gray-400 text-sm line-through">{{ prod.old_price|currency_xof }}</span>
+                                    <span class="text-gray-400 text-sm line-through">{{ prod.old_price }} FCFA</span>
                                 {% endif %}
-                                <span class="text-xl font-extrabold text-primary">{{ prod.price|currency_xof }}</span>
+                                <span class="text-xl font-extrabold text-primary">{{ prod.price }} FCFA</span>
                             </div>
                             <button class="text-gray-300 hover:text-red-500 transition hover:scale-125"><i class="fa-regular fa-heart text-xl"></i></button>
                         </div>

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load currency_tags %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -121,7 +120,7 @@
                     <p class="text-[10px] text-accent font-bold uppercase tracking-widest mb-2">{{ product.category.name }}</p>
                     <h3 class="text-xl font-bold text-primary mb-4 group-hover:text-accent transition">{{ product.name }}</h3>
                     <div class="flex items-center justify-between">
-                        <span class="text-2xl font-black text-primary">{{ product.price|currency_xof }}</span>
+                        <span class="text-2xl font-black text-primary">{{ product.price|floatformat:0 }} FCFA</span>
                         <a href="{% url 'products:product_detail' product.slug %}" class="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-primary hover:bg-primary hover:text-white transition">
                             <i class="fa-solid fa-plus"></i>
                         </a>

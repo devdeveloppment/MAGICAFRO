@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load currency_tags %}
 
 {% block title %}{{ product.name }} | MagicAfro{% endblock %}
 
@@ -64,13 +63,13 @@
 
                     <div class="mb-8">
                         <div class="flex items-baseline space-x-4">
-                            <span class="text-4xl font-extrabold text-primary">{{ product.price|currency_xof }}</span>
+                            <span class="text-4xl font-extrabold text-primary">{{ product.price }} FCFA</span>
                             {% if product.old_price %}
-                            <span class="text-xl text-gray-400 line-through font-medium">{{ product.old_price|currency_xof }}</span>
+                            <span class="text-xl text-gray-400 line-through font-medium">{{ product.old_price }} FCFA</span>
                             <span class="text-green-500 font-bold bg-green-50 px-3 py-1 rounded-full text-xs">-{{ product.discount_percent }}%</span>
                             {% endif %}
                         </div>
-                        <p class="text-gray-400 text-xs mt-2 uppercase font-bold tracking-tighter">TVA incluse | Livraison gratuite dès {{ 30000|currency_xof }}</p>
+                        <p class="text-gray-400 text-xs mt-2 uppercase font-bold tracking-tighter">TVA incluse | Livraison gratuite dès 30 000 FCFA</p>
                     </div>
 
                     <p class="text-gray-600 leading-relaxed mb-10 text-lg">
