@@ -4,7 +4,7 @@ from .models import Order
 class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['full_name', 'email', 'phone', 'street_address', 'postal_code', 'city', 'payment_method']
+        fields = ['full_name', 'email', 'phone', 'street_address', 'postal_code', 'city']
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'w-full h-14 bg-gray-50 border-none rounded-2xl px-6 focus:ring-2 focus:ring-accent/20 transition', 'placeholder': 'Nom complet'}),
             'email': forms.EmailInput(attrs={'class': 'w-full h-14 bg-gray-50 border-none rounded-2xl px-6 focus:ring-2 focus:ring-accent/20 transition', 'placeholder': 'Email'}),

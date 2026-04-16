@@ -54,14 +54,8 @@ def checkout(request):
                 )
             cart.clear()
             
-            # If CinetPay, redirect to payment initiation
-            if order.payment_method == 'CINETPAY':
-                return redirect('payments:initiate_cinetpay', order_id=order.id)
-            elif order.payment_method == 'STRIPE':
-                return redirect('payments:stripe_payment', order_id=order.id)
-                
-            # Otherwise show success page
-            return render(request, 'orders/created.html', {'order': order})
+            # Redirect to WhatsApp for order confirmation
+            return redirect(order.get_whatsapp_url())
     else:
         # Pre-fill with user info if logged in
         initial_data = {}

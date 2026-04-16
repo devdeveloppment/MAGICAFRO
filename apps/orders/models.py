@@ -13,19 +13,18 @@ class Order(models.Model):
     ]
 
     PAYMENT_METHOD_CHOICES = [
-        ('CINETPAY', 'CinetPay (Mobile Money)'),
-        ('STRIPE', 'Carte Bancaire (Stripe)'),
+        ('WHATSAPP', 'Commander via WhatsApp'),
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders', null=True, blank=True)
     full_name = models.CharField(max_length=150, default='')
-    email = models.EmailField(default='')
+    email = models.EmailField(default='', blank=True)
     phone = models.CharField(max_length=20, default='')
     street_address = models.CharField(max_length=250, default='')
-    postal_code = models.CharField(max_length=20, default='')
-    city = models.CharField(max_length=100, default='')
+    postal_code = models.CharField(max_length=20, default='', blank=True)
+    city = models.CharField(max_length=100, default='Lomé')
     total = models.DecimalField(max_digits=12, decimal_places=2, default=0.0)
-    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='CINETPAY')
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, default='WHATSAPP')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING', db_index=True)
     payment_status = models.BooleanField(default=False, db_index=True)
     transaction_id = models.CharField(max_length=100, blank=True)
@@ -33,7 +32,25 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Commande #{self.id} - {self.email or (self.user.email if self.user else 'Inconnu')}"
+        return f"Commande #{self.id} - {self.email or 'Invite'}"
+
+    def get_whatsapp_url(self):
+        owner_phone = "22891025232"
+        message = f"🌟 *Nouvelle Commande MagicAfro #{self.id}*\n\n"
+        message += f"👤 *Client:* {self.full_name}\n"
+        message += f"📞 *Tel:* {self.phone}\n"
+        message += f"📍 *Adresse:* {self.street_address}, {self.city}\n\n"
+        message += "🛒 *Produits:*\n"
+        
+        for item in self.items.all():
+            message += f"- {item.product.name} (x{item.quantity}) : {int(item.total_price)} FCFA\n"
+            
+        message += f"\n💰 *TOTAL:* {int(self.total)} FCFA\n\n"
+        message += "Merci de confirmer ma commande ! ✨"
+        
+        import urllib.parse
+        encoded_message = urllib.parse.quote(message)
+        return f"https://wa.me/{owner_phone}?text={encoded_message}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
