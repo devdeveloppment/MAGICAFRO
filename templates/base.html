@@ -135,24 +135,13 @@
 
                 <div class="flex flex-col items-center group cursor-pointer">
                     {% if user.is_authenticated %}
-                        <div class="flex flex-col items-center">
-                            <a href="{% url 'accounts:profile' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
-                            {% if user.is_staff %}
-                                <a href="{% url 'dashboard:home' %}" class="text-[8px] text-accent font-bold hover:underline">DASHBOARD</a>
-                            {% endif %}
-                        </div>
+                        <a href="{% url 'accounts:profile' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Profil</span>
                     {% else %}
-                        <a href="/admin/" class="text-xl hover:text-accent transition"><i class="fa-solid fa-user"></i></a>
+                        <a href="{% url 'accounts:login' %}" class="text-xl hover:text-accent transition"><i class="fa-solid fa-circle-user"></i></a>
+                        <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Connexion</span>
                     {% endif %}
-                    <span class="text-[9px] font-bold uppercase tracking-tighter mt-1 text-gray-400 group-hover:text-accent">Compte</span>
                 </div>
-                
-                {% if not user.is_authenticated %}
-                <a href="{% url 'dashboard:login' %}" class="hidden md:flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-accent transition shadow-lg">
-                    <i class="fa-solid fa-lock"></i>
-                    <span>ADMIN</span>
-                </a>
-                {% endif %}
 
                 <div class="flex flex-col items-center group cursor-pointer">
                     <a href="{% url 'products:product_list' %}" class="text-xl hover:text-accent transition relative">
