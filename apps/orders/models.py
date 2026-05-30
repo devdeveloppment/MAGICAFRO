@@ -64,3 +64,24 @@ class OrderItem(models.Model):
     @property
     def total_price(self):
         return self.quantity * self.unit_price
+
+class Subscription(models.Model):
+    FREQUENCY_CHOICES = [
+        ('1_MONTH', 'Chaque mois'),
+        ('2_MONTHS', 'Tous les 2 mois'),
+        ('3_MONTHS', 'Tous les 3 mois'),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='subscriptions')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Produit abonné")
+    frequency = models.CharField(max_length=20, choices=FREQUENCY_CHOICES, default='1_MONTH', verbose_name="Fréquence de livraison")
+    is_active = models.BooleanField(default=True, verbose_name="Actif")
+    next_delivery_date = models.DateField(verbose_name="Prochaine livraison")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Abonnement"
+        verbose_name_plural = "Abonnements"
+
+    def __str__(self):
+        return f"Abonnement {self.user.email} - {self.product.name} ({self.get_frequency_display()})"

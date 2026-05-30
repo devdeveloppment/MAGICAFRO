@@ -103,6 +103,42 @@
 
                     <!-- Selection & Add to Cart -->
                     <div class="mt-auto space-y-6">
+                        
+                        <!-- Premium Feature: Subscribe & Save -->
+                        <div class="bg-white border-2 border-primary/20 rounded-2xl p-4 shadow-sm mb-6">
+                            <label class="flex items-start cursor-pointer group">
+                                <div class="flex items-center h-5">
+                                    <input type="radio" name="purchase_type" value="one-time" class="w-4 h-4 text-primary border-gray-300 focus:ring-primary" checked>
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <span class="font-bold text-dark block group-hover:text-primary transition">Achat Unique</span>
+                                    <span class="text-gray-500">{{ product.price }} FCFA</span>
+                                </div>
+                            </label>
+                            
+                            <hr class="my-3 border-gray-100">
+                            
+                            <label class="flex items-start cursor-pointer group relative">
+                                <div class="absolute -right-2 -top-6 bg-gradient-to-r from-red-500 to-orange-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-lg animate-pulse">
+                                    Économisez 15%
+                                </div>
+                                <div class="flex items-center h-5">
+                                    <input type="radio" name="purchase_type" value="subscribe" class="w-4 h-4 text-primary border-gray-300 focus:ring-primary">
+                                </div>
+                                <div class="ml-3 text-sm flex-1">
+                                    <span class="font-bold text-primary block">S'abonner (Livraison Mensuelle)</span>
+                                    <div class="flex justify-between items-center mt-1">
+                                        <span class="text-red-500 font-black line-through text-xs">{{ product.price }} FCFA</span>
+                                        <span class="text-emerald-500 font-black text-lg">
+                                            <!-- Simple JS simulation for demo -->
+                                            <span class="price-discounted">...</span> FCFA / mois
+                                        </span>
+                                    </div>
+                                    <p class="text-[10px] text-gray-400 mt-2"><i class="fa-solid fa-sync mr-1"></i> Sans engagement. Annulez à tout moment.</p>
+                                </div>
+                            </label>
+                        </div>
+
                         <form id="add-to-cart-form" action="{% url 'orders:cart_add' product.id %}" method="post" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
                             {% csrf_token %}
                             <div class="flex items-center justify-between bg-gray-100 rounded-full px-6 py-2 h-14 sm:w-32">
@@ -163,5 +199,20 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Calculate discounted price for subscription
+    document.addEventListener('DOMContentLoaded', () => {
+        const basePrice = parseInt("{{ product.price }}".replace(/\s/g, ''), 10);
+        if(!isNaN(basePrice)) {
+            const subPrice = Math.floor(basePrice * 0.85);
+            document.querySelectorAll('.price-discounted').forEach(el => {
+                el.textContent = subPrice.toLocaleString('fr-FR');
+            });
+        }
+    });
+</script>
 {% endblock %}
 

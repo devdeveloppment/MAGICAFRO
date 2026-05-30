@@ -152,3 +152,15 @@ class RoutineItem(models.Model):
 
     def __str__(self):
         return f"Étape {self.step_number} : {self.product.name} ({self.routine.name})"
+
+class ReviewMedia(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='media')
+    file = models.FileField(upload_to='reviews/media/', verbose_name="Image ou Vidéo")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Média d'Avis"
+        verbose_name_plural = "Médias d'Avis"
+
+    def __str__(self):
+        return f"Média pour avis #{self.review.id}"

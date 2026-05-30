@@ -75,3 +75,24 @@ class BeautyProfile(models.Model):
 
     def __str__(self):
         return f"Profil Beauté de {self.user.email}"
+
+class LoyaltyAccount(models.Model):
+    TIER_CHOICES = [
+        ('BRONZE', 'Bronze'),
+        ('SILVER', 'Argent'),
+        ('GOLD', 'Or'),
+        ('DIAMOND', 'Diamant'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='loyalty_account')
+    points = models.PositiveIntegerField(default=0, verbose_name="Points de fidélité")
+    tier = models.CharField(max_length=50, choices=TIER_CHOICES, default='BRONZE', verbose_name="Statut VIP")
+    total_spent = models.DecimalField(max_digits=12, decimal_places=2, default=0.0, verbose_name="Total dépensé")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Compte Fidélité"
+        verbose_name_plural = "Comptes Fidélité"
+
+    def __str__(self):
+        return f"Fidélité - {self.user.email} ({self.points} pts - {self.get_tier_display()})"
