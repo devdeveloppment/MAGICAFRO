@@ -1,0 +1,337 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% load static %}
+{% load currency_tags %}
+
+{% block extra_css %}
+<style>
+    .status-badge { transition: all .2s; }
+    .action-btn { transition: transform .15s, box-shadow .15s; }
+    .action-btn:hover { transform: translateY(-2px); }
+    .action-btn:active { transform: translateY(0); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .fade-in { animation: fadeIn .35s ease both; }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+
+{# ── En-tête ── #}
+<div class="flex items-center justify-between mb-8 fade-in">
+    <div class="flex items-center space-x-4">
+        <a href="{% url 'dashboard:order_list' %}"
+           class="w-10 h-10 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/30 transition">
+            <i class="fa-solid fa-arrow-left text-sm"></i>
+        </a>
+        <div>
+            <h1 class="text-2xl font-extrabold text-dark tracking-tight">
+                Commande <span class="text-accent">#{{ order.id }}</span>
+            </h1>
+            <p class="text-xs text-gray-400 font-medium mt-0.5">
+                Passée le {{ order.created_at|date:"d F Y à H:i" }}
+                &nbsp;·&nbsp;
+                <span class="font-semibold">{{ order.payment_method }}</span>
+            </p>
+        </div>
+    </div>
+
+    {# Badge statut actuel #}
+    <span class="px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-sm
+        {% if order.status == 'DELIVERED' %}bg-emerald-50 text-emerald-600
+        {% elif order.status == 'SHIPPED' %}bg-accent/10 text-accent
+        {% elif order.status == 'PROCESSING' %}bg-primary/10 text-primary
+        {% elif order.status == 'PENDING' %}bg-amber-50 text-amber-600
+        {% elif order.status == 'CANCELLED' %}bg-red-50 text-red-500
+        {% else %}bg-gray-100 text-gray-500{% endif %}">
+        <i class="fa-solid fa-circle-dot mr-1 text-[8px] align-middle"></i>
+        {{ order.get_status_display }}
+    </span>
+</div>
+
+{# Messages flash #}
+{% if messages %}
+<div class="mb-6 fade-in">
+    {% for msg in messages %}
+    <div class="flex items-center space-x-3 px-5 py-3 rounded-2xl text-sm font-semibold
+        {% if msg.tags == 'success' %}bg-emerald-50 text-emerald-700 border border-emerald-100
+        {% else %}bg-red-50 text-red-700 border border-red-100{% endif %}">
+        <i class="fa-solid {% if msg.tags == 'success' %}fa-check-circle{% else %}fa-triangle-exclamation{% endif %}"></i>
+        <span>{{ msg }}</span>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+    {# ══════════════════════════════════════════ #}
+    {# Colonne principale (2/3)                   #}
+    {# ══════════════════════════════════════════ #}
+    <div class="xl:col-span-2 space-y-6">
+
+        {# ── Produits commandés ── #}
+        <div class="bg-white rounded-[28px] border border-gray-100 shadow-sm overflow-hidden fade-in">
+            <div class="px-7 py-5 border-b border-gray-50 flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-xl bg-accent/10 flex items-center justify-center">
+                    <i class="fa-solid fa-shopping-bag text-accent text-sm"></i>
+                </div>
+                <h2 class="font-extrabold text-dark text-sm uppercase tracking-widest">Produits commandés</h2>
+            </div>
+
+            <div class="divide-y divide-gray-50">
+                {% for item in order.items.all %}
+                <div class="px-7 py-5 flex items-center space-x-5">
+                    {# Image produit #}
+                    <div class="flex-shrink-0">
+                        {% if item.product %}
+                            <img src="{{ item.product.get_primary_image }}"
+                                 alt="{{ item.product.name }}"
+                                 class="w-16 h-16 object-cover rounded-2xl border border-gray-100 shadow-sm">
+                        {% else %}
+                            <div class="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center">
+                                <i class="fa-solid fa-image text-gray-300 text-xl"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Infos produit #}
+                    <div class="flex-grow min-w-0">
+                        <div class="text-sm font-bold text-dark truncate">
+                            {{ item.product.name|default:"Produit supprimé" }}
+                        </div>
+                        {% if item.product.category %}
+                        <div class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mt-0.5">
+                            {{ item.product.category.name }}
+                        </div>
+                        {% endif %}
+                        <div class="flex items-center space-x-2 mt-2">
+                            <span class="px-2.5 py-0.5 bg-gray-50 rounded-lg text-[10px] font-bold text-gray-500 border border-gray-100">
+                                Qté : {{ item.quantity }}
+                            </span>
+                            <span class="text-[10px] text-gray-400">×</span>
+                            <span class="text-xs font-bold text-primary">{{ item.unit_price|currency_xof }}</span>
+                        </div>
+                    </div>
+
+                    {# Sous-total #}
+                    <div class="text-right flex-shrink-0">
+                        <div class="text-sm font-black text-dark">{{ item.total_price|currency_xof }}</div>
+                        <div class="text-[10px] text-gray-400 mt-0.5">sous-total</div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="px-7 py-10 text-center text-gray-400 italic text-sm">
+                    <i class="fa-solid fa-box-open text-3xl mb-2 block opacity-30"></i>
+                    Aucun article dans cette commande.
+                </div>
+                {% endfor %}
+            </div>
+
+            {# Récapitulatif total #}
+            <div class="px-7 py-5 bg-gray-50/60 border-t border-gray-100">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Total commande</span>
+                    <span class="text-2xl font-black text-primary">{{ order.total|currency_xof }}</span>
+                </div>
+                <div class="flex items-center mt-2 space-x-2">
+                    {% if order.payment_status %}
+                    <span class="flex items-center space-x-1.5 text-emerald-600 text-xs font-bold">
+                        <i class="fa-solid fa-circle-check"></i><span>Paiement confirmé</span>
+                    </span>
+                    {% else %}
+                    <span class="flex items-center space-x-1.5 text-amber-500 text-xs font-bold">
+                        <i class="fa-solid fa-clock"></i><span>Paiement en attente</span>
+                    </span>
+                    {% endif %}
+                    {% if order.transaction_id %}
+                    <span class="text-[10px] text-gray-400">· Tx: {{ order.transaction_id }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# ── Notes / WhatsApp ── #}
+        {% if order.payment_method == 'WHATSAPP' %}
+        <div class="bg-emerald-50 border border-emerald-100 rounded-[20px] px-6 py-4 flex items-center space-x-4 fade-in">
+            <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fa-brands fa-whatsapp text-white text-lg"></i>
+            </div>
+            <div class="flex-grow">
+                <div class="text-sm font-bold text-emerald-800">Commande via WhatsApp</div>
+                <div class="text-xs text-emerald-600 mt-0.5">Contactez le client pour confirmer les détails.</div>
+            </div>
+            <a href="{{ order.get_whatsapp_url }}" target="_blank"
+               class="flex-shrink-0 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition action-btn">
+                <i class="fa-brands fa-whatsapp mr-1"></i> Ouvrir WhatsApp
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+
+    {# ══════════════════════════════════════════ #}
+    {# Colonne latérale (1/3)                     #}
+    {# ══════════════════════════════════════════ #}
+    <div class="space-y-6">
+
+        {# ── Informations client ── #}
+        <div class="bg-white rounded-[28px] border border-gray-100 shadow-sm overflow-hidden fade-in">
+            <div class="px-6 py-5 border-b border-gray-50 flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <i class="fa-solid fa-user text-primary text-sm"></i>
+                </div>
+                <h2 class="font-extrabold text-dark text-sm uppercase tracking-widest">Client</h2>
+            </div>
+            <div class="px-6 py-5 space-y-3.5">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center font-black text-accent text-sm flex-shrink-0">
+                        {{ order.full_name|first|upper|default:"?" }}
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold text-dark">{{ order.full_name|default:"Non renseigné" }}</div>
+                        {% if order.user %}
+                        <div class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">Compte enregistré</div>
+                        {% else %}
+                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Invité</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="space-y-2 pt-2 border-t border-gray-50">
+                    {% if order.email %}
+                    <div class="flex items-start space-x-2.5 text-xs">
+                        <i class="fa-solid fa-envelope text-gray-300 mt-0.5 w-4 text-center"></i>
+                        <a href="mailto:{{ order.email }}" class="text-gray-600 hover:text-primary transition break-all">{{ order.email }}</a>
+                    </div>
+                    {% endif %}
+                    {% if order.phone %}
+                    <div class="flex items-center space-x-2.5 text-xs">
+                        <i class="fa-solid fa-phone text-gray-300 w-4 text-center"></i>
+                        <a href="tel:{{ order.phone }}" class="text-gray-600 hover:text-primary transition">{{ order.phone }}</a>
+                    </div>
+                    {% endif %}
+                    {% if order.street_address %}
+                    <div class="flex items-start space-x-2.5 text-xs">
+                        <i class="fa-solid fa-location-dot text-gray-300 mt-0.5 w-4 text-center"></i>
+                        <span class="text-gray-600">
+                            {{ order.street_address }}<br>
+                            {% if order.postal_code %}{{ order.postal_code }} {% endif %}{{ order.city }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# ── Changer le statut ── #}
+        <div class="bg-white rounded-[28px] border border-gray-100 shadow-sm overflow-hidden fade-in">
+            <div class="px-6 py-5 border-b border-gray-50 flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-xl bg-warning/10 flex items-center justify-center">
+                    <i class="fa-solid fa-sliders text-warning text-sm"></i>
+                </div>
+                <h2 class="font-extrabold text-dark text-sm uppercase tracking-widest">Gestion du statut</h2>
+            </div>
+            <div class="px-6 py-5">
+                <p class="text-xs text-gray-400 mb-4">Statut actuel :
+                    <span class="font-bold text-dark">{{ order.get_status_display }}</span>
+                </p>
+
+                {# Boutons d'action rapide #}
+                <div class="grid grid-cols-2 gap-2 mb-5">
+                    {% if order.status == 'PENDING' %}
+                    <form method="post" action="{% url 'dashboard:order_update_status' order.pk %}">
+                        {% csrf_token %}<input type="hidden" name="status" value="PROCESSING">
+                        <button type="submit" class="action-btn w-full py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary/90 transition shadow-md shadow-primary/30">
+                            <i class="fa-solid fa-gear mr-1"></i> Préparer
+                        </button>
+                    </form>
+                    <form method="post" action="{% url 'dashboard:order_update_status' order.pk %}">
+                        {% csrf_token %}<input type="hidden" name="status" value="CANCELLED">
+                        <button type="submit" onclick="return confirm('Annuler la commande #{{ order.id }} ?')"
+                            class="action-btn w-full py-2.5 bg-red-50 text-red-500 text-xs font-bold rounded-xl hover:bg-red-500 hover:text-white transition border border-red-100">
+                            <i class="fa-solid fa-xmark mr-1"></i> Annuler
+                        </button>
+                    </form>
+                    {% elif order.status == 'PROCESSING' %}
+                    <form method="post" action="{% url 'dashboard:order_update_status' order.pk %}">
+                        {% csrf_token %}<input type="hidden" name="status" value="SHIPPED">
+                        <button type="submit" class="action-btn w-full py-2.5 bg-accent text-white text-xs font-bold rounded-xl hover:bg-accent/90 transition shadow-md shadow-accent/30">
+                            <i class="fa-solid fa-truck mr-1"></i> Expédier
+                        </button>
+                    </form>
+                    <form method="post" action="{% url 'dashboard:order_update_status' order.pk %}">
+                        {% csrf_token %}<input type="hidden" name="status" value="CANCELLED">
+                        <button type="submit" onclick="return confirm('Annuler la commande #{{ order.id }} ?')"
+                            class="action-btn w-full py-2.5 bg-red-50 text-red-500 text-xs font-bold rounded-xl hover:bg-red-500 hover:text-white transition border border-red-100">
+                            <i class="fa-solid fa-xmark mr-1"></i> Annuler
+                        </button>
+                    </form>
+                    {% elif order.status == 'SHIPPED' %}
+                    <form method="post" action="{% url 'dashboard:order_update_status' order.pk %}" class="col-span-2">
+                        {% csrf_token %}<input type="hidden" name="status" value="DELIVERED">
+                        <button type="submit" class="action-btn w-full py-2.5 bg-emerald-500 text-white text-xs font-bold rounded-xl hover:bg-emerald-600 transition shadow-md shadow-emerald-500/30">
+                            <i class="fa-solid fa-circle-check mr-1"></i> Marquer comme Livrée
+                        </button>
+                    </form>
+                    {% elif order.status == 'DELIVERED' or order.status == 'CANCELLED' %}
+                    <div class="col-span-2 text-center text-xs text-gray-400 italic py-2">
+                        {% if order.status == 'DELIVERED' %}
+                            <i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Commande finalisée
+                        {% else %}
+                            <i class="fa-solid fa-ban text-red-400 mr-1"></i> Commande annulée
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                {# Sélecteur avancé #}
+                <div class="border-t border-gray-50 pt-4">
+                    <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-2">Forcer un statut</p>
+                    <form method="post" action="{% url 'dashboard:order_update_status' order.pk %}" class="flex space-x-2">
+                        {% csrf_token %}
+                        <select name="status"
+                            class="flex-grow text-xs font-semibold text-gray-700 bg-gray-50 border border-gray-100 rounded-xl px-3 py-2 focus:ring-2 focus:ring-accent focus:border-transparent">
+                            {% for value, label in status_choices %}
+                            <option value="{{ value }}" {% if order.status == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit"
+                            class="action-btn flex-shrink-0 bg-dark text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-primary transition shadow-md">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {# ── Métadonnées ── #}
+        <div class="bg-white rounded-[28px] border border-gray-100 shadow-sm px-6 py-5 fade-in">
+            <h2 class="font-extrabold text-dark text-xs uppercase tracking-widest mb-4">Infos commande</h2>
+            <div class="space-y-2.5 text-xs">
+                <div class="flex justify-between">
+                    <span class="text-gray-400 font-medium">Référence</span>
+                    <span class="font-black text-dark">#{{ order.id|stringformat:"05d" }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-400 font-medium">Créée le</span>
+                    <span class="font-semibold text-gray-600">{{ order.created_at|date:"d/m/Y" }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-400 font-medium">Mise à jour</span>
+                    <span class="font-semibold text-gray-600">{{ order.updated_at|date:"d/m/Y H:i" }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-400 font-medium">Paiement</span>
+                    <span class="font-bold {% if order.payment_status %}text-emerald-500{% else %}text-amber-500{% endif %}">
+                        {% if order.payment_status %}Confirmé{% else %}En attente{% endif %}
+                    </span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-400 font-medium">Articles</span>
+                    <span class="font-semibold text-gray-600">{{ order.items.count }} article(s)</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

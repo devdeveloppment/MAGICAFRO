@@ -14,21 +14,30 @@ def debug_images(request):
     """Page de diagnostic pour vérifier le stockage des images."""
     from products.models import ProductImage
     from django.conf import settings
-    
+
+    storages = settings.STORAGES
+    default_backend = storages.get('default', {}).get('BACKEND', 'NON DEFINI')
+    cloud_name = settings.CLOUDINARY_STORAGE.get('CLOUD_NAME', 'NON DEFINI')
+
     images = ProductImage.objects.all().order_by('-id')[:10]
+    imgs_data = []
+    for img in images:
+        try:
+            url = img.image.url if img.image else 'AUCUNE IMAGE'
+        except Exception as e:
+            url = f'ERREUR: {e}'
+        imgs_data.append({
+            'id': img.id,
+            'product': img.product.name,
+            'image_name': str(img.image),
+            'image_url': url,
+            'is_feature': img.is_feature,
+        })
+
     data = {
-        'DEFAULT_FILE_STORAGE': settings.DEFAULT_FILE_STORAGE,
-        'CLOUDINARY_CLOUD_NAME': settings.CLOUDINARY_STORAGE.get('CLOUD_NAME', 'NON DEFINI'),
-        'images': [
-            {
-                'id': img.id,
-                'product': img.product.name,
-                'image_name': str(img.image),
-                'image_url': img.image.url if img.image else 'AUCUNE IMAGE',
-                'is_feature': img.is_feature,
-            }
-            for img in images
-        ]
+        'DEFAULT_STORAGE_BACKEND': default_backend,
+        'CLOUDINARY_CLOUD_NAME': cloud_name,
+        'images': imgs_data,
     }
     return JsonResponse(data, json_dumps_params={'ensure_ascii': False, 'indent': 2})
 
@@ -55,31 +64,46 @@ def dashboard_logout(request):
 
 @login_required(login_url='dashboard:login')
 def dashboard_home(request):
-    # Stats
-    total_sales = Order.objects.filter(payment_status=True).aggregate(Sum('total'))['total__sum'] or 0
-    orders_count = Order.objects.count()
-    pending_orders = Order.objects.filter(status='PENDING').count()
+    # Stats optimization - aggregate multiple metrics in one query
+    stats = Order.objects.aggregate(
+        total_sales=Sum('total', filter=Q(payment_status=True)),
+        orders_count=Count('id'),
+        pending_orders=Count('id', filter=Q(status='PENDING'))
+    )
+    total_sales = stats['total_sales'] or 0
+    orders_count = stats['orders_count']
+    pending_orders = stats['pending_orders']
     products_count = Product.objects.count()
     
-    # Recent orders
+    # Recent orders - select_related/prefetch_related not needed if we only show basic info, 
+    # but good practice if the template accesses items or user
     recent_orders = Order.objects.all().order_by('-created_at')[:10]
     
     # Low stock products
     low_stock_products = Product.objects.filter(stock__lte=5).select_related('category').order_by('stock')[:5]
     
-    # Sales Data for Chart (last 7 days)
+    # Sales Data for Chart (last 7 days) - Single Query Optimization
+    from django.db.models.functions import TruncDate
     today = timezone.now().date()
+    start_date = today - timedelta(days=6)
+    
+    # Efficiently group sales by date
+    sales_by_day = Order.objects.filter(
+        created_at__date__gte=start_date,
+        payment_status=True
+    ).annotate(date=TruncDate('created_at')) \
+     .values('date') \
+     .annotate(day_total=Sum('total')) \
+     .order_by('date')
+    
+    sales_dict = {item['date']: float(item['day_total']) for item in sales_by_day}
+    
     days = []
     sales_data = []
-    
     for i in range(6, -1, -1):
         day = today - timedelta(days=i)
         days.append(day.strftime('%d %b'))
-        day_sales = Order.objects.filter(
-            created_at__date=day, 
-            payment_status=True
-        ).aggregate(Sum('total'))['total__sum'] or 0
-        sales_data.append(float(day_sales))
+        sales_data.append(sales_dict.get(day, 0.0))
 
     context = {
         'total_sales': total_sales,
@@ -97,11 +121,11 @@ def dashboard_home(request):
 @login_required(login_url='dashboard:login')
 def order_list(request):
     status_filter = request.GET.get('status')
-    orders = Order.objects.all().order_by('-created_at')
-    
+    orders = Order.objects.select_related('user').prefetch_related('items__product').order_by('-created_at')
+
     if status_filter:
         orders = orders.filter(status=status_filter)
-        
+
     context = {
         'orders': orders,
         'segment': 'orders',
@@ -112,6 +136,34 @@ def order_list(request):
         'count_shipped': Order.objects.filter(status='SHIPPED').count(),
     }
     return render(request, 'dashboard/orders.html', context)
+
+@login_required(login_url='dashboard:login')
+def order_detail(request, pk):
+    order = get_object_or_404(
+        Order.objects.select_related('user').prefetch_related('items__product__images'),
+        pk=pk
+    )
+    context = {
+        'order': order,
+        'segment': 'orders',
+        'status_choices': Order.STATUS_CHOICES,
+    }
+    return render(request, 'dashboard/order_detail.html', context)
+
+@login_required(login_url='dashboard:login')
+def order_update_status(request, pk):
+    if request.method == 'POST':
+        order = get_object_or_404(Order, pk=pk)
+        new_status = request.POST.get('status')
+        valid_statuses = [s[0] for s in Order.STATUS_CHOICES]
+        if new_status in valid_statuses:
+            order.status = new_status
+            order.save(update_fields=['status', 'updated_at'])
+            messages.success(request, f"Statut de la commande #{order.id} mis à jour : {order.get_status_display()}")
+        else:
+            messages.error(request, "Statut invalide.")
+    return redirect('dashboard:order_detail', pk=pk)
+
 
 @login_required(login_url='dashboard:login')
 def product_list(request):

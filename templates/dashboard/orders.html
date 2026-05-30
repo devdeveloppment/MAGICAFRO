@@ -73,7 +73,9 @@
                     </td>
                     <td class="px-8 py-5 text-right text-sm font-black text-primary">{{ order.total|currency_xof }}</td>
                     <td class="px-8 py-5 text-right">
-                        <a href="#" class="w-8 h-8 rounded-lg bg-gray-50 text-gray-400 hover:bg-dark hover:text-white transition inline-flex items-center justify-center shadow-sm">
+                        <a href="{% url 'dashboard:order_detail' order.id %}"
+                           class="w-8 h-8 rounded-lg bg-gray-50 text-gray-400 hover:bg-dark hover:text-white transition inline-flex items-center justify-center shadow-sm"
+                           title="Voir les détails">
                             <i class="fa-solid fa-eye text-xs"></i>
                         </a>
                     </td>

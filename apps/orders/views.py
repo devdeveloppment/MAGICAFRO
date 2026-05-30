@@ -45,13 +45,15 @@ def checkout(request):
                 order.user = request.user
             order.total = cart.get_total_price()
             order.save()
-            for item in cart:
-                OrderItem.objects.create(
+            order_items = [
+                OrderItem(
                     order=order,
                     product=item['product'],
                     unit_price=item['price'],
                     quantity=item['quantity']
-                )
+                ) for item in cart
+            ]
+            OrderItem.objects.bulk_create(order_items)
             cart.clear()
             
             # Redirect to WhatsApp for order confirmation

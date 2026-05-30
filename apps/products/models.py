@@ -60,20 +60,23 @@ class Product(models.Model):
 
     @property
     def get_primary_image(self):
-        # PERFORMANCE OPTIMIZATION: Check for prefetched feature_images first
+        """Retourne l'URL de l'image principale du produit."""
+        # Chercher d'abord les images prefetchées (optimisation)
+        img = None
         if hasattr(self, 'feature_images') and self.feature_images:
             img = self.feature_images[0]
         else:
-            # Fallback if not prefetched
             img = self.images.filter(is_feature=True).first() or self.images.first()
-        
+
         if img and img.image:
             try:
-                return img.image.url
+                url = img.image.url
+                if url:
+                    return url
             except Exception:
                 pass
-            
-        # Image stable par ID pour éviter les changements brusques
+
+        # Fallback stable par ID (évite les changements visuels brusques)
         return f"https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80&sig={self.id}"
 
     @property
