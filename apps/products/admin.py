@@ -1,8 +1,16 @@
 from django.contrib import admin
-from .models import Category, Product, ProductImage, Review
+from .models import Category, Product, ProductImage, Review, Routine, RoutineItem, ReviewMedia
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
+    extra = 1
+
+class ReviewMediaInline(admin.TabularInline):
+    model = ReviewMedia
+    extra = 0
+
+class RoutineItemInline(admin.TabularInline):
+    model = RoutineItem
     extra = 1
 
 @admin.register(Category)
@@ -24,3 +32,13 @@ class ProductAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['product', 'user', 'rating', 'is_verified', 'created_at']
     list_filter = ['rating', 'is_verified']
+    inlines = [ReviewMediaInline]
+
+@admin.register(Routine)
+class RoutineAdmin(admin.ModelAdmin):
+    list_display = ['name', 'discount_percentage', 'is_active', 'created_at']
+    list_filter = ['is_active']
+    search_fields = ['name']
+    prepopulated_fields = {'slug': ('name',)}
+    inlines = [RoutineItemInline]
+    list_editable = ['is_active', 'discount_percentage']

@@ -183,10 +183,10 @@
                 Vous aimerez aussi
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {% for item in related %}
+                {% for item in related_products %}
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 card-hover group h-full flex flex-col">
-                    <div class="relative aspect-square overflow-hidden bg-gray-50 p-6">
-                        <img src="{{ item.get_primary_image|default:'https://via.placeholder.com/300' }}" alt="{{ item.name }}" class="w-full h-full object-contain group-hover:scale-110 transition duration-500">
+                    <div class="relative aspect-[4/5] overflow-hidden bg-gray-50">
+                        <img src="{{ item.get_primary_image|default:'https://via.placeholder.com/300' }}" alt="{{ item.name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
                         <a href="{% url 'products:product_detail' item.slug %}" class="absolute inset-0 z-10"></a>
                     </div>
                     <div class="p-6">
@@ -197,19 +197,192 @@
                 {% endfor %}
             </div>
         </div>
+
+        <!-- Customer Reviews Section -->
+        <div class="mt-20" id="reviews-section">
+            <h2 class="text-3xl font-extrabold text-primary mb-12 flex items-center">
+                <span class="w-2 h-8 gradient-brown rounded-full mr-4"></span>
+                Avis de nos clientes
+                <span class="ml-4 text-sm font-bold text-gray-400">({{ product.reviews.count }})</span>
+            </h2>
+
+            <!-- Existing Reviews -->
+            <div class="space-y-6 mb-12">
+                {% for review in product.reviews.all %}
+                <div class="bg-white rounded-[30px] p-6 shadow-sm border border-gray-100" data-aos="fade-up">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm uppercase">
+                                {{ review.user.first_name|first }}{{ review.user.last_name|first }}
+                            </div>
+                            <div>
+                                <span class="font-bold text-dark block text-sm">{{ review.user.first_name }} {{ review.user.last_name|first }}.</span>
+                                <span class="text-[10px] text-gray-400">{{ review.created_at|date:"d M Y" }}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-0.5 text-amber-400 text-sm">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                    <i class="fa-solid fa-star"></i>
+                                {% else %}
+                                    <i class="fa-regular fa-star text-gray-200"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{{ review.comment }}</p>
+                    
+                    {% if review.media.exists %}
+                    <div class="flex flex-wrap gap-3">
+                        {% for media in review.media.all %}
+                        <div class="w-20 h-20 rounded-xl overflow-hidden shadow-sm border border-gray-100">
+                            <img src="{{ media.file.url }}" alt="Photo avis" class="w-full h-full object-cover">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if review.is_verified %}
+                    <div class="mt-4 flex items-center text-emerald-500 text-[10px] font-black uppercase tracking-widest">
+                        <i class="fa-solid fa-circle-check mr-1.5"></i> Achat vérifié
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <div class="text-center py-12 bg-white rounded-[30px] border border-gray-100">
+                    <i class="fa-regular fa-comment-dots text-4xl text-gray-200 mb-4 block"></i>
+                    <p class="text-gray-400 font-medium">Soyez la première à donner votre avis sur ce produit !</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Review Form -->
+            {% if user.is_authenticated %}
+            <div class="bg-white/80 backdrop-blur-xl rounded-[30px] p-8 shadow-lg border border-white">
+                <h3 class="text-lg font-black text-dark mb-6">Partagez votre expérience</h3>
+                <form action="{% url 'products:submit_review' product.slug %}" method="post" enctype="multipart/form-data" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    <!-- Star Rating -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Votre note</label>
+                        <div class="flex space-x-2" id="star-rating">
+                            {% for i in "12345" %}
+                            <button type="button" data-value="{{ forloop.counter }}" class="star-btn text-3xl text-gray-200 hover:text-amber-400 transition cursor-pointer">
+                                <i class="fa-solid fa-star"></i>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" name="rating" id="rating-input" value="5" required>
+                    </div>
+
+                    <!-- Comment -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Votre commentaire</label>
+                        <textarea name="comment" rows="4" required placeholder="Décrivez votre expérience avec ce produit..." class="w-full px-5 py-4 bg-gray-50 rounded-2xl border border-gray-100 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none text-sm resize-none transition"></textarea>
+                    </div>
+
+                    <!-- Photo Upload -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Ajoutez des photos <span class="text-gray-300">(optionnel)</span></label>
+                        <div class="relative">
+                            <input type="file" name="photos" multiple accept="image/*" id="photo-input" class="hidden">
+                            <label for="photo-input" class="flex items-center justify-center w-full py-5 border-2 border-dashed border-gray-200 rounded-2xl text-gray-400 hover:border-primary/30 hover:text-primary cursor-pointer transition group">
+                                <i class="fa-solid fa-camera mr-2 group-hover:scale-110 transition"></i>
+                                <span class="text-sm font-bold">Cliquez pour ajouter vos photos avant/après</span>
+                            </label>
+                            <div id="photo-preview" class="flex flex-wrap gap-3 mt-3"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 gradient-brown text-white font-black rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Publier mon avis (+25 pts Magic Rewards)
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            <div class="text-center py-8 bg-white rounded-[30px] border border-gray-100">
+                <p class="text-gray-500 mb-4">Connectez-vous pour laisser un avis et gagner <span class="text-accent font-bold">25 points fidélité</span></p>
+                <a href="{% url 'login' %}" class="inline-flex items-center px-8 py-3 bg-primary text-white rounded-full font-bold hover:bg-accent transition">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Se connecter
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Calculate discounted price for subscription
     document.addEventListener('DOMContentLoaded', () => {
+        // === Subscription Price Calculator ===
         const basePrice = parseInt("{{ product.price }}".replace(/\s/g, ''), 10);
         if(!isNaN(basePrice)) {
             const subPrice = Math.floor(basePrice * 0.85);
             document.querySelectorAll('.price-discounted').forEach(el => {
                 el.textContent = subPrice.toLocaleString('fr-FR');
+            });
+        }
+
+        // === Interactive Star Rating ===
+        const starBtns = document.querySelectorAll('.star-btn');
+        const ratingInput = document.getElementById('rating-input');
+        
+        if (starBtns.length > 0) {
+            // Set initial state (5 stars)
+            updateStars(5);
+
+            starBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const val = parseInt(btn.dataset.value);
+                    ratingInput.value = val;
+                    updateStars(val);
+                });
+                btn.addEventListener('mouseenter', () => {
+                    updateStars(parseInt(btn.dataset.value), true);
+                });
+            });
+
+            document.getElementById('star-rating')?.addEventListener('mouseleave', () => {
+                updateStars(parseInt(ratingInput.value));
+            });
+        }
+
+        function updateStars(rating, isHover = false) {
+            starBtns.forEach(btn => {
+                const val = parseInt(btn.dataset.value);
+                if (val <= rating) {
+                    btn.classList.remove('text-gray-200');
+                    btn.classList.add('text-amber-400');
+                    if (!isHover) btn.style.transform = 'scale(1.1)';
+                } else {
+                    btn.classList.add('text-gray-200');
+                    btn.classList.remove('text-amber-400');
+                    btn.style.transform = 'scale(1)';
+                }
+            });
+        }
+
+        // === Photo Preview ===
+        const photoInput = document.getElementById('photo-input');
+        const preview = document.getElementById('photo-preview');
+
+        if (photoInput) {
+            photoInput.addEventListener('change', () => {
+                preview.innerHTML = '';
+                const files = Array.from(photoInput.files).slice(0, 5);
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const div = document.createElement('div');
+                        div.className = 'w-20 h-20 rounded-xl overflow-hidden border-2 border-accent/30 shadow-sm';
+                        div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover" alt="Preview">`;
+                        preview.appendChild(div);
+                    };
+                    reader.readAsDataURL(file);
+                });
             });
         }
     });

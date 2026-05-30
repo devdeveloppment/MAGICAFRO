@@ -1,8 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.cache import cache
 from django.core.paginator import Paginator
 from django.db.models import Q, Prefetch
-from .models import Category, Product, ProductImage
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Category, Product, ProductImage, Review, ReviewMedia
 from marketing.models import Testimonial
 
 def home(request):
@@ -70,7 +72,7 @@ def product_list(request, category_slug=None):
 
 def product_detail(request, slug):
     product = get_object_or_404(
-        Product.objects.select_related('category').prefetch_related('images', 'reviews__user'),
+        Product.objects.select_related('category').prefetch_related('images', 'reviews__user', 'reviews__media'),
         slug=slug, is_active=True
     )
     related_products = (
@@ -86,12 +88,40 @@ def product_detail(request, slug):
         'related_products': related_products,
     })
 
-    
-    context = {
-        'product': product,
-        'related_products': related_products,
-    }
-    return render(request, 'products/product_detail.html', context)
+@login_required
+def submit_review(request, slug):
+    """Soumettre un avis avec photos et gagner des points de fidélité."""
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+
+    if request.method == 'POST':
+        rating = request.POST.get('rating', 5)
+        comment = request.POST.get('comment', '')
+
+        # Créer l'avis
+        review = Review.objects.create(
+            product=product,
+            user=request.user,
+            rating=int(rating),
+            comment=comment,
+            is_verified=product.orders_containing(request.user) if hasattr(product, 'orders_containing') else False,
+        )
+
+        # Sauvegarder les photos uploadées
+        photos = request.FILES.getlist('photos')
+        for photo in photos[:5]:  # Max 5 photos
+            ReviewMedia.objects.create(review=review, file=photo)
+
+        # Attribuer des points de fidélité (+25 pts par avis)
+        try:
+            from accounts.models import LoyaltyAccount
+            loyalty, _ = LoyaltyAccount.objects.get_or_create(user=request.user)
+            loyalty.points += 25
+            loyalty.save()
+            messages.success(request, f'Merci pour votre avis ! Vous avez gagné 25 points Magic Rewards. 🎉')
+        except Exception:
+            messages.success(request, 'Merci pour votre avis !')
+
+    return redirect('products:product_detail', slug=slug)
 
 def beauty_diagnostic(request):
     """
@@ -134,3 +164,4 @@ def beauty_diagnostic(request):
         })
 
     return render(request, 'products/diagnostic.html')
+
