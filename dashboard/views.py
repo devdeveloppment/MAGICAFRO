@@ -392,3 +392,75 @@ def report_list(request):
     }
     return render(request, 'dashboard/reports.html', context)
 
+# --- BLOG MANAGEMENT ---
+
+@login_required(login_url='dashboard:login')
+def blog_list(request):
+    from blog.models import BlogPost
+    posts = BlogPost.objects.all().order_by('-created_at')
+    context = {
+        'posts': posts,
+        'title': 'Articles de Blog',
+        'segment': 'blog'
+    }
+    return render(request, 'dashboard/blog_list.html', context)
+
+@login_required(login_url='dashboard:login')
+def blog_create(request):
+    from .forms import BlogPostForm
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            if post.is_published and not post.published_at:
+                from django.utils import timezone
+                post.published_at = timezone.now()
+            post.save()
+            form.save_m2m() # for tags
+            messages.success(request, "Article créé avec succès.")
+            return redirect('dashboard:blog_list')
+    else:
+        form = BlogPostForm()
+    
+    context = {
+        'form': form,
+        'title': 'Ajouter un Article',
+        'segment': 'blog'
+    }
+    return render(request, 'dashboard/blog_form.html', context)
+
+@login_required(login_url='dashboard:login')
+def blog_edit(request, pk):
+    from blog.models import BlogPost
+    from .forms import BlogPostForm
+    post = get_object_or_404(BlogPost, pk=pk)
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            if post.is_published and not post.published_at:
+                from django.utils import timezone
+                post.published_at = timezone.now()
+            post.save()
+            form.save_m2m()
+            messages.success(request, "Article modifié avec succès.")
+            return redirect('dashboard:blog_list')
+    else:
+        form = BlogPostForm(instance=post)
+        
+    context = {
+        'form': form,
+        'post': post,
+        'title': f'Modifier {post.title}',
+        'segment': 'blog'
+    }
+    return render(request, 'dashboard/blog_form.html', context)
+
+@login_required(login_url='dashboard:login')
+def blog_delete(request, pk):
+    from blog.models import BlogPost
+    post = get_object_or_404(BlogPost, pk=pk)
+    post.delete()
+    messages.success(request, "Article supprimé.")
+    return redirect('dashboard:blog_list')

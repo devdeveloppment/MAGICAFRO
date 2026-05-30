@@ -1,147 +1,81 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ post.title|default:"Article" }} | MagicAfro{% endblock %}
+{% block title %}{{ post.title }} | MagicAfro{% endblock %}
 
 {% block content %}
-<article class="bg-white pb-24">
-    <!-- Article Header -->
-    <div class="bg-gray-50 py-16 lg:py-24">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <nav class="flex text-[10px] font-black uppercase tracking-widest text-gray-400 mb-8 items-center space-x-3">
-                <a href="{% url 'products:home' %}" class="hover:text-primary transition">Accueil</a>
-                <i class="fa-solid fa-chevron-right text-[8px]"></i>
-                <a href="{% url 'blog:post_list' %}" class="hover:text-primary transition">Blog</a>
-                <i class="fa-solid fa-chevron-right text-[8px]"></i>
-                <span class="text-accent">{{ post.title|default:"Article" }}</span>
-            </nav>
-            <div class="mb-12">
-                <span class="text-[10px] font-black text-accent uppercase tracking-[0.3em] mb-4 block">Conseils Beauté</span>
-                <h1 class="text-4xl lg:text-6xl font-black text-primary leading-tight mb-8">
-                    {{ post.title|default:"Comment entretenir ses tresses pour une pousse maximale." }}
-                </h1>
-                <div class="flex items-center space-x-6">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-lg font-black">M</div>
-                        <div>
-                            <p class="text-[10px] font-black text-primary uppercase tracking-widest leading-none mb-1">Équipe MagicAfro</p>
-                            <p class="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Expert Beauté</p>
-                        </div>
-                    </div>
-                    <div class="h-8 w-px bg-gray-200"></div>
-                    <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                        <span>15 Avril 2026</span>
-                        <span class="ml-4"><i class="fa-regular fa-clock mr-1"></i> 5 min de lecture</span>
-                    </div>
-                </div>
-            </div>
+<!-- Article Hero -->
+<div class="bg-gray-50 pt-20 pb-12">
+    <div class="container mx-auto px-4 text-center max-w-4xl">
+        <div class="flex items-center justify-center space-x-4 mb-6 text-xs font-bold text-gray-400 uppercase tracking-widest">
+            <a href="{% url 'blog:post_list' %}" class="hover:text-primary transition">Journal</a>
+            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            <span>{{ post.published_at|date:"d F Y"|default:post.created_at|date:"d F Y" }}</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-primary mb-8 leading-tight">
+            {{ post.title }}
+        </h1>
+        <div class="flex items-center justify-center space-x-4 text-sm text-gray-500">
+            <span>Par <strong class="text-dark">{{ post.author.get_full_name|default:post.author.username }}</strong></span>
+            {% if post.tags.exists %}
+            <span class="w-1 h-1 bg-accent rounded-full"></span>
+            <span class="text-accent font-bold uppercase tracking-widest">{{ post.tags.first.name }}</span>
+            {% endif %}
         </div>
     </div>
+</div>
 
-    <!-- Featured Image -->
-    <div class="container mx-auto px-4 max-w-5xl -mt-16 lg:-mt-24 mb-16 lg:mb-24">
-        <div class="rounded-[60px] overflow-hidden shadow-2xl relative">
-            <img src="{% static 'img/woman_braiding_hair_1773231371852.png' %}" class="w-full h-full object-cover aspect-video">
-        </div>
+<!-- Image/Video -->
+<div class="container mx-auto px-4 max-w-5xl mb-16">
+    {% if post.video %}
+    <div id="video" class="rounded-[40px] overflow-hidden premium-shadow bg-black">
+        <video controls class="w-full aspect-video object-cover">
+            <source src="{{ post.video.url }}" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+    </div>
+    {% elif post.image %}
+    <div class="rounded-[40px] overflow-hidden premium-shadow h-[50vh] md:h-[70vh]">
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">
+    </div>
+    {% endif %}
+</div>
+
+<!-- Article Content -->
+<div class="container mx-auto px-4 max-w-3xl mb-24">
+    <div class="prose prose-lg prose-headings:font-black prose-headings:text-primary prose-a:text-accent prose-a:font-bold hover:prose-a:text-primary prose-img:rounded-3xl max-w-none text-gray-600 leading-relaxed">
+        {{ post.content|safe|linebreaks }}
     </div>
 
-    <!-- Article Content -->
-    <div class="container mx-auto px-4 max-w-3xl">
-        <div class="prose prose-xl prose-stone prose-primary mx-auto">
-            <p class="text-xl text-gray-600 leading-relaxed font-medium mb-10 italic border-l-4 border-accent pl-8 py-2">
-                Les tresses ne sont pas seulement un style esthétique, c'est aussi un moyen puissant de protéger vos cheveux contre les agressions extérieures et de favoriser une pousse saine, à condition de savoir les entretenir.
-            </p>
-            
-            <h2 class="text-3xl font-black text-primary mt-16 mb-8 uppercase tracking-tight">1. Préparation du cuir chevelu</h2>
-            <p class="text-gray-600 leading-relaxed mb-10">
-                Tout commence par une base saine. Avant de réaliser vos tresses, assurez-vous que votre cuir chevelu est parfaitement propre et surtout bien hydraté. L'utilisation de notre <span class="text-accent font-bold">beurre de karité brut</span> est recommandée pour sceller l'hydratation dès la racine.
-            </p>
-
-            <div class="my-16 bg-cream rounded-[40px] p-10 flex flex-col md:flex-row items-center gap-10">
-                <div class="w-full md:w-1/3 aspect-square rounded-3xl overflow-hidden shadow-lg">
-                    <img src="{% static 'img/beurre_karite_brut_1773185667118.png' %}" class="w-full h-full object-cover">
-                </div>
-                <div class="w-full md:w-2/3">
-                    <h4 class="text-xl font-black text-primary mb-2 uppercase tracking-tight">Le conseil MagicAfro</h4>
-                    <p class="text-sm text-gray-500 mb-6 font-medium">Appliquez une noisette de beurre de karité sur les séparations pour apaiser les éventuelles tensions lors de la réalisation des tresses.</p>
-                    <a href="{% url 'products:product_list' %}" class="text-xs font-black text-accent uppercase tracking-widest border-b-2 border-accent pb-1">Voir nos produits</a>
-                </div>
-            </div>
-
-            <h2 class="text-3xl font-black text-primary mt-16 mb-8 uppercase tracking-tight">2. L'hydratation quotidienne</h2>
-            <p class="text-gray-600 leading-relaxed mb-10">
-                L'erreur la plus commune est de penser que les cheveux n'ont plus besoin d'eau une fois tressés. C'est faux ! Vos cheveux continuent de respirer. Utilisez un vaporisateur mélangeant de l'eau et quelques gouttes de notre <span class="text-accent font-bold">huile d'avocat pure</span> pour pulvériser vos longueurs une fois par jour.
-            </p>
-
-            <div class="grid grid-cols-2 gap-8 my-16">
-                <div class="rounded-3xl overflow-hidden aspect-[3/4] shadow-xl">
-                    <img src="https://images.unsplash.com/photo-1595475824519-75894f275e53?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                </div>
-                <div class="rounded-3xl overflow-hidden aspect-[3/4] shadow-xl mt-12">
-                    <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-            <h2 class="text-3xl font-black text-primary mt-16 mb-8 uppercase tracking-tight">En conclusion</h2>
-            <p class="text-gray-600 leading-relaxed mb-10">
-                L'entretien des tresses demande rigueur et douceur. Évitez les coiffures trop serrées sur les tempes pour prévenir l'alopécie de traction, et n'oubliez pas de porter un foulard en satin chaque soir pour préserver l'éclat de vos soins.
-            </p>
+    <!-- Tags & Share -->
+    <div class="mt-16 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex flex-wrap gap-2">
+            {% for tag in post.tags.all %}
+            <span class="px-4 py-2 bg-gray-50 text-gray-500 rounded-full text-xs font-bold uppercase tracking-widest">{{ tag.name }}</span>
+            {% endfor %}
         </div>
-
-        <!-- Share & Tags -->
-        <div class="mt-20 pt-10 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center space-x-3">
-                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tags:</span>
-                <a href="#" class="px-3 py-1 bg-gray-50 rounded-full text-[10px] font-bold text-gray-500 hover:bg-primary hover:text-white transition">#Cheveux</a>
-                <a href="#" class="px-3 py-1 bg-gray-50 rounded-full text-[10px] font-bold text-gray-500 hover:bg-primary hover:text-white transition">#Routine</a>
-                <a href="#" class="px-3 py-1 bg-gray-50 rounded-full text-[10px] font-bold text-gray-500 hover:bg-primary hover:text-white transition">#Croissance</a>
-            </div>
-            <div class="flex items-center space-x-6 text-gray-400">
-                <span class="text-[10px] font-black uppercase tracking-widest border-r pr-6 border-gray-200">Partager</span>
-                <a href="#" class="hover:text-primary transition"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="hover:text-primary transition"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#" class="hover:text-primary transition"><i class="fa-brands fa-linkedin-in"></i></a>
-            </div>
+        <div class="flex items-center space-x-4 text-gray-400">
+            <span class="text-xs font-bold uppercase tracking-widest">Partager :</span>
+            <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-pinterest-p"></i></a>
         </div>
     </div>
-</article>
+</div>
 
-<!-- Related Articles -->
-<section class="bg-gray-50 py-24">
+<!-- Newsletter -->
+<div class="bg-cream py-24">
     <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-            <div>
-                <span class="text-accent font-black uppercase tracking-[0.3em] text-[10px] mb-2 block">Lectures suggérées</span>
-                <h2 class="text-4xl font-black text-primary uppercase tracking-tight">Articles Similaires</h2>
-            </div>
-            <a href="{% url 'blog:post_list' %}" class="text-xs font-black text-primary uppercase tracking-widest border-b-2 border-primary pb-1 hover:text-accent hover:border-accent transition">Tout le blog</a>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <!-- Article 1 -->
-            <div class="group h-full flex flex-col">
-                <div class="relative rounded-[30px] overflow-hidden aspect-video mb-6">
-                    <img src="{% static 'img/huile_avocat_pure_1773185688071.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                </div>
-                <h3 class="text-xl font-black text-primary mb-4 line-clamp-2 group-hover:text-accent transition">Pourquoi l'huile d'avocat est votre meilleure alliée ?</h3>
-                <a href="#" class="text-[10px] font-black text-primary uppercase tracking-widest flex items-center group-hover:translate-x-3 transition mt-auto">Continuer <i class="fa-solid fa-arrow-right ml-2 text-[8px]"></i></a>
-            </div>
-            <!-- Article 2 -->
-            <div class="group h-full flex flex-col">
-                <div class="relative rounded-[30px] overflow-hidden aspect-video mb-6">
-                    <img src="{% static 'img/applying_hair_product_1773231491698.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                </div>
-                <h3 class="text-xl font-black text-primary mb-4 line-clamp-2 group-hover:text-accent transition">Comment diagnostiquer votre porosité capillaire.</h3>
-                <a href="#" class="text-[10px] font-black text-primary uppercase tracking-widest flex items-center group-hover:translate-x-3 transition mt-auto">Continuer <i class="fa-solid fa-arrow-right ml-2 text-[8px]"></i></a>
-            </div>
-            <!-- Article 3 -->
-            <div class="group h-full flex flex-col">
-                <div class="relative rounded-[30px] overflow-hidden aspect-video mb-6">
-                    <img src="{% static 'img/hero_woman_hair_touch_1773231294569.png' %}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                </div>
-                <h3 class="text-xl font-black text-primary mb-4 line-clamp-2 group-hover:text-accent transition">MagicAfro : Notre vision de la beauté inclusive.</h3>
-                <a href="#" class="text-[10px] font-black text-primary uppercase tracking-widest flex items-center group-hover:translate-x-3 transition mt-auto">Continuer <i class="fa-solid fa-arrow-right ml-2 text-[8px]"></i></a>
+        <div class="bg-primary rounded-[60px] p-12 lg:p-24 text-center text-white relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <h2 class="text-4xl lg:text-5xl font-black mb-8">Vous avez aimé cet <span class="text-accent italic">article</span> ?</h2>
+                <p class="text-gray-300 mb-12 text-lg">Inscrivez-vous à notre newsletter pour recevoir nos rituels bien-être et nos offres exclusives directement dans votre boîte mail.</p>
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="votre@email.com" class="flex-grow bg-white/10 border border-white/20 rounded-full px-8 py-5 text-white placeholder-gray-400 focus:bg-white/20 outline-none transition">
+                    <button type="submit" class="px-12 py-5 bg-accent text-white font-black rounded-full shadow-xl shadow-accent/20 hover:scale-105 transition active:scale-95">S'abonner</button>
+                </form>
             </div>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}

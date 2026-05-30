@@ -1,0 +1,61 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="mb-8 flex items-center justify-between">
+    <div>
+        <h1 class="text-2xl font-extrabold text-primary tracking-tight">Articles de Blog</h1>
+        <p class="text-sm text-gray-400 font-medium">Gérez le contenu de votre journal en ligne.</p>
+    </div>
+    <a href="{% url 'dashboard:blog_create' %}" class="px-6 py-3 bg-primary text-white font-bold rounded-2xl shadow-xl shadow-primary/30 hover:bg-accent transition transform hover:-translate-y-1">
+        <i class="fa-solid fa-plus mr-2"></i> Nouvel Article
+    </a>
+</div>
+
+<div class="bg-white rounded-[40px] border border-gray-100 shadow-sm overflow-hidden p-6 md:p-10">
+    {% if posts %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for post in posts %}
+        <div class="border border-gray-100 rounded-3xl overflow-hidden hover:shadow-xl transition group flex flex-col">
+            <div class="h-40 bg-gray-50 relative overflow-hidden">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                {% endif %}
+                <div class="absolute top-3 right-3 flex space-x-2">
+                    {% if post.video %}
+                    <span class="w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-sm"><i class="fa-solid fa-video text-[10px]"></i></span>
+                    {% endif %}
+                    {% if post.is_published %}
+                    <span class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center"><i class="fa-solid fa-check text-[10px]"></i></span>
+                    {% else %}
+                    <span class="w-8 h-8 rounded-full bg-gray-400 text-white flex items-center justify-center"><i class="fa-solid fa-clock text-[10px]"></i></span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ post.created_at|date:"d M Y" }}</div>
+                <h3 class="font-black text-primary text-lg mb-4 line-clamp-2 leading-tight flex-grow">{{ post.title }}</h3>
+                <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-50">
+                    <a href="{% url 'dashboard:blog_edit' post.id %}" class="text-accent hover:text-primary transition font-bold text-xs uppercase tracking-widest"><i class="fa-solid fa-pen mr-1"></i> Éditer</a>
+                    <form method="POST" action="{% url 'dashboard:blog_delete' post.id %}" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                        {% csrf_token %}
+                        <button type="submit" class="text-red-500 hover:text-red-700 transition font-bold text-xs uppercase tracking-widest"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-20">
+        <div class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fa-solid fa-newspaper text-3xl text-gray-300"></i>
+        </div>
+        <h3 class="text-xl font-bold text-dark mb-2">Aucun article</h3>
+        <p class="text-gray-400 mb-6">Commencez par rédiger votre premier article de blog.</p>
+        <a href="{% url 'dashboard:blog_create' %}" class="inline-flex px-6 py-3 bg-primary text-white font-bold rounded-2xl hover:bg-accent transition">
+            Créer un article
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

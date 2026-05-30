@@ -1,0 +1,71 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block dashboard_content %}
+<div class="mb-8 flex items-center justify-between">
+    <div>
+        <h1 class="text-2xl font-extrabold text-primary tracking-tight">{{ title }}</h1>
+        <p class="text-sm text-gray-400 font-medium">Rédigez votre contenu beauté.</p>
+    </div>
+    <a href="{% url 'dashboard:blog_list' %}" class="text-sm font-bold text-gray-400 hover:text-dark flex items-center transition">
+        <i class="fa-solid fa-chevron-left mr-2"></i> Retour aux articles
+    </a>
+</div>
+
+<div class="max-w-4xl">
+    <div class="bg-white rounded-[40px] border border-gray-100 shadow-sm p-10">
+        <form method="post" enctype="multipart/form-data" class="space-y-8">
+            {% csrf_token %}
+            
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Titre de l'article</label>
+                {{ form.title }}
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Contenu de l'article (Supporte HTML/Markdown basique)</label>
+                {{ form.content }}
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Image de couverture</label>
+                    {% if post and post.image %}
+                        <div class="mb-4 px-6">
+                            <img src="{{ post.image.url }}" class="w-full h-32 object-cover rounded-2xl border border-gray-100">
+                        </div>
+                    {% endif %}
+                    {{ form.image }}
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Vidéo (Optionnel)</label>
+                    {{ form.video }}
+                    {% if post and post.video %}
+                        <p class="text-[10px] text-green-500 mt-2 px-6 italic">Une vidéo est déjà enregistrée.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Tags</label>
+                    {{ form.tags }}
+                    <p class="text-[10px] text-gray-400 mt-2 px-6 italic">Sélectionnez les catégories (Cheveux, Peau, etc.). Maintenez Ctrl/Cmd pour sélectionner plusieurs.</p>
+                </div>
+                <div class="space-y-2 pt-8">
+                    <div class="flex items-center space-x-4 px-6">
+                        {{ form.is_published }}
+                        <label class="text-sm font-bold text-dark">Publier immédiatement (Visible sur le blog)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-10 border-t border-gray-50 flex justify-end space-x-4">
+                <a href="{% url 'dashboard:blog_list' %}" class="px-8 py-4 rounded-2xl font-bold text-gray-400 hover:bg-gray-50 hover:text-dark transition">Annuler</a>
+                <button type="submit" class="px-12 py-4 bg-primary text-white font-bold rounded-2xl shadow-xl shadow-primary/30 hover:bg-accent transition transform active:scale-95 flex items-center">
+                    <i class="fa-solid fa-check-circle mr-2"></i> Enregistrer l'article
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

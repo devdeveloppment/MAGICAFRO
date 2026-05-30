@@ -21,6 +21,7 @@ class BlogPost(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
     image = models.ImageField(upload_to='blog/')
+    video = models.FileField(upload_to='blog/videos/', null=True, blank=True)
     published_at = models.DateTimeField(null=True, blank=True)
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

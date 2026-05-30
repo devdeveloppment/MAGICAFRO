@@ -80,6 +80,12 @@
                         Clients
                     </a>
                 </li>
+                <li>
+                    <a href="{% url 'dashboard:blog_list' %}" class="flex items-center px-6 py-3 text-sm font-medium transition-all group {% if segment == 'blog' %}sidebar-item-active{% else %}text-gray-500 hover:bg-gray-50 hover:text-primary{% endif %}">
+                        <i class="fa-solid fa-newspaper w-5 mr-3"></i>
+                        Blog / Journal
+                    </a>
+                </li>
             </ul>
 
             <div class="px-6 mt-10 mb-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Ventes</div>

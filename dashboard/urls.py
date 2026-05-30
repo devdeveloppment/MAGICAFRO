@@ -20,5 +20,9 @@ urlpatterns = [
     path('promotions/<int:pk>/toggle/', views.promotion_toggle, name='promotion_toggle'),
     path('promotions/<int:pk>/delete/', views.promotion_delete, name='promotion_delete'),
     path('reports/', views.report_list, name='report_list'),
+    path('blog/', views.blog_list, name='blog_list'),
+    path('blog/add/', views.blog_create, name='blog_create'),
+    path('blog/<int:pk>/edit/', views.blog_edit, name='blog_edit'),
+    path('blog/<int:pk>/delete/', views.blog_delete, name='blog_delete'),
     path('debug-images/', views.debug_images, name='debug_images'),
 ]
