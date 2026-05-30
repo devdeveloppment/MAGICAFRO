@@ -34,6 +34,10 @@
             Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
     </div>
+    {% elif post.video_url %}
+    <div class="rounded-[40px] overflow-hidden premium-shadow bg-black">
+        <iframe src="{{ post.get_video_embed_url }}" class="w-full aspect-video" frameborder="0" allowfullscreen></iframe>
+    </div>
     {% elif post.image %}
     <div class="rounded-[40px] overflow-hidden premium-shadow h-[50vh] md:h-[70vh]">
         <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover">

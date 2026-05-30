@@ -44,6 +44,7 @@ class Product(models.Model):
     rating_avg = models.FloatField(default=0.0)
     is_active = models.BooleanField(default=True, db_index=True)
     video = models.FileField(upload_to='products/videos/', null=True, blank=True)
+    video_url = models.URLField(max_length=500, null=True, blank=True, help_text="Lien YouTube, TikTok, etc.")
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -85,6 +86,19 @@ class Product(models.Model):
         if self.old_price and self.old_price > self.price:
             return int((1 - (self.price / self.old_price)) * 100)
         return 0
+
+    @property
+    def get_video_embed_url(self):
+        if not self.video_url:
+            return None
+        url = self.video_url
+        if 'youtube.com/watch?v=' in url:
+            video_id = url.split('v=')[1].split('&')[0]
+            return f"https://www.youtube.com/embed/{video_id}"
+        elif 'youtu.be/' in url:
+            video_id = url.split('youtu.be/')[1].split('?')[0]
+            return f"https://www.youtube.com/embed/{video_id}"
+        return url
 
     def __str__(self):
         return self.name

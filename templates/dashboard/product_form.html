@@ -64,18 +64,29 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Galerie (Plusieurs images)</label>
-                    {{ form.additional_images }}
-                    <p class="text-[10px] text-gray-400 mt-2 px-6 italic">Maintenez la touche Ctrl (ou Cmd) pour sélectionner plusieurs images.</p>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Vidéo du produit (Optionnel)</label>
-                    {{ form.video }}
-                    {% if product.video %}
-                    <p class="text-[10px] text-green-500 mt-2 px-6 italic">Une vidéo est déjà enregistrée. Ajoutez-en une nouvelle pour la remplacer.</p>
-                    {% endif %}
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Galerie (Plusieurs images)</label>
+                {{ form.additional_images }}
+                <p class="text-[10px] text-gray-400 mt-2 px-6 italic">Maintenez la touche Ctrl (ou Cmd) pour sélectionner plusieurs images.</p>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-3xl border border-gray-100">
+                <h3 class="text-xs font-black text-primary uppercase tracking-widest mb-6">Média Vidéo (Optionnel)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Fichier Vidéo (.mp4)</label>
+                        {{ form.video }}
+                        {% if product.video %}
+                        <p class="text-[10px] text-green-500 mt-2 italic">Une vidéo est déjà enregistrée. Ajoutez-en une nouvelle pour la remplacer.</p>
+                        {% endif %}
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Lien YouTube / TikTok</label>
+                        {{ form.video_url }}
+                        {% if product.video_url %}
+                        <p class="text-[10px] text-green-500 mt-2 italic">Un lien vidéo est configuré.</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 

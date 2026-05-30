@@ -37,11 +37,25 @@
                     {{ form.image }}
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Vidéo (Optionnel)</label>
-                    {{ form.video }}
-                    {% if post and post.video %}
-                        <p class="text-[10px] text-green-500 mt-2 px-6 italic">Une vidéo est déjà enregistrée.</p>
-                    {% endif %}
+                    <div class="bg-gray-50 p-6 rounded-3xl border border-gray-100 h-full">
+                        <h3 class="text-[10px] font-black text-primary uppercase tracking-widest mb-4">Vidéo (Optionnel)</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Fichier Vidéo (.mp4)</label>
+                                {{ form.video }}
+                                {% if post and post.video %}
+                                    <p class="text-[10px] text-green-500 mt-1 italic">Une vidéo est déjà enregistrée.</p>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Ou Lien YouTube/TikTok</label>
+                                {{ form.video_url }}
+                                {% if post and post.video_url %}
+                                    <p class="text-[10px] text-green-500 mt-1 italic">Un lien vidéo est configuré.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

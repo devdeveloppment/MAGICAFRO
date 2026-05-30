@@ -45,14 +45,19 @@
                     </div>
                     
                     {% if product.video %}
-                    <!-- Product Video -->
-                    <div class="mt-8 rounded-[30px] overflow-hidden premium-shadow bg-black/5">
-                        <video controls class="w-full aspect-video object-cover">
-                            <source src="{{ product.video.url }}" type="video/mp4">
-                            Votre navigateur ne supporte pas la lecture de vidéos.
-                        </video>
-                    </div>
-                    {% endif %}
+                <!-- Product Video (Local) -->
+                <div class="mt-8 rounded-[30px] overflow-hidden premium-shadow bg-black/5">
+                    <video controls class="w-full aspect-video object-cover">
+                        <source src="{{ product.video.url }}" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                </div>
+            {% elif product.video_url %}
+                <!-- Product Video (External) -->
+                <div class="mt-8 rounded-[30px] overflow-hidden premium-shadow bg-black/5">
+                    <iframe src="{{ product.get_video_embed_url }}" class="w-full aspect-video" frameborder="0" allowfullscreen></iframe>
+                </div>
+            {% endif %}
                 </div>
 
                 <!-- Product Info -->

@@ -22,6 +22,7 @@ class BlogPost(models.Model):
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
     image = models.ImageField(upload_to='blog/')
     video = models.FileField(upload_to='blog/videos/', null=True, blank=True)
+    video_url = models.URLField(max_length=500, null=True, blank=True, help_text="Lien YouTube, TikTok, etc.")
     published_at = models.DateTimeField(null=True, blank=True)
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,6 +31,19 @@ class BlogPost(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    @property
+    def get_video_embed_url(self):
+        if not self.video_url:
+            return None
+        url = self.video_url
+        if 'youtube.com/watch?v=' in url:
+            video_id = url.split('v=')[1].split('&')[0]
+            return f"https://www.youtube.com/embed/{video_id}"
+        elif 'youtu.be/' in url:
+            video_id = url.split('youtu.be/')[1].split('?')[0]
+            return f"https://www.youtube.com/embed/{video_id}"
+        return url
 
     def __str__(self):
         return self.title
