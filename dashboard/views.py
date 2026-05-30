@@ -187,10 +187,20 @@ def product_create(request):
                 try:
                     pi = ProductImage(product=product, is_feature=True)
                     pi.image.save(image.name, image, save=True)
-                    print(f"[OK] Image sauvegardée: {pi.image.url}")
                 except Exception as e:
-                    print(f"[ERREUR] Impossible de sauvegarder l'image: {e}")
                     messages.warning(request, f"Produit créé mais l'image n'a pas pu être sauvegardée: {e}")
+            
+            # Additional images
+            additional_images = request.FILES.getlist('additional_images')
+            if additional_images:
+                from products.models import ProductImage
+                for img in additional_images:
+                    try:
+                        pi = ProductImage(product=product, is_feature=False)
+                        pi.image.save(img.name, img, save=True)
+                    except Exception as e:
+                        pass
+            
             return redirect('dashboard:product_list')
         else:
             print(f"[FORM ERRORS] {form.errors}")
@@ -214,15 +224,25 @@ def product_edit(request, pk):
             image = request.FILES.get('image')  # Lire directement depuis request.FILES
             if image:
                 from products.models import ProductImage
-                # Supprimer les anciennes images et créer une nouvelle
-                product.images.all().delete()
+                # Supprimer les anciennes images principales
+                product.images.filter(is_feature=True).delete()
                 try:
                     pi = ProductImage(product=product, is_feature=True)
                     pi.image.save(image.name, image, save=True)
-                    print(f"[OK] Image modifiée sauvegardée: {pi.image.url}")
                 except Exception as e:
-                    print(f"[ERREUR] Impossible de sauvegarder l'image: {e}")
-                    messages.warning(request, f"Produit modifié mais l'image n'a pas pu être sauvegardée: {e}")
+                    messages.warning(request, f"Produit modifié mais l'image principale n'a pas pu être sauvegardée: {e}")
+            
+            # Additional images
+            additional_images = request.FILES.getlist('additional_images')
+            if additional_images:
+                from products.models import ProductImage
+                for img in additional_images:
+                    try:
+                        pi = ProductImage(product=product, is_feature=False)
+                        pi.image.save(img.name, img, save=True)
+                    except Exception as e:
+                        pass
+                        
             return redirect('dashboard:product_list')
     else:
         form = ProductForm(instance=product)

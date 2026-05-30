@@ -49,7 +49,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Image Principale</label>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Image Principale (Mise en avant)</label>
                     {% if product.images.exists %}
                         <div class="mb-4 px-6">
                             <img src="{{ product.get_primary_image }}" class="w-32 h-32 object-cover rounded-2xl border border-gray-100">
@@ -59,8 +59,23 @@
                     {{ form.image }}
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Badge</label>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Badge Promo</label>
                     {{ form.badge }}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Galerie (Plusieurs images)</label>
+                    {{ form.additional_images }}
+                    <p class="text-[10px] text-gray-400 mt-2 px-6 italic">Maintenez la touche Ctrl (ou Cmd) pour sélectionner plusieurs images.</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-6">Vidéo du produit (Optionnel)</label>
+                    {{ form.video }}
+                    {% if product.video %}
+                    <p class="text-[10px] text-green-500 mt-2 px-6 italic">Une vidéo est déjà enregistrée. Ajoutez-en une nouvelle pour la remplacer.</p>
+                    {% endif %}
                 </div>
             </div>
 

@@ -43,6 +43,7 @@ class Product(models.Model):
     badge = models.CharField(max_length=10, choices=BADGE_CHOICES, null=True, blank=True)
     rating_avg = models.FloatField(default=0.0)
     is_active = models.BooleanField(default=True, db_index=True)
+    video = models.FileField(upload_to='products/videos/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 

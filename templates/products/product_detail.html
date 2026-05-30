@@ -36,13 +36,23 @@
                     </div>
                     
                     <!-- Thumbnails -->
-                    <div class="flex space-x-4">
+                    <div class="flex flex-wrap gap-4 mt-6">
                         {% for img in product.images.all %}
-                        <div class="w-20 h-20 rounded-2xl border-2 {% if img.is_feature %}border-accent active{% else %}border-transparent{% endif %} p-2 cursor-pointer bg-white transition product-thumb hover:border-accent/30" onclick="document.getElementById('main-product-image').src='{{ img.image.url }}'; document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active', 'border-accent')); this.classList.add('active', 'border-accent');">
-                            <img src="{{ img.image.url }}" class="w-full h-full object-contain">
+                        <div class="w-20 h-20 rounded-2xl border-2 {% if img.is_feature %}border-accent active{% else %}border-transparent{% endif %} p-1 cursor-pointer bg-white transition product-thumb hover:border-accent/30" onclick="document.getElementById('main-product-image').src='{{ img.image.url }}'; document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active', 'border-accent')); this.classList.add('active', 'border-accent');">
+                            <img src="{{ img.image.url }}" class="w-full h-full object-cover rounded-xl">
                         </div>
                         {% endfor %}
                     </div>
+                    
+                    {% if product.video %}
+                    <!-- Product Video -->
+                    <div class="mt-8 rounded-[30px] overflow-hidden premium-shadow bg-black/5">
+                        <video controls class="w-full aspect-video object-cover">
+                            <source src="{{ product.video.url }}" type="video/mp4">
+                            Votre navigateur ne supporte pas la lecture de vidéos.
+                        </video>
+                    </div>
+                    {% endif %}
                 </div>
 
                 <!-- Product Info -->
