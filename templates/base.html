@@ -89,10 +89,27 @@
             transform: translateY(-2px);
             transition: all 0.2s ease;
         }
+        /* Premium Glassmorphism */
+        .glass { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.6); 
+            box-shadow: 0 8px 32px 0 rgba(139, 69, 19, 0.05);
+        }
+        .glass-dark { 
+            background: rgba(17, 24, 39, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        .premium-shadow {
+            box-shadow: 0 20px 40px -15px rgba(139, 69, 19, 0.15);
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-white text-gray-900 overflow-x-hidden">
+<body class="bg-[#FAFAFA] text-gray-900 overflow-x-hidden pb-16 md:pb-0">
 
     <!-- Promotional Bar (Marquee) -->
     <div class="bg-dark text-white py-2 overflow-hidden whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.2em]">
@@ -102,7 +119,7 @@
     </div>
 
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+    <header class="sticky top-0 z-50 glass border-b border-gray-100/50">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4 md:gap-8">
             <!-- Mobile Menu Toggle (Left) -->
             <button id="mobile-menu-btn" class="md:hidden text-2xl text-primary p-2 -ml-2">
@@ -335,14 +352,41 @@
         </div>
     </div>
 
+    <!-- Mobile Bottom Navigation (App-like) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass rounded-t-[30px] px-6 py-3 flex justify-between items-center premium-shadow">
+        <a href="{% url 'products:home' %}" class="flex flex-col items-center text-primary group">
+            <i class="fa-solid fa-house text-xl mb-1 group-hover:-translate-y-1 transition transform"></i>
+            <span class="text-[9px] font-black uppercase tracking-widest">Accueil</span>
+        </a>
+        <a href="{% url 'products:product_list' %}" class="flex flex-col items-center text-gray-400 hover:text-accent transition group">
+            <i class="fa-solid fa-search text-xl mb-1 group-hover:-translate-y-1 transition transform"></i>
+            <span class="text-[9px] font-black uppercase tracking-widest">Boutique</span>
+        </a>
+        <button id="mobile-cart-btn" class="relative -top-5 w-14 h-14 rounded-full gradient-brown text-white flex items-center justify-center shadow-lg shadow-primary/40 transform hover:scale-110 transition border-4 border-white">
+            <i class="fa-solid fa-bag-shopping text-xl"></i>
+            <span id="mobile-cart-counter" class="absolute 0 right-0 bg-white text-primary text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-sm border border-primary/20">{{ cart|length }}</span>
+        </button>
+        <a href="{% url 'products:product_list' %}" class="flex flex-col items-center text-gray-400 hover:text-accent transition group">
+            <i class="fa-regular fa-heart text-xl mb-1 group-hover:-translate-y-1 transition transform"></i>
+            <span class="text-[9px] font-black uppercase tracking-widest">Favoris</span>
+        </a>
+        <a href="{% if user.is_authenticated %}{% url 'accounts:profile' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="flex flex-col items-center text-gray-400 hover:text-accent transition group">
+            <i class="fa-regular fa-user text-xl mb-1 group-hover:-translate-y-1 transition transform"></i>
+            <span class="text-[9px] font-black uppercase tracking-widest">Profil</span>
+        </a>
+    </div>
+
     <script>
         // Cart Toggle
         const cartBtn = document.getElementById('cart-btn');
+        const mobileCartBtn = document.getElementById('mobile-cart-btn');
         const cartDrawer = document.getElementById('cart-drawer');
         const closeCart = document.getElementById('close-cart');
         const cartOverlay = document.getElementById('cart-overlay');
 
-        if (cartBtn) cartBtn.addEventListener('click', () => cartDrawer.classList.remove('hidden'));
+        const openCartDrawer = () => cartDrawer.classList.remove('hidden');
+        if (cartBtn) cartBtn.addEventListener('click', openCartDrawer);
+        if (mobileCartBtn) mobileCartBtn.addEventListener('click', openCartDrawer);
         if (closeCart) closeCart.addEventListener('click', () => cartDrawer.classList.add('hidden'));
         if (cartOverlay) cartOverlay.addEventListener('click', () => cartDrawer.classList.add('hidden'));
 
@@ -399,9 +443,14 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Update counter
+                    // Update counters
                     const counter = document.getElementById('cart-counter');
-                    counter.innerText = data.cart_count;
+                    const mobileCounter = document.getElementById('mobile-cart-counter');
+                    const titleCounter = document.getElementById('cart-title-count');
+                    
+                    if (counter) counter.innerText = data.cart_count;
+                    if (mobileCounter) mobileCounter.innerText = data.cart_count;
+                    if (titleCounter) titleCounter.innerText = data.cart_count;
                     
                     // Show drawer
                     cartDrawer.classList.remove('hidden');

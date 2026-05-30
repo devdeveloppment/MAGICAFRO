@@ -26,13 +26,13 @@
             <div class="flex flex-col lg:flex-row gap-16">
                 <!-- Product Images -->
                 <div class="lg:w-1/2">
-                    <div class="relative aspect-square rounded-3xl overflow-hidden bg-gray-50 mb-6 group">
+                    <div class="relative aspect-[4/5] rounded-[40px] overflow-hidden bg-gray-50 mb-6 group premium-shadow">
                         {% if product.badge %}
                         <span class="absolute top-6 left-6 {% if product.badge == 'PROMO' %}gradient-promo{% else %}gradient-brown{% endif %} text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest z-10 shadow-lg">
                             {{ product.get_badge_display }}
                         </span>
                         {% endif %}
-                        <img src="{{ product.get_primary_image|default:'https://via.placeholder.com/600' }}" id="main-product-image" alt="{{ product.name }}" class="w-full h-full object-contain p-12 transition duration-500">
+                        <img src="{{ product.get_primary_image|default:'https://via.placeholder.com/600' }}" id="main-product-image" alt="{{ product.name }}" class="absolute inset-0 w-full h-full object-cover transition duration-500">
                     </div>
                     
                     <!-- Thumbnails -->
@@ -72,9 +72,34 @@
                         <p class="text-gray-400 text-xs mt-2 uppercase font-bold tracking-tighter">TVA incluse | Livraison gratuite dès 30 000 FCFA</p>
                     </div>
 
-                    <p class="text-gray-600 leading-relaxed mb-10 text-lg">
+                    <p class="text-gray-600 leading-relaxed mb-8 text-lg">
                         {{ product.description }}
                     </p>
+
+                    <!-- Premium Feature: Key Ingredients -->
+                    <div class="bg-cream/50 rounded-3xl p-6 mb-10 border border-orange-50">
+                        <h4 class="text-xs font-black text-primary uppercase tracking-widest mb-4">La Magie à l'intérieur</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-accent shadow-sm flex-shrink-0">
+                                    <i class="fa-solid fa-droplet text-xs"></i>
+                                </div>
+                                <div>
+                                    <span class="text-sm font-bold text-dark block">Hydratation Intense</span>
+                                    <span class="text-[10px] text-gray-500 leading-tight block">Pénètre la fibre capillaire</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-accent shadow-sm flex-shrink-0">
+                                    <i class="fa-solid fa-leaf text-xs"></i>
+                                </div>
+                                <div>
+                                    <span class="text-sm font-bold text-dark block">100% Naturel</span>
+                                    <span class="text-[10px] text-gray-500 leading-tight block">Sans parabène ni sulfate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Selection & Add to Cart -->
                     <div class="mt-auto space-y-6">
