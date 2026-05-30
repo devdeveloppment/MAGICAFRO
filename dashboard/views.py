@@ -257,14 +257,118 @@ def customer_list(request):
 
 @login_required(login_url='dashboard:login')
 def promotion_list(request):
+    from marketing.models import PromoCode
+    promos = PromoCode.objects.all().order_by('-valid_from')
+    now = timezone.now()
     context = {
+        'promos': promos,
+        'now': now,
+        'active_count': promos.filter(is_active=True, valid_to__gte=now).count(),
+        'expired_count': promos.filter(valid_to__lt=now).count(),
         'segment': 'promotions'
     }
     return render(request, 'dashboard/promotions.html', context)
 
 @login_required(login_url='dashboard:login')
+def promotion_create(request):
+    from marketing.models import PromoCode
+    if request.method == 'POST':
+        try:
+            from datetime import datetime
+            promo = PromoCode.objects.create(
+                code=request.POST.get('code', '').upper().strip(),
+                discount_type=request.POST.get('discount_type', 'PERCENT'),
+                discount_value=request.POST.get('discount_value', 0),
+                min_order=request.POST.get('min_order', 0) or 0,
+                valid_from=datetime.fromisoformat(request.POST.get('valid_from')),
+                valid_to=datetime.fromisoformat(request.POST.get('valid_to')),
+                is_active=request.POST.get('is_active') == 'on',
+            )
+            messages.success(request, f'Code promo "{promo.code}" créé avec succès !')
+        except Exception as e:
+            messages.error(request, f'Erreur : {e}')
+    return redirect('dashboard:promotion_list')
+
+@login_required(login_url='dashboard:login')
+def promotion_toggle(request, pk):
+    from marketing.models import PromoCode
+    promo = get_object_or_404(PromoCode, pk=pk)
+    promo.is_active = not promo.is_active
+    promo.save(update_fields=['is_active'])
+    status = "activé" if promo.is_active else "désactivé"
+    messages.success(request, f'Code "{promo.code}" {status}.')
+    return redirect('dashboard:promotion_list')
+
+@login_required(login_url='dashboard:login')
+def promotion_delete(request, pk):
+    from marketing.models import PromoCode
+    promo = get_object_or_404(PromoCode, pk=pk)
+    if request.method == 'POST':
+        promo.delete()
+        messages.success(request, 'Code promo supprimé.')
+    return redirect('dashboard:promotion_list')
+
+@login_required(login_url='dashboard:login')
 def report_list(request):
+    from django.db.models.functions import TruncDate, TruncMonth
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    today = timezone.now().date()
+
+    # === KPIs ===
+    total_revenue = Order.objects.filter(payment_status=True).aggregate(t=Sum('total'))['t'] or 0
+    month_start = today.replace(day=1)
+    monthly_revenue = Order.objects.filter(payment_status=True, created_at__date__gte=month_start).aggregate(t=Sum('total'))['t'] or 0
+    total_orders = Order.objects.count()
+    total_customers = User.objects.filter(is_staff=False).count()
+
+    # === Ventes 30 jours (graphique) ===
+    start_30 = today - timedelta(days=29)
+    sales_30 = Order.objects.filter(
+        created_at__date__gte=start_30, payment_status=True
+    ).annotate(date=TruncDate('created_at')).values('date').annotate(day_total=Sum('total')).order_by('date')
+    sales_dict = {item['date']: float(item['day_total']) for item in sales_30}
+    chart_labels = []
+    chart_data = []
+    for i in range(29, -1, -1):
+        d = today - timedelta(days=i)
+        chart_labels.append(d.strftime('%d/%m'))
+        chart_data.append(sales_dict.get(d, 0))
+
+    # === Top 5 produits ===
+    from orders.models import OrderItem
+    top_products = (
+        OrderItem.objects
+        .values('product__name')
+        .annotate(qty=Sum('quantity'), revenue=Sum('unit_price') * Sum('quantity'))
+        .order_by('-qty')[:5]
+    )
+
+    # === Répartition statuts ===
+    status_counts = Order.objects.values('status').annotate(count=Count('id')).order_by('status')
+    status_labels = [dict(Order.STATUS_CHOICES).get(s['status'], s['status']) for s in status_counts]
+    status_data = [s['count'] for s in status_counts]
+
+    # === Top clients ===
+    top_customers = (
+        User.objects.filter(is_staff=False)
+        .annotate(order_count=Count('orders'), total_spent=Sum('orders__total'))
+        .filter(order_count__gt=0)
+        .order_by('-total_spent')[:5]
+    )
+
     context = {
-        'segment': 'reports'
+        'segment': 'reports',
+        'total_revenue': total_revenue,
+        'monthly_revenue': monthly_revenue,
+        'total_orders': total_orders,
+        'total_customers': total_customers,
+        'chart_labels': chart_labels,
+        'chart_data': chart_data,
+        'top_products': top_products,
+        'status_labels': status_labels,
+        'status_data': status_data,
+        'top_customers': top_customers,
     }
     return render(request, 'dashboard/reports.html', context)
+

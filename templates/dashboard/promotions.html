@@ -1,19 +1,165 @@
 {% extends 'dashboard/base_dashboard.html' %}
 
 {% block dashboard_content %}
-<div class="mb-8">
-    <h1 class="text-2xl font-extrabold text-dark tracking-tight">Promotions & Marketing</h1>
-    <p class="text-sm text-gray-400 font-medium">Gérez vos codes promos et offres spéciales.</p>
+<div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+        <h1 class="text-2xl font-extrabold text-dark tracking-tight">Promotions & Marketing</h1>
+        <p class="text-sm text-gray-400 font-medium">Gérez vos codes promos et offres spéciales.</p>
+    </div>
+    <button onclick="document.getElementById('create-modal').classList.remove('hidden')" class="px-6 py-3 bg-accent text-white font-bold rounded-xl hover:bg-primary transition text-sm flex items-center self-start">
+        <i class="fa-solid fa-plus mr-2"></i> Nouveau Code Promo
+    </button>
 </div>
 
-<div class="bg-white rounded-[40px] border border-gray-100 shadow-sm p-12 text-center">
-    <div class="w-24 h-24 bg-cream text-accent rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
-        <i class="fa-solid fa-ticket"></i>
+<!-- Messages -->
+{% if messages %}
+<div class="mb-6 space-y-2">
+    {% for message in messages %}
+    <div class="px-4 py-3 rounded-xl text-sm font-medium {% if message.tags == 'success' %}bg-green-50 text-green-700 border border-green-100{% else %}bg-red-50 text-red-700 border border-red-100{% endif %}">
+        {{ message }}
     </div>
-    <h2 class="text-xl font-bold text-dark mb-4">Module en Cours de Développement</h2>
-    <p class="text-gray-500 max-w-md mx-auto leading-relaxed">
-        Nous travaillons actuellement sur ce module pour vous permettre de créer des campagnes promotionnelles ciblées et de gérer vos coupons de réduction. <br><br>
-        Revenez bientôt !
-    </p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-xl bg-green-50 text-green-500 flex items-center justify-center text-xl"><i class="fa-solid fa-check-circle"></i></div>
+        <div>
+            <p class="text-2xl font-extrabold text-dark">{{ active_count }}</p>
+            <p class="text-xs text-gray-400 font-medium">Actifs</p>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-xl bg-red-50 text-red-500 flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
+        <div>
+            <p class="text-2xl font-extrabold text-dark">{{ expired_count }}</p>
+            <p class="text-xs text-gray-400 font-medium">Expirés</p>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center text-xl"><i class="fa-solid fa-tags"></i></div>
+        <div>
+            <p class="text-2xl font-extrabold text-dark">{{ promos.count }}</p>
+            <p class="text-xs text-gray-400 font-medium">Total Codes</p>
+        </div>
+    </div>
+</div>
+
+<!-- Promotions Table -->
+<div class="bg-white rounded-[30px] border border-gray-100 shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-50 text-left">
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Code</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Réduction</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Min. Commande</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Période</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Statut</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for promo in promos %}
+                <tr class="border-b border-gray-50 hover:bg-gray-50/50 transition">
+                    <td class="px-6 py-4">
+                        <span class="font-mono font-bold text-dark bg-gray-100 px-3 py-1 rounded-lg text-xs">{{ promo.code }}</span>
+                    </td>
+                    <td class="px-6 py-4 font-bold text-accent">
+                        {% if promo.discount_type == 'PERCENT' %}
+                            -{{ promo.discount_value|floatformat:0 }}%
+                        {% else %}
+                            -{{ promo.discount_value|floatformat:0 }} FCFA
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 text-gray-500">{{ promo.min_order|floatformat:0 }} FCFA</td>
+                    <td class="px-6 py-4 text-gray-500 text-xs">
+                        {{ promo.valid_from|date:"d/m/Y" }} → {{ promo.valid_to|date:"d/m/Y" }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {% if promo.is_active and promo.valid_to >= now %}
+                            <span class="px-3 py-1 bg-green-50 text-green-600 text-[10px] font-bold rounded-full uppercase">Actif</span>
+                        {% elif promo.valid_to < now %}
+                            <span class="px-3 py-1 bg-red-50 text-red-500 text-[10px] font-bold rounded-full uppercase">Expiré</span>
+                        {% else %}
+                            <span class="px-3 py-1 bg-gray-100 text-gray-500 text-[10px] font-bold rounded-full uppercase">Désactivé</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 text-right space-x-2">
+                        <a href="{% url 'dashboard:promotion_toggle' promo.pk %}" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-gray-400 hover:bg-blue-50 hover:text-blue-500 transition" title="Activer/Désactiver">
+                            <i class="fa-solid fa-power-off text-xs"></i>
+                        </a>
+                        <form action="{% url 'dashboard:promotion_delete' promo.pk %}" method="post" class="inline" onsubmit="return confirm('Supprimer ce code promo ?')">
+                            {% csrf_token %}
+                            <button type="submit" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition" title="Supprimer">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-6 py-12 text-center text-gray-400">
+                        <i class="fa-solid fa-tags text-3xl mb-3 block opacity-30"></i>
+                        Aucun code promo pour le moment.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Create Modal -->
+<div id="create-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div class="bg-white rounded-[30px] shadow-2xl w-full max-w-lg mx-4 p-8 relative">
+        <button onclick="document.getElementById('create-modal').classList.add('hidden')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 text-gray-400 hover:text-red-500 flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h2 class="text-xl font-extrabold text-dark mb-6">Créer un Code Promo</h2>
+        <form action="{% url 'dashboard:promotion_create' %}" method="post" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Code</label>
+                <input type="text" name="code" required placeholder="Ex: MAGIC20" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none font-mono uppercase">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Type</label>
+                    <select name="discount_type" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none">
+                        <option value="PERCENT">Pourcentage (%)</option>
+                        <option value="FIXED">Montant fixe (FCFA)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Valeur</label>
+                    <input type="number" name="discount_value" required placeholder="20" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Commande minimale (FCFA)</label>
+                <input type="number" name="min_order" value="0" class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Début</label>
+                    <input type="datetime-local" name="valid_from" required class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">Fin</label>
+                    <input type="datetime-local" name="valid_to" required class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none">
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="is_active" id="is_active" checked class="w-4 h-4 text-accent rounded border-gray-300">
+                <label for="is_active" class="text-sm font-medium text-gray-600">Activer immédiatement</label>
+            </div>
+            <button type="submit" class="w-full py-3 bg-accent text-white font-bold rounded-xl hover:bg-primary transition">
+                <i class="fa-solid fa-check mr-2"></i> Créer le code
+            </button>
+        </form>
+    </div>
 </div>
 {% endblock %}

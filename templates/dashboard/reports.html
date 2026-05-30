@@ -1,19 +1,181 @@
 {% extends 'dashboard/base_dashboard.html' %}
 
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
 {% block dashboard_content %}
 <div class="mb-8">
     <h1 class="text-2xl font-extrabold text-dark tracking-tight">Rapports & Analyses</h1>
-    <p class="text-sm text-gray-400 font-medium">Suivez la performance de votre boutique en temps réel.</p>
+    <p class="text-sm text-gray-400 font-medium">Performance de votre boutique en temps réel.</p>
 </div>
 
-<div class="bg-white rounded-[40px] border border-gray-100 shadow-sm p-12 text-center">
-    <div class="w-24 h-24 bg-cream text-accent rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
-        <i class="fa-solid fa-chart-pie"></i>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-2xl border border-gray-100 p-5">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 rounded-xl bg-green-50 text-green-500 flex items-center justify-center"><i class="fa-solid fa-coins"></i></div>
+            <span class="text-[10px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-full uppercase">Total</span>
+        </div>
+        <p class="text-2xl font-extrabold text-dark">{{ total_revenue|floatformat:0 }}</p>
+        <p class="text-xs text-gray-400 font-medium">FCFA de revenus</p>
     </div>
-    <h2 class="text-xl font-bold text-dark mb-4">Module en Cours de Développement</h2>
-    <p class="text-gray-500 max-w-md mx-auto leading-relaxed">
-        Ce module vous offrira des analyses détaillées sur vos ventes, vos meilleurs produits et le comportement de vos clients. <br><br>
-        Bientôt disponible !
-    </p>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center"><i class="fa-solid fa-calendar"></i></div>
+            <span class="text-[10px] font-bold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full uppercase">Ce mois</span>
+        </div>
+        <p class="text-2xl font-extrabold text-dark">{{ monthly_revenue|floatformat:0 }}</p>
+        <p class="text-xs text-gray-400 font-medium">FCFA ce mois</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center"><i class="fa-solid fa-shopping-bag"></i></div>
+        </div>
+        <p class="text-2xl font-extrabold text-dark">{{ total_orders }}</p>
+        <p class="text-xs text-gray-400 font-medium">Commandes totales</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center"><i class="fa-solid fa-users"></i></div>
+        </div>
+        <p class="text-2xl font-extrabold text-dark">{{ total_customers }}</p>
+        <p class="text-xs text-gray-400 font-medium">Clients inscrits</p>
+    </div>
 </div>
+
+<!-- Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <!-- Sales Chart (30 days) -->
+    <div class="lg:col-span-2 bg-white rounded-[30px] border border-gray-100 shadow-sm p-6">
+        <h3 class="text-sm font-bold text-dark mb-4">Ventes — 30 derniers jours (FCFA)</h3>
+        <div class="relative h-64">
+            <canvas id="salesChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Status Pie -->
+    <div class="bg-white rounded-[30px] border border-gray-100 shadow-sm p-6">
+        <h3 class="text-sm font-bold text-dark mb-4">Répartition des Commandes</h3>
+        <div class="relative h-64 flex items-center justify-center">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Tables Row -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Top Products -->
+    <div class="bg-white rounded-[30px] border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-50">
+            <h3 class="text-sm font-bold text-dark flex items-center"><i class="fa-solid fa-trophy text-amber-400 mr-2"></i> Top 5 Produits</h3>
+        </div>
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-50">
+                    <th class="px-6 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-left">#</th>
+                    <th class="px-6 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-left">Produit</th>
+                    <th class="px-6 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-right">Vendus</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in top_products %}
+                <tr class="border-b border-gray-50 hover:bg-gray-50/50">
+                    <td class="px-6 py-3 text-gray-400 font-bold">{{ forloop.counter }}</td>
+                    <td class="px-6 py-3 font-medium text-dark">{{ item.product__name|default:"Produit supprimé" }}</td>
+                    <td class="px-6 py-3 text-right font-bold text-accent">{{ item.qty }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="px-6 py-8 text-center text-gray-400">Aucune vente enregistrée.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Top Customers -->
+    <div class="bg-white rounded-[30px] border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-50">
+            <h3 class="text-sm font-bold text-dark flex items-center"><i class="fa-solid fa-crown text-amber-400 mr-2"></i> Top 5 Clients</h3>
+        </div>
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-50">
+                    <th class="px-6 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-left">Client</th>
+                    <th class="px-6 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-right">Commandes</th>
+                    <th class="px-6 py-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-right">Total dépensé</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in top_customers %}
+                <tr class="border-b border-gray-50 hover:bg-gray-50/50">
+                    <td class="px-6 py-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-xs">{{ c.first_name|first|upper }}{{ c.last_name|first|upper }}</div>
+                            <span class="font-medium text-dark">{{ c.first_name }} {{ c.last_name }}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-3 text-right text-gray-500">{{ c.order_count }}</td>
+                    <td class="px-6 py-3 text-right font-bold text-accent">{{ c.total_spent|floatformat:0 }} FCFA</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="px-6 py-8 text-center text-gray-400">Aucun client avec commande.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Sales Line Chart
+    new Chart(document.getElementById('salesChart'), {
+        type: 'line',
+        data: {
+            labels: {{ chart_labels|safe }},
+            datasets: [{
+                label: 'Ventes (FCFA)',
+                data: {{ chart_data|safe }},
+                borderColor: '#D2691E',
+                backgroundColor: 'rgba(210, 105, 30, 0.08)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 2,
+                pointHoverRadius: 5,
+                borderWidth: 2.5,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 9 }, maxTicksLimit: 10 } },
+                y: { grid: { color: '#f3f4f6' }, ticks: { font: { size: 10 } }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Status Doughnut Chart
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: {{ status_labels|safe }},
+            datasets: [{
+                data: {{ status_data|safe }},
+                backgroundColor: ['#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#6B7280', '#EF4444'],
+                borderWidth: 0,
+                hoverOffset: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%',
+            plugins: {
+                legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 12, usePointStyle: true, pointStyleWidth: 8 } }
+            }
+        }
+    });
+</script>
 {% endblock %}
