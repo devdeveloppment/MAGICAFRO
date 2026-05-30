@@ -89,6 +89,48 @@ def product_detail(request, slug):
     
     context = {
         'product': product,
-        'related': related_products,
+        'related_products': related_products,
     }
     return render(request, 'products/product_detail.html', context)
+
+def beauty_diagnostic(request):
+    """
+    Diagnostic IA: Analyze user input and return tailored recommendations.
+    Saves to BeautyProfile if the user is authenticated.
+    """
+    if request.method == 'POST':
+        hair_type = request.POST.get('hair_type')
+        porosity = request.POST.get('porosity')
+        concern = request.POST.get('concern')
+        
+        # Sauvegarde du profil si connecté
+        if request.user.is_authenticated:
+            from accounts.models import BeautyProfile
+            profile, _ = BeautyProfile.objects.get_or_create(user=request.user)
+            profile.hair_type = hair_type
+            profile.hair_porosity = porosity
+            profile.primary_concern = concern
+            profile.save()
+            
+        # Moteur de recommandation basique
+        recommended_products = Product.objects.filter(is_active=True)
+        if concern == 'Hydratation':
+            recommended_products = recommended_products.filter(Q(description__icontains='hydrat') | Q(name__icontains='hydrat'))
+        elif concern == 'Pousse':
+            recommended_products = recommended_products.filter(Q(description__icontains='pousse') | Q(name__icontains='pousse') | Q(description__icontains='croissance'))
+        elif concern == 'Réparation':
+            recommended_products = recommended_products.filter(Q(description__icontains='répar') | Q(name__icontains='répar') | Q(description__icontains='fort'))
+            
+        # Fallback si pas de résultat exact
+        if not recommended_products.exists():
+            recommended_products = Product.objects.filter(is_active=True).order_by('-rating_avg')[:4]
+        else:
+            recommended_products = recommended_products[:4]
+            
+        return render(request, 'products/diagnostic_results.html', {
+            'products': recommended_products,
+            'concern': concern,
+            'hair_type': hair_type
+        })
+
+    return render(request, 'products/diagnostic.html')

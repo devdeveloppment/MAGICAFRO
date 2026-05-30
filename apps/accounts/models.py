@@ -41,3 +41,37 @@ class Address(models.Model):
 
     def __str__(self):
         return f"{self.full_name} - {self.city}"
+
+class BeautyProfile(models.Model):
+    HAIR_TYPE_CHOICES = [
+        ('1', 'Lisse (1)'),
+        ('2', 'Ondulé (2A, 2B, 2C)'),
+        ('3', 'Bouclé (3A, 3B, 3C)'),
+        ('4', 'Crépu (4A, 4B, 4C)'),
+    ]
+    POROSITY_CHOICES = [
+        ('FAIBLE', 'Faible'),
+        ('MOYENNE', 'Moyenne'),
+        ('FORTE', 'Forte'),
+    ]
+    SKIN_TYPE_CHOICES = [
+        ('SECHE', 'Sèche'),
+        ('GRASSE', 'Grasse'),
+        ('MIXTE', 'Mixte'),
+        ('NORMALE', 'Normale'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='beauty_profile')
+    hair_type = models.CharField(max_length=20, choices=HAIR_TYPE_CHOICES, blank=True, null=True, verbose_name="Type de cheveux")
+    hair_porosity = models.CharField(max_length=20, choices=POROSITY_CHOICES, blank=True, null=True, verbose_name="Porosité")
+    skin_type = models.CharField(max_length=20, choices=SKIN_TYPE_CHOICES, blank=True, null=True, verbose_name="Type de peau")
+    primary_concern = models.CharField(max_length=255, blank=True, null=True, help_text="Ex: Hydratation, Pousse, Acné...", verbose_name="Préoccupation principale")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Profil Beauté"
+        verbose_name_plural = "Profils Beauté"
+
+    def __str__(self):
+        return f"Profil Beauté de {self.user.email}"

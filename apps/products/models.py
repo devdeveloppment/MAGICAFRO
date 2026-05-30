@@ -106,3 +106,49 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Review by {self.user.email} for {self.product.name}"
+
+class Routine(models.Model):
+    name = models.CharField(max_length=200, verbose_name="Nom de la routine")
+    slug = models.SlugField(unique=True, blank=True)
+    description = models.TextField(verbose_name="Description")
+    is_active = models.BooleanField(default=True, verbose_name="Active")
+    discount_percentage = models.IntegerField(default=10, help_text="Pourcentage de réduction si achetée complète", verbose_name="Réduction (%)")
+    image = models.ImageField(upload_to='routines/', null=True, blank=True, verbose_name="Image de couverture")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Routine Beauté"
+        verbose_name_plural = "Routines Beauté"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            import uuid
+            self.slug = slugify(self.name)
+            if Routine.objects.filter(slug=self.slug).exists():
+                self.slug = f"{self.slug}-{str(uuid.uuid4())[:4]}"
+        super().save(*args, **kwargs)
+
+    @property
+    def total_price(self):
+        return sum(item.product.price for item in self.items.all())
+    
+    @property
+    def discounted_price(self):
+        return self.total_price * (100 - self.discount_percentage) / 100
+
+    def __str__(self):
+        return self.name
+
+class RoutineItem(models.Model):
+    routine = models.ForeignKey(Routine, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Produit")
+    step_number = models.IntegerField(default=1, verbose_name="Numéro de l'étape")
+    instructions = models.TextField(blank=True, help_text="Ex: Appliquer sur cheveux humides...", verbose_name="Instructions d'utilisation")
+
+    class Meta:
+        verbose_name = "Étape de Routine"
+        verbose_name_plural = "Étapes de Routine"
+        ordering = ['step_number']
+
+    def __str__(self):
+        return f"Étape {self.step_number} : {self.product.name} ({self.routine.name})"
