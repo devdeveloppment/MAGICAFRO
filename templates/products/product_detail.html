@@ -32,14 +32,14 @@
                             {{ product.get_badge_display }}
                         </span>
                         {% endif %}
-                        <img src="{{ product.get_primary_image|default:'https://via.placeholder.com/600' }}" id="main-product-image" alt="{{ product.name }}" class="absolute inset-0 w-full h-full object-cover transition duration-500">
+                        <img src="{{ product.get_primary_image|default:'https://via.placeholder.com/600' }}" id="main-product-image" alt="{{ product.name }}" class="absolute inset-0 w-full h-full object-contain p-2 transition duration-500">
                     </div>
                     
                     <!-- Thumbnails -->
                     <div class="flex flex-wrap gap-4 mt-6">
                         {% for img in product.images.all %}
                         <div class="w-20 h-20 rounded-2xl border-2 {% if img.is_feature %}border-accent active{% else %}border-transparent{% endif %} p-1 cursor-pointer bg-white transition product-thumb hover:border-accent/30" onclick="document.getElementById('main-product-image').src='{{ img.image.url }}'; document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active', 'border-accent')); this.classList.add('active', 'border-accent');">
-                            <img src="{{ img.image.url }}" class="w-full h-full object-cover rounded-xl">
+                            <img src="{{ img.image.url }}" class="w-full h-full object-contain rounded-xl">
                         </div>
                         {% endfor %}
                     </div>
@@ -201,7 +201,7 @@
                 {% for item in related_products %}
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 card-hover group h-full flex flex-col">
                     <div class="relative aspect-[4/5] overflow-hidden bg-gray-50">
-                        <img src="{{ item.get_primary_image|default:'https://via.placeholder.com/300' }}" alt="{{ item.name }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <img src="{{ item.get_primary_image|default:'https://via.placeholder.com/300' }}" alt="{{ item.name }}" class="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-110 transition duration-500">
                         <a href="{% url 'products:product_detail' item.slug %}" class="absolute inset-0 z-10"></a>
                     </div>
                     <div class="p-6">
