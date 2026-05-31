@@ -236,8 +236,5 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-# File Storage Settings
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 CART_SESSION_ID = 'cart'
