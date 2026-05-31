@@ -1,1 +1,1140 @@
-[{"model": "accounts.user", "pk": 1, "fields": {"password": "pbkdf2_sha256$720000$XvhjfLEIk2Ner4D2VMMLfv$ZKbyQklqETvIEpApO+5b8XwN1mbqS8CRzaZmR2/vtLs=", "last_login": "2026-05-30T20:16:41.159Z", "is_superuser": true, "is_staff": true, "is_active": true, "date_joined": "2026-03-10T22:22:14.848Z", "email": "admin@magicafro.com", "first_name": "Admin", "last_name": "MagicAfro", "groups": [], "user_permissions": []}}, {"model": "accounts.beautyprofile", "pk": 1, "fields": {"user": 1, "hair_type": "4", "hair_porosity": "FORTE", "skin_type": null, "primary_concern": "Réparation", "created_at": "2026-05-30T17:48:42.701Z", "updated_at": "2026-05-31T13:54:42.918Z"}}, {"model": "products.category", "pk": 1, "fields": {"name": "Shampooings", "slug": "shampooings", "parent": null, "icon": "fa-soap", "order": 1, "image": ""}}, {"model": "products.category", "pk": 2, "fields": {"name": "Masques", "slug": "masques", "parent": null, "icon": "fa-mask", "order": 2, "image": ""}}, {"model": "products.category", "pk": 3, "fields": {"name": "Huiles", "slug": "huiles", "parent": null, "icon": "fa-droplet", "order": 3, "image": ""}}, {"model": "products.category", "pk": 4, "fields": {"name": "Beurres", "slug": "beurres", "parent": null, "icon": "fa-jar", "order": 4, "image": ""}}, {"model": "products.category", "pk": 5, "fields": {"name": "Maquillage", "slug": "maquillage", "parent": null, "icon": "fa-brush", "order": 5, "image": ""}}, {"model": "products.category", "pk": 6, "fields": {"name": "Accessoires", "slug": "accessoires", "parent": null, "icon": "fa-hat-wizard", "order": 6, "image": ""}}, {"model": "products.category", "pk": 7, "fields": {"name": "Soins du Corps", "slug": "soins-du-corps", "parent": null, "icon": "fa-spa", "order": 3, "image": ""}}, {"model": "products.category", "pk": 8, "fields": {"name": "Cheveux", "slug": "cheveux", "parent": null, "icon": "fa-wind", "order": 2, "image": ""}}, {"model": "products.category", "pk": 9, "fields": {"name": "Édition Limitée", "slug": "edition-limitee", "parent": null, "icon": "fa-crown", "order": 0, "image": ""}}, {"model": "products.category", "pk": 10, "fields": {"name": "Perruques", "slug": "perruques", "parent": null, "icon": "fa-crown", "order": 0, "image": ""}}, {"model": "products.product", "pk": 1, "fields": {"name": "Beurre de Karité Brut", "slug": "beurre-de-karite-brut", "description": "Hydratant et nourrissant peaux & cheveux. 100% naturel.", "price": "16309.50", "old_price": "29.90", "stock": 50, "category": 7, "badge": "BEST", "rating_avg": 4.9, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-10T22:24:40.524Z", "updated_at": "2026-03-11T00:35:15.285Z"}}, {"model": "products.product", "pk": 2, "fields": {"name": "Huile d'Avocat Pure", "slug": "huile-davocat-pure", "description": "Stimule la pousse et fortifie.", "price": "10414.50", "old_price": "19.90", "stock": 50, "category": 3, "badge": "BEST", "rating_avg": 4.9, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-10T22:24:40.532Z", "updated_at": "2026-03-11T00:35:15.294Z"}}, {"model": "products.product", "pk": 3, "fields": {"name": "Shampooing Solide Hibiscus", "slug": "shampooing-solide-hibiscus", "description": "Cheveux ternes et fatigués.", "price": "8187.50", "old_price": null, "stock": 50, "category": 8, "badge": "BEST", "rating_avg": 4.9, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-10T22:24:40.537Z", "updated_at": "2026-03-11T00:35:15.298Z"}}, {"model": "products.product", "pk": 4, "fields": {"name": "Kit de Pinceaux Bambou", "slug": "kit-de-pinceaux-bambou", "description": "Application douce et précise.", "price": "25545.00", "old_price": null, "stock": 50, "category": 5, "badge": "BEST", "rating_avg": 4.9, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-10T22:24:40.544Z", "updated_at": "2026-03-11T00:56:48.600Z"}}, {"model": "products.product", "pk": 5, "fields": {"name": "Soin Signature MagicAfro", "slug": "soin-signature-magicafro", "description": "L'excellence du soin capillaire pour une beauté sublimée.", "price": "45000.00", "old_price": null, "stock": 0, "category": 9, "badge": "BEST", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-11T12:36:18.300Z", "updated_at": "2026-03-11T12:41:03.548Z"}}, {"model": "products.product", "pk": 6, "fields": {"name": "Kit de Tressage Pro", "slug": "kit-tressage-pro", "description": "Tout ce qu'il vous faut pour des tresses parfaites et durables.", "price": "25000.00", "old_price": null, "stock": 0, "category": 9, "badge": null, "rating_avg": 0.0, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-11T12:36:18.319Z", "updated_at": "2026-03-11T12:36:18.319Z"}}, {"model": "products.product", "pk": 7, "fields": {"name": "Masque Nutritif Intense", "slug": "masque-nutritif-intense", "description": "Nourrit en profondeur les boucles les plus assoiffées.", "price": "18500.00", "old_price": null, "stock": 0, "category": 9, "badge": null, "rating_avg": 0.0, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-11T12:36:18.343Z", "updated_at": "2026-03-11T12:36:18.343Z"}}, {"model": "products.product", "pk": 8, "fields": {"name": "L'Huile d'Or Rare", "slug": "huile-or-rare", "description": "Une huile précieuse aux extraits rares pour un éclat incomparable.", "price": "55000.00", "old_price": null, "stock": 0, "category": 9, "badge": "BEST", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-11T12:36:18.366Z", "updated_at": "2026-03-11T12:41:03.558Z"}}, {"model": "products.product", "pk": 9, "fields": {"name": "strange james", "slug": "strange-james", "description": "reqtsrdtfyghijlkjbxcvhbnxcvhbnhbn", "price": "7000.00", "old_price": null, "stock": 2, "category": 10, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-11T13:10:51.255Z", "updated_at": "2026-03-11T13:17:57.202Z"}}, {"model": "products.product", "pk": 10, "fields": {"name": "Beauty for stardom", "slug": "beauty-for-stardom", "description": "vyblsdngknjlengldsngoilrdsngmoglndfgoslgnldfigndmlkngmlgnfgih", "price": "9000.00", "old_price": null, "stock": 3, "category": 10, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-11T18:07:50.181Z", "updated_at": "2026-03-11T18:07:50.181Z"}}, {"model": "products.product", "pk": 11, "fields": {"name": "pomade de beauté", "slug": "pomade-de-beaute", "description": ",ds vsqljkg:nds lgrgdsvl vdfsbibglf jv skjb obnxnbdfjbs dmwfd", "price": "15000.00", "old_price": null, "stock": 6, "category": 3, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": null, "created_at": "2026-03-11T18:08:53.971Z", "updated_at": "2026-03-11T18:08:53.971Z"}}, {"model": "products.product", "pk": 12, "fields": {"name": "Sérum Vitamine C Éclat Intense", "slug": "serum-vitamine-c-eclat-intense", "description": "Le Sérum Vitamine C Éclat Intense est un soin concentré spécialement conçu pour illuminer le teint, réduire les taches pigmentaires et améliorer l'apparence générale de la peau.\r\n\r\nGrâce à sa formule enrichie en Vitamine C pure, en extrait d'orange naturelle et en antioxydants puissants, ce sérum aide à protéger la peau contre les agressions extérieures telles que la pollution, les rayons UV et le stress environnemental.\r\n\r\nSa texture légère pénètre rapidement dans la peau sans laisser de film gras, offrant une sensation immédiate de fraîcheur et d'hydratation.\r\n\r\nAprès plusieurs semaines d'utilisation régulière, la peau paraît plus lumineuse, plus uniforme et visiblement plus jeune.\r\n\r\nComment ça fonctionne ?\r\n\r\nLa Vitamine C agit directement sur la production excessive de mélanine responsable des taches brunes.\r\n\r\nElle stimule également la production naturelle de collagène, une protéine essentielle qui maintient la fermeté et l'élasticité de la peau.\r\n\r\nLes antioxydants présents dans la formule neutralisent les radicaux libres responsables du vieillissement prématuré.\r\n\r\nBienfaits\r\nRéduit les taches pigmentaires\r\nIllumine le teint\r\nHydrate intensément\r\nStimule la production de collagène\r\nProtège contre les agressions extérieures\r\nAméliore la texture de la peau\r\nRend le visage plus éclatant\r\nComment utiliser ?\r\nNettoyer soigneusement le visage.\r\nAppliquer 2 à 3 gouttes de sérum sur une peau propre et sèche.\r\nMasser délicatement jusqu'à absorption complète.\r\nAppliquer ensuite une crème hydratante.\r\nUtiliser matin et soir pour de meilleurs résultats.\r\nType de peau\r\nPeau grasse\r\nPeau mixte\r\nPeau normale\r\nPeau terne\r\nRésultats attendus\r\nAprès 7 jours : peau plus fraîche et hydratée.\r\nAprès 14 jours : teint plus lumineux.\r\nAprès 30 jours : diminution visible des taches et amélioration globale de l'éclat du visage.\r\nIngrédients principaux\r\nVitamine C\r\nAcide Hyaluronique\r\nExtrait d'Orange\r\nAloe Vera", "price": "12900.00", "old_price": null, "stock": 5, "category": 7, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=mGsGlYBG6T8&pp=ygUgU8OpcnVtIFZpdGFtaW5lIEMgw4ljbGF0IEludGVuc2XSBwkJIwsBhyohjO8%3D", "created_at": "2026-05-30T20:46:54.328Z", "updated_at": "2026-05-30T20:47:18.779Z"}}, {"model": "products.product", "pk": 13, "fields": {"name": "Crème Définition Boucles Afro Premium", "slug": "creme-definition-boucles-afro-premium", "description": "La Crème Définition Boucles Afro Premium est spécialement formulée pour les cheveux crépus, frisés et bouclés.\r\n\r\nElle nourrit intensément la fibre capillaire tout en définissant parfaitement les boucles sans effet cartonné.\r\n\r\nSa formule riche en beurre de karité, huile de coco et huile de ricin permet de maintenir l'hydratation des cheveux pendant plusieurs jours tout en réduisant les frisottis.\r\n\r\nLes cheveux deviennent plus souples, brillants et faciles à coiffer.\r\n\r\nComment ça fonctionne ?\r\n\r\nLe beurre de karité nourrit profondément les cheveux.\r\n\r\nL'huile de coco pénètre la fibre capillaire afin de limiter la casse.\r\n\r\nL'huile de ricin favorise la pousse et renforce les racines.\r\n\r\nEnsemble, ces actifs créent une protection naturelle qui maintient l'hydratation des boucles.\r\n\r\nBienfaits\r\nDéfinit les boucles\r\nRéduit les frisottis\r\nNourrit profondément\r\nFavorise la pousse\r\nApporte de la brillance\r\nProtège contre la casse\r\nComment utiliser ?\r\nAppliquer sur cheveux humides.\r\nRépartir uniformément mèche par mèche.\r\nScruncher les boucles avec les mains.\r\nLaisser sécher naturellement ou utiliser un diffuseur.\r\nType de cheveux\r\nCheveux crépus\r\nCheveux frisés\r\nCheveux bouclés\r\nRésultats attendus\r\nBoucles mieux définies dès la première utilisation.\r\nCheveux plus doux après quelques jours.\r\nRéduction visible de la casse après plusieurs semaines.\r\nIngrédients principaux\r\nBeurre de Karité\r\nHuile de Coco\r\nHuile de Ricin\r\nAloe Vera", "price": "8500.00", "old_price": null, "stock": 6, "category": 7, "badge": "PROMO", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/uKTuZFt2m_8", "created_at": "2026-05-30T20:49:01.843Z", "updated_at": "2026-05-30T20:49:42.782Z"}}, {"model": "products.product", "pk": 14, "fields": {"name": "Fond de Teint HD Longue Tenue", "slug": "fond-de-teint-hd-longue-tenue", "description": "Le Fond de Teint HD Longue Tenue offre une couvrance parfaite tout en conservant un rendu naturel et lumineux.\r\n\r\nSa formule légère unifie le teint, masque les imperfections et résiste à la chaleur ainsi qu'à l'humidité pendant toute la journée.\r\n\r\nConçu pour les peaux noires, métissées et mates, il s'adapte parfaitement aux différentes carnations pour un résultat homogène et sans effet masque.\r\n\r\nComment ça fonctionne ?\r\n\r\nLes pigments haute définition corrigent les irrégularités du teint.\r\n\r\nLes agents matifiants contrôlent l'excès de sébum tandis que les actifs hydratants empêchent la peau de se dessécher.\r\n\r\nBienfaits\r\nLongue tenue jusqu'à 24 heures\r\nHaute couvrance\r\nFini naturel\r\nRésistant à la transpiration\r\nHydratation continue\r\nComment utiliser ?\r\nAppliquer une base de maquillage.\r\nDéposer une petite quantité sur le visage.\r\nÉtaler avec une éponge ou un pinceau.\r\nFixer avec une poudre si nécessaire.\r\nRésultats attendus\r\nTeint uniforme immédiatement.\r\nPeau lumineuse toute la journée.\r\nFinition professionnelle.", "price": "9900.00", "old_price": null, "stock": 3, "category": 7, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=EVyKVLUjnCI&pp=ygUdRm9uZCBkZSBUZWludCBIRCBMb25ndWUgVGVudWU%3D", "created_at": "2026-05-30T20:51:35.835Z", "updated_at": "2026-05-30T20:51:35.835Z"}}, {"model": "products.product", "pk": 15, "fields": {"name": "Huile de Ricin Croissance Extrême", "slug": "huile-de-ricin-croissance-extreme", "description": "L'Huile de Ricin Croissance Extrême est un soin naturel reconnu pour stimuler la pousse des cheveux, renforcer les racines et améliorer la densité capillaire.\r\n\r\nObtenue à partir de graines de ricin soigneusement sélectionnées, cette huile riche en acides gras essentiels nourrit intensément le cuir chevelu et protège les cheveux contre la casse.\r\n\r\nElle convient aussi aux cils, sourcils et barbe.\r\n\r\nComment ça fonctionne ?\r\n\r\nL'acide ricinoléique contenu dans l'huile améliore la circulation sanguine au niveau du cuir chevelu.\r\n\r\nCette stimulation favorise l'apport des nutriments nécessaires à la croissance des cheveux.\r\n\r\nBienfaits\r\nStimule la pousse\r\nRéduit la casse\r\nRenforce les racines\r\nÉpaissit les cheveux\r\nNourrit profondément\r\nComment utiliser ?\r\nAppliquer directement sur le cuir chevelu.\r\nMasser pendant 5 minutes.\r\nLaisser agir toute la nuit.\r\nRincer avec un shampoing doux.\r\nRésultats attendus\r\nCheveux plus forts après quelques semaines.\r\nRéduction de la chute.\r\nCroissance plus rapide et plus dense.\r\nIngrédients principaux\r\nHuile de Ricin 100 % Pure\r\nVitamine E", "price": "6500.00", "old_price": null, "stock": 8, "category": 3, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/TdidWyC1QeE", "created_at": "2026-05-30T20:54:59.015Z", "updated_at": "2026-05-30T20:54:59.015Z"}}, {"model": "products.product", "pk": 16, "fields": {"name": "Gel Nettoyant Purifiant Anti-Imperfections", "slug": "gel-nettoyant-purifiant-anti-imperfections", "description": "Ce nettoyant élimine efficacement les impuretés, l'excès de sébum et les résidus de maquillage tout en respectant l'équilibre naturel de la peau.\r\n\r\nFonctionnement\r\n\r\nLes agents purifiants désobstruent les pores et réduisent les bactéries responsables des boutons.\r\n\r\nBienfaits\r\nRéduit les imperfections\r\nNettoie en profondeur\r\nLimite l'excès de sébum\r\nRafraîchit le visage\r\nUtilisation\r\nMouiller le visage.\r\nAppliquer une noisette.\r\nMasser pendant 1 minute.\r\nRincer abondamment.\r\nRésultats\r\n\r\nPeau propre, fraîche et plus nette.\r\n\r\n3. Crème Hydratante Aloe Vera Premium\r\nPrix : 9 900 FCFA\r\nDescription\r\n\r\nCrème riche en Aloe Vera qui nourrit intensément la peau tout en maintenant son hydratation pendant toute la journée.\r\n\r\nFonctionnement\r\n\r\nL'Aloe Vera retient l'eau dans les couches supérieures de la peau.\r\n\r\nBienfaits\r\nHydratation longue durée\r\nPeau douce\r\nRéduction des irritations\r\nUtilisation\r\n\r\nAppliquer matin et soir après le nettoyage.", "price": "7500.00", "old_price": null, "stock": 8, "category": 9, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/_MopTAPZiDY", "created_at": "2026-05-30T20:57:51.650Z", "updated_at": "2026-05-30T20:58:07.256Z"}}, {"model": "products.product", "pk": 17, "fields": {"name": "Masque Purifiant Argile Détox", "slug": "masque-purifiant-argile-detox", "description": "Masque enrichi en argile naturelle permettant d'absorber les impuretés et purifier la peau.\r\n\r\nFonctionnement\r\n\r\nL'argile attire les toxines et absorbe l'excès de sébum.\r\n\r\nBienfaits\r\nRéduction des pores\r\nPeau plus nette\r\nEffet détoxifiant\r\nUtilisation\r\n\r\nAppliquer 15 minutes puis rincer.\r\n\r\n5. Fond de Teint HD Longue Tenue\r\nPrix : 9 900 FCFA\r\nDescription\r\n\r\nFond de teint haute couvrance offrant un rendu naturel adapté aux peaux noires et métissées.\r\n\r\nFonctionnement\r\n\r\nLes pigments HD uniformisent instantanément le teint.\r\n\r\nBienfaits\r\nLongue tenue\r\nEffet naturel\r\nHaute couvrance\r\nUtilisation\r\n\r\nAppliquer à l'éponge ou au pinceau.", "price": "8500.00", "old_price": null, "stock": 6, "category": 5, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=SBexPtFBnNs&pp=ygUeTWFzcXVlIFB1cmlmaWFudCBBcmdpbGUgRMOpdG94", "created_at": "2026-05-30T21:01:05.081Z", "updated_at": "2026-05-30T21:01:05.081Z"}}, {"model": "products.product", "pk": 18, "fields": {"name": "Rouge à Lèvres Velvet Luxe", "slug": "rouge-a-levres-velvet-luxe", "description": "Rouge à lèvres mat offrant une couleur intense et une longue tenue.\r\n\r\nFonctionnement\r\n\r\nLes pigments adhèrent durablement aux lèvres.\r\n\r\nBienfaits\r\nCouleur intense\r\nLongue tenue\r\nHydratation\r\nUtilisation\r\n\r\nAppliquer directement sur les lèvres.\r\n\r\n7. Gloss Diamond Shine\r\nPrix : 3 900 FCFA\r\nDescription\r\n\r\nGloss brillant enrichi en huiles nourrissantes pour des lèvres lumineuses.\r\n\r\nBienfaits\r\nBrillance extrême\r\nHydratation\r\nEffet volume\r\nUtilisation\r\n\r\nAppliquer seul ou sur un rouge à lèvres.", "price": "4500.00", "old_price": null, "stock": 2, "category": 5, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/Y78psJ6qYFw", "created_at": "2026-05-30T21:03:45.539Z", "updated_at": "2026-05-30T21:03:45.539Z"}}, {"model": "products.product", "pk": 19, "fields": {"name": "Mascara Volume Extrême", "slug": "mascara-volume-extreme", "description": "Mascara conçu pour allonger et épaissir les cils.\r\n\r\nFonctionnement\r\n\r\nLes fibres gainent chaque cil individuellement.\r\n\r\nBienfaits\r\nVolume immédiat\r\nRegard intense\r\nLongue tenue\r\nUtilisation\r\n\r\nAppliquer de la racine vers la pointe.", "price": "5500.00", "old_price": null, "stock": 4, "category": 2, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/cyqB8D1cX9U", "created_at": "2026-05-30T21:06:25.509Z", "updated_at": "2026-05-30T21:06:25.509Z"}}, {"model": "products.product", "pk": 20, "fields": {"name": "Crème Définition Boucles Afro Premium", "slug": "creme-definition-boucles-afro-premium-3f18", "description": "Crème coiffante spécialement conçue pour les cheveux afro, bouclés et crépus.\r\n\r\nFonctionnement\r\n\r\nMaintient l'hydratation et définit les boucles.\r\n\r\nBienfaits\r\nBoucles définies\r\nRéduction des frisottis\r\nBrillance naturelle\r\nUtilisation\r\n\r\nAppliquer sur cheveux humides.", "price": "8500.00", "old_price": null, "stock": 20, "category": 1, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=nLhrVJ02WNU&pp=ygUnQ3LDqG1lIETDqWZpbml0aW9uIEJvdWNsZXMgQWZybyBQcmVtaXVt", "created_at": "2026-05-30T21:09:02.258Z", "updated_at": "2026-05-30T21:09:02.258Z"}}, {"model": "products.product", "pk": 21, "fields": {"name": "Leave-In Hydratation Intense", "slug": "leave-in-hydratation-intense", "description": "Soin sans rinçage nourrissant les cheveux en profondeur.\r\n\r\nBienfaits\r\nHydratation durable\r\nProtection contre la casse\r\nCheveux plus souples\r\nUtilisation\r\n\r\nAppliquer après le lavage.", "price": "9500.00", "old_price": null, "stock": 30, "category": 8, "badge": "PROMO", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/VxzP3oKWOpI", "created_at": "2026-05-30T21:12:06.635Z", "updated_at": "2026-05-30T21:12:06.635Z"}}, {"model": "products.product", "pk": 22, "fields": {"name": "Shampoing Réparateur Karité & Coco", "slug": "shampoing-reparateur-karite-coco", "description": "Nettoie les cheveux tout en réparant les fibres capillaires fragilisées.\r\n\r\nBienfaits\r\nRéparation intense\r\nHydratation\r\nDouceur\r\nUtilisation\r\n\r\nAppliquer puis masser avant rinçage.", "price": "7900.00", "old_price": null, "stock": 12, "category": 1, "badge": "PROMO", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=SFH3RqOfEeU&pp=ygUkU2hhbXBvaW5nIFLDqXBhcmF0ZXVyIEthcml0w6kgJiBDb2Nv", "created_at": "2026-05-30T21:14:03.564Z", "updated_at": "2026-05-30T21:14:03.564Z"}}, {"model": "products.product", "pk": 23, "fields": {"name": "Lace Wig Naturelle", "slug": "lace-wig-naturelle", "description": "Solutions élégantes pour changer de style tout en conservant un aspect naturel.", "price": "12000.00", "old_price": null, "stock": 14, "category": 10, "badge": "BEST", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=qlfTXugL1xM&pp=ygUSTGFjZSBXaWcgTmF0dXJlbGxl", "created_at": "2026-05-30T21:19:05.016Z", "updated_at": "2026-05-30T21:20:42.365Z"}}, {"model": "products.product", "pk": 24, "fields": {"name": "Perruque Bouclée Premium", "slug": "perruque-bouclee-premium", "description": "Solutions élégantes pour changer de style tout en conservant un aspect naturel.", "price": "25000.00", "old_price": null, "stock": 23, "category": 10, "badge": "BEST", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/8TURwhgV4Nc", "created_at": "2026-05-30T21:20:33.059Z", "updated_at": "2026-05-30T21:20:33.059Z"}}, {"model": "products.product", "pk": 25, "fields": {"name": "Extensions Brésiliennes", "slug": "extensions-bresiliennes", "description": "Solutions élégantes pour changer de style tout en conservant un aspect naturel.", "price": "50000.00", "old_price": null, "stock": 25, "category": 10, "badge": "BEST", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/xRKscZz7uWE", "created_at": "2026-05-30T21:22:46.661Z", "updated_at": "2026-05-30T21:22:46.661Z"}}, {"model": "products.product", "pk": 26, "fields": {"name": "Mascara Volume Extrême", "slug": "mascara-volume-extreme-8f4e", "description": "Permet de sublimer le regard avec des finitions naturelles ou glamour.", "price": "3000.00", "old_price": null, "stock": 2, "category": 5, "badge": "BEST", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=abOGK6ZGqhY&pp=ygUObWFzY2FyYSB2b2x1bWU%3D", "created_at": "2026-05-30T21:26:59.434Z", "updated_at": "2026-05-30T21:26:59.434Z"}}, {"model": "products.product", "pk": 27, "fields": {"name": "Eyeliner Waterproof", "slug": "eyeliner-waterproof", "description": "Permet de sublimer le regard avec des finitions naturelles ou glamour.", "price": "12000.00", "old_price": null, "stock": 7, "category": 5, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=d8V9cNWiqsc&pp=ygUTZXllbGluZXIgd2F0ZXJwcm9vZg%3D%3D", "created_at": "2026-05-30T21:28:59.727Z", "updated_at": "2026-05-30T21:28:59.727Z"}}, {"model": "products.product", "pk": 28, "fields": {"name": "Palette Smoky Eyes", "slug": "palette-smoky-eyes", "description": "Permet de sublimer le regard avec des finitions naturelles ou glamour.", "price": "12000.00", "old_price": null, "stock": 10, "category": 5, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/w7SW8XSWEMk", "created_at": "2026-05-30T21:32:20.709Z", "updated_at": "2026-05-30T21:32:20.709Z"}}, {"model": "products.product", "pk": 29, "fields": {"name": "Kit de Pinceaux Professionnels", "slug": "kit-de-pinceaux-professionnels", "description": "Accessoires indispensables pour une application parfaite du maquillage.", "price": "25000.00", "old_price": null, "stock": 23, "category": 6, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=zTWlHaMKRw0&pp=ygUeS2l0IGRlIFBpbmNlYXV4IFByb2Zlc3Npb25uZWxz", "created_at": "2026-05-30T21:34:20.120Z", "updated_at": "2026-05-30T21:34:20.120Z"}}, {"model": "products.product", "pk": 30, "fields": {"name": "Beauty Blender", "slug": "beauty-blender", "description": "Accessoires indispensables pour une application parfaite du maquillage.", "price": "2000.00", "old_price": null, "stock": 3, "category": 6, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/YRDgR0RjJUY", "created_at": "2026-05-30T21:43:53.831Z", "updated_at": "2026-05-30T21:43:53.831Z"}}, {"model": "products.product", "pk": 31, "fields": {"name": "Miroir LED", "slug": "miroir-led", "description": "Accessoires indispensables pour une application parfaite du maquillage.", "price": "15000.00", "old_price": null, "stock": 6, "category": 6, "badge": "BEST", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/shorts/O4DPE5L9J5I", "created_at": "2026-05-30T21:46:40.499Z", "updated_at": "2026-05-30T21:46:40.499Z"}}, {"model": "products.product", "pk": 32, "fields": {"name": "Trousse Cosmétique", "slug": "trousse-cosmetique", "description": "Accessoires indispensables pour une application parfaite du maquillage.", "price": "16000.00", "old_price": null, "stock": 40, "category": 6, "badge": "NEW", "rating_avg": 0.0, "is_active": true, "video": "", "video_url": "https://www.youtube.com/watch?v=owbOVm5IW48&pp=ygUTVHJvdXNzZSBDb3Ntw6l0aXF1ZQ%3D%3D", "created_at": "2026-05-30T21:48:22.730Z", "updated_at": "2026-05-31T14:50:29.081Z"}}, {"model": "products.productimage", "pk": 1, "fields": {"product": 1, "image": "products/beurre_karite_brut_1773185667118.png", "is_feature": true}}, {"model": "products.productimage", "pk": 2, "fields": {"product": 2, "image": "products/huile_avocat_pure_1773185688071.png", "is_feature": true}}, {"model": "products.productimage", "pk": 3, "fields": {"product": 3, "image": "products/shampooing_solide_hibiscus_1773185717660.png", "is_feature": true}}, {"model": "products.productimage", "pk": 4, "fields": {"product": 4, "image": "products/kit_pinceaux_bambou_1773185763634.png", "is_feature": true}}, {"model": "products.productimage", "pk": 5, "fields": {"product": 5, "image": "products/hero_woman_hair_touch_1773231294569.png", "is_feature": true}}, {"model": "products.productimage", "pk": 6, "fields": {"product": 6, "image": "products/woman_braiding_hair_1773231371852.png", "is_feature": true}}, {"model": "products.productimage", "pk": 7, "fields": {"product": 7, "image": "products/applying_hair_product_1773231491698.png", "is_feature": true}}, {"model": "products.productimage", "pk": 8, "fields": {"product": 8, "image": "products/premium_hair_oil_mockup_1773231641737.png", "is_feature": true}}, {"model": "products.productimage", "pk": 9, "fields": {"product": 9, "image": "products/79b0b8e2b6c48ef389a313562560eb89.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 10, "fields": {"product": 10, "image": "products/519dd7f64baab738edc62227b8074ddd.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 11, "fields": {"product": 11, "image": "products/aa6b4d28be3aeb8e06bc3c5b05c5b442.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 12, "fields": {"product": 12, "image": "products/9ca25eba8ee3c37b6638048c42f2a4fe.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 13, "fields": {"product": 13, "image": "products/939d17990e95c416c123de34330c8310.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 14, "fields": {"product": 14, "image": "products/470915d82b4a2842e15aaff5cf96e0c6.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 15, "fields": {"product": 15, "image": "products/4aeab30d5360d76c46cf919ff4fd01cd.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 16, "fields": {"product": 16, "image": "products/068e4c4eed8a05f98c6cc4716c080e1e.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 17, "fields": {"product": 17, "image": "products/4cf3b614bfd1edb483a0abda82aebe7f.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 18, "fields": {"product": 18, "image": "products/674c4b8cf2c6ad42cfde620f0fb0ddad.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 19, "fields": {"product": 19, "image": "products/0e76c9d4a91d0eaa936ea9e8f853b72c.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 20, "fields": {"product": 20, "image": "products/b4ca756c2f0bc1970aaa691116ff68ee.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 21, "fields": {"product": 21, "image": "products/a2c72f1f1f91423076d455ddf029f837.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 22, "fields": {"product": 22, "image": "products/711c4b08c566623e05e75ad7da594abd.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 23, "fields": {"product": 23, "image": "products/1c6c25e8f9117d157e63e730afb1b597.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 24, "fields": {"product": 24, "image": "products/e5f04db4c4599f3b5b0dcc4cea059a05.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 25, "fields": {"product": 25, "image": "products/f87c96e2e6eaed3224f052d36e1e38df.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 26, "fields": {"product": 26, "image": "products/bb0a3b2a99a0d370c1cbbfa13ff2ed5b.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 27, "fields": {"product": 27, "image": "products/27a4f93cf5a33bbf62f4518f72df860e.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 28, "fields": {"product": 28, "image": "products/bf5206eeceeaa4b176f1f7c907d20edf.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 29, "fields": {"product": 29, "image": "products/dbfb9645025f07466ce5131844f53a21.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 30, "fields": {"product": 30, "image": "products/b6658279a48e7238010c263b2b9bda7e.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 31, "fields": {"product": 31, "image": "products/650a50a95c28b0175b66bc8f80793eaf.jpg", "is_feature": true}}, {"model": "products.productimage", "pk": 34, "fields": {"product": 32, "image": "products/0e76c9d4a91d0eaa936ea9e8f853b72c_Mb7Tyqb.jpg", "is_feature": true}}, {"model": "blog.blogpost", "pk": 1, "fields": {"title": "Comment Construire Une Routine Beauté Complète Pour Une Peau Éclatante ?", "slug": "comment-construire-une-routine-beaute-complete-pour-une-peau-eclatante", "content": "Introduction\r\n\r\nAvoir une belle peau ne dépend pas uniquement des produits utilisés. Une routine adaptée à votre type de peau est essentielle pour obtenir un teint lumineux, uniforme et en bonne santé.\r\n\r\nDe nombreuses personnes utilisent plusieurs produits sans connaître leur rôle exact, ce qui peut parfois provoquer des irritations ou limiter les résultats.\r\n\r\nDans cet article, découvrez les étapes essentielles d'une routine beauté efficace.\r\n\r\nÉtape 1 : Nettoyer La Peau\r\n\r\nLe nettoyage permet d'éliminer :\r\n\r\nLes impuretés\r\nL'excès de sébum\r\nLa pollution\r\nLes résidus de maquillage\r\n\r\nUn bon nettoyant prépare la peau à recevoir les soins suivants.\r\n\r\nÉtape 2 : Appliquer Un Sérum\r\n\r\nLes sérums contiennent des actifs concentrés capables de cibler des besoins précis :\r\n\r\nTaches pigmentaires\r\nDéshydratation\r\nRides\r\nManque d'éclat\r\n\r\nLa vitamine C et l'acide hyaluronique sont parmi les ingrédients les plus recherchés.\r\n\r\nÉtape 3 : Hydrater\r\n\r\nMême les peaux grasses ont besoin d'hydratation.\r\n\r\nUne bonne crème hydratante aide à protéger la barrière cutanée et à maintenir le confort de la peau.\r\n\r\nÉtape 4 : Utiliser Une Protection Solaire\r\n\r\nLe soleil est l'une des principales causes du vieillissement prématuré et des taches pigmentaires.\r\n\r\nL'application quotidienne d'un écran solaire reste indispensable.\r\n\r\nConclusion\r\n\r\nUne routine simple mais régulière est souvent plus efficace qu'une accumulation de produits. La clé est de choisir des soins adaptés à votre peau et de maintenir une utilisation constante.", "author": 1, "image": "blog/db1b2bac8f83349733108cc34a4b407c.jpg", "video": "", "video_url": "https://www.youtube.com/watch?v=249f7umBw1Y&pp=ygUlc2tpbmNhcmUtcm91dGluZS1hZnJvLWJlYXV0eS1nbG93LmpwZw%3D%3D", "published_at": "2026-05-31T14:15:54.795Z", "is_published": true, "created_at": "2026-05-31T14:15:54.813Z", "tags": []}}, {"model": "blog.blogpost", "pk": 2, "fields": {"title": "Les Secrets Pour Des Cheveux Afro Forts, Hydratés Et En Bonne Santé", "slug": "les-secrets-pour-des-cheveux-afro-forts-hydrates-et-en-bonne-sante", "content": "Introduction\r\n\r\nLes cheveux afro possèdent une structure unique qui nécessite des soins spécifiques.\r\n\r\nNaturellement plus secs, ils ont besoin d'une hydratation régulière et de produits adaptés afin d'éviter la casse et préserver leur beauté.\r\n\r\nPourquoi Les Cheveux Afro Sont Plus Fragiles ?\r\n\r\nLa forme en spirale du cheveu rend la circulation du sébum plus difficile sur toute la longueur de la fibre capillaire.\r\n\r\nRésultat :\r\n\r\nSécheresse\r\nCasses fréquentes\r\nPointes fragiles\r\nPerte de définition des boucles\r\nLes Produits Essentiels\r\nHuile de Ricin\r\n\r\nFavorise la pousse et renforce les racines.\r\n\r\nBeurre de Karité\r\n\r\nNourrit profondément les cheveux.\r\n\r\nAloe Vera\r\n\r\nHydrate et apaise le cuir chevelu.\r\n\r\nLeave-In Conditioner\r\n\r\nMaintient l'hydratation pendant plusieurs jours.\r\n\r\nLes Erreurs À Éviter\r\nUtiliser trop de chaleur\r\nNégliger l'hydratation\r\nUtiliser des produits agressifs\r\nDormir sans protection en satin\r\nLes Coiffures Protectrices\r\n\r\nLes coiffures protectrices permettent de réduire la manipulation quotidienne :\r\n\r\nVanilles\r\nBox Braids\r\nCornrows\r\nFaux Locks\r\nConclusion\r\n\r\nDes cheveux afro en bonne santé reposent sur trois piliers :\r\n\r\nHydratation\r\nNutrition\r\nProtection\r\n\r\nUne routine adaptée permet de conserver des cheveux plus forts, plus brillants et plus résistants.", "author": 1, "image": "blog/c2a94e900b6c605b5865802b659cec95.jpg", "video": "", "video_url": "https://www.youtube.com/watch?v=hS6bgW4tN6c&pp=ygVFTGVzIFNlY3JldHMgUG91ciBEZXMgQ2hldmV1eCBBZnJvIEZvcnRzLCBIeWRyYXTDqXMgRXQgRW4gQm9ubmUgU2FudMOp0gcJCSMLAYcqIYzv", "published_at": "2026-05-31T14:22:09.979Z", "is_published": true, "created_at": "2026-05-31T14:22:09.987Z", "tags": []}}, {"model": "blog.blogpost", "pk": 3, "fields": {"title": "Les Tendances Beauté Afro Qui Vont Dominer Cette Année", "slug": "les-tendances-beaute-afro-qui-vont-dominer-cette-annee", "content": "Introduction\r\n\r\nLa beauté afro continue d'évoluer avec de nouvelles tendances qui mettent en avant les textures naturelles, les ingrédients authentiques et les routines personnalisées.\r\n\r\nVoici les tendances les plus populaires du moment.\r\n\r\n1. Le Retour Aux Ingrédients Naturels\r\n\r\nLes consommateurs recherchent davantage :\r\n\r\nHuile de Baobab\r\nBeurre de Karité\r\nAloe Vera\r\nSavon Noir Africain\r\n\r\nCes ingrédients sont appréciés pour leurs propriétés nourrissantes et leur origine naturelle.\r\n\r\n2. Les Produits Multifonctions\r\n\r\nLes clientes privilégient désormais des soins capables de :\r\n\r\nHydrater\r\nNourrir\r\nProtéger\r\n\r\ndans un seul produit.\r\n\r\n3. Les Coiffures Protectrices Modernes\r\n\r\nLes tendances actuelles incluent :\r\n\r\nBox Braids\r\nVanilles XXL\r\nCornrows créatives\r\nWash & Go\r\n4. Les Soins Personnalisés\r\n\r\nLes routines sur mesure gagnent en popularité.\r\n\r\nChaque type de peau ou de cheveux nécessite désormais des produits adaptés à ses besoins spécifiques.\r\n\r\n5. Les Accessoires Beauté Premium\r\n\r\nLes accessoires deviennent des éléments essentiels :\r\n\r\nBonnets en satin\r\nBrosses spécialisées\r\nPinceaux professionnels\r\nMiroirs LED\r\nConclusion\r\n\r\nLa beauté afro moderne repose sur l'équilibre entre innovation, naturalité et valorisation de la beauté authentique.", "author": 1, "image": "blog/1b2941574526e2e689448ca40d9ea564.jpg", "video": "", "video_url": "https://www.youtube.com/shorts/oaE7gYEzAxI", "published_at": "2026-05-31T14:32:46.107Z", "is_published": true, "created_at": "2026-05-31T14:32:46.115Z", "tags": []}}, {"model": "marketing.testimonial", "pk": 1, "fields": {"name": "Aminata K.", "city": "Paris", "photo": "", "rating": 5, "comment": "Enfin des produits qui comprennent vraiment les besoins des cheveux crépus. Mon beurre de karité est magique !", "is_visible": true, "created_at": "2026-03-10T22:24:40.553Z"}}, {"model": "marketing.testimonial", "pk": 2, "fields": {"name": "Sarah M.", "city": "Lyon", "photo": "", "rating": 5, "comment": "L'huile d'avocat a transformé ma routine. Mes cheveux sont plus souples et brillants. Livraison super rapide.", "is_visible": true, "created_at": "2026-03-10T22:24:40.560Z"}}, {"model": "marketing.testimonial", "pk": 3, "fields": {"name": "Léa D.", "city": "Marseille", "photo": "", "rating": 5, "comment": "Superbe sélection de soins bio. Le site est magnifique et les conseils sont au top. Je recommande à 100%.", "is_visible": true, "created_at": "2026-03-10T22:24:40.564Z"}}]
+[
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Shampooings",
+      "slug": "shampooings",
+      "parent": null,
+      "icon": "fa-soap",
+      "order": 1,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Masques",
+      "slug": "masques",
+      "parent": null,
+      "icon": "fa-mask",
+      "order": 2,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Huiles",
+      "slug": "huiles",
+      "parent": null,
+      "icon": "fa-droplet",
+      "order": 3,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+      "name": "Beurres",
+      "slug": "beurres",
+      "parent": null,
+      "icon": "fa-jar",
+      "order": 4,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "name": "Maquillage",
+      "slug": "maquillage",
+      "parent": null,
+      "icon": "fa-brush",
+      "order": 5,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+      "name": "Accessoires",
+      "slug": "accessoires",
+      "parent": null,
+      "icon": "fa-hat-wizard",
+      "order": 6,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 7,
+    "fields": {
+      "name": "Soins du Corps",
+      "slug": "soins-du-corps",
+      "parent": null,
+      "icon": "fa-spa",
+      "order": 3,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 8,
+    "fields": {
+      "name": "Cheveux",
+      "slug": "cheveux",
+      "parent": null,
+      "icon": "fa-wind",
+      "order": 2,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 9,
+    "fields": {
+      "name": "Édition Limitée",
+      "slug": "edition-limitee",
+      "parent": null,
+      "icon": "fa-crown",
+      "order": 0,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 10,
+    "fields": {
+      "name": "Perruques",
+      "slug": "perruques",
+      "parent": null,
+      "icon": "fa-crown",
+      "order": 0,
+      "image": ""
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Beurre de Karité Brut",
+      "slug": "beurre-de-karite-brut",
+      "description": "Hydratant et nourrissant peaux & cheveux. 100% naturel.",
+      "price": "16309.50",
+      "old_price": "29.90",
+      "stock": 50,
+      "category": 7,
+      "badge": "BEST",
+      "rating_avg": 4.9,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-10T22:24:40.524Z",
+      "updated_at": "2026-03-11T00:35:15.285Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "Huile d'Avocat Pure",
+      "slug": "huile-davocat-pure",
+      "description": "Stimule la pousse et fortifie.",
+      "price": "10414.50",
+      "old_price": "19.90",
+      "stock": 50,
+      "category": 3,
+      "badge": "BEST",
+      "rating_avg": 4.9,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-10T22:24:40.532Z",
+      "updated_at": "2026-03-11T00:35:15.294Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "Shampooing Solide Hibiscus",
+      "slug": "shampooing-solide-hibiscus",
+      "description": "Cheveux ternes et fatigués.",
+      "price": "8187.50",
+      "old_price": null,
+      "stock": 50,
+      "category": 8,
+      "badge": "BEST",
+      "rating_avg": 4.9,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-10T22:24:40.537Z",
+      "updated_at": "2026-03-11T00:35:15.298Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "Kit de Pinceaux Bambou",
+      "slug": "kit-de-pinceaux-bambou",
+      "description": "Application douce et précise.",
+      "price": "25545.00",
+      "old_price": null,
+      "stock": 50,
+      "category": 5,
+      "badge": "BEST",
+      "rating_avg": 4.9,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-10T22:24:40.544Z",
+      "updated_at": "2026-03-11T00:56:48.600Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "Soin Signature MagicAfro",
+      "slug": "soin-signature-magicafro",
+      "description": "L'excellence du soin capillaire pour une beauté sublimée.",
+      "price": "45000.00",
+      "old_price": null,
+      "stock": 0,
+      "category": 9,
+      "badge": "BEST",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-11T12:36:18.300Z",
+      "updated_at": "2026-03-11T12:41:03.548Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "name": "Kit de Tressage Pro",
+      "slug": "kit-tressage-pro",
+      "description": "Tout ce qu'il vous faut pour des tresses parfaites et durables.",
+      "price": "25000.00",
+      "old_price": null,
+      "stock": 0,
+      "category": 9,
+      "badge": null,
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-11T12:36:18.319Z",
+      "updated_at": "2026-03-11T12:36:18.319Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+      "name": "Masque Nutritif Intense",
+      "slug": "masque-nutritif-intense",
+      "description": "Nourrit en profondeur les boucles les plus assoiffées.",
+      "price": "18500.00",
+      "old_price": null,
+      "stock": 0,
+      "category": 9,
+      "badge": null,
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-11T12:36:18.343Z",
+      "updated_at": "2026-03-11T12:36:18.343Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "name": "L'Huile d'Or Rare",
+      "slug": "huile-or-rare",
+      "description": "Une huile précieuse aux extraits rares pour un éclat incomparable.",
+      "price": "55000.00",
+      "old_price": null,
+      "stock": 0,
+      "category": 9,
+      "badge": "BEST",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-11T12:36:18.366Z",
+      "updated_at": "2026-03-11T12:41:03.558Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+      "name": "strange james",
+      "slug": "strange-james",
+      "description": "reqtsrdtfyghijlkjbxcvhbnxcvhbnhbn",
+      "price": "7000.00",
+      "old_price": null,
+      "stock": 2,
+      "category": 10,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-11T13:10:51.255Z",
+      "updated_at": "2026-03-11T13:17:57.202Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "name": "Beauty for stardom",
+      "slug": "beauty-for-stardom",
+      "description": "vyblsdngknjlengldsngoilrdsngmoglndfgoslgnldfigndmlkngmlgnfgih",
+      "price": "9000.00",
+      "old_price": null,
+      "stock": 3,
+      "category": 10,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-11T18:07:50.181Z",
+      "updated_at": "2026-03-11T18:07:50.181Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "name": "pomade de beauté",
+      "slug": "pomade-de-beaute",
+      "description": ",ds vsqljkg:nds lgrgdsvl vdfsbibglf jv skjb obnxnbdfjbs dmwfd",
+      "price": "15000.00",
+      "old_price": null,
+      "stock": 6,
+      "category": 3,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": null,
+      "created_at": "2026-03-11T18:08:53.971Z",
+      "updated_at": "2026-03-11T18:08:53.971Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 12,
+    "fields": {
+      "name": "Sérum Vitamine C Éclat Intense",
+      "slug": "serum-vitamine-c-eclat-intense",
+      "description": "Le Sérum Vitamine C Éclat Intense est un soin concentré spécialement conçu pour illuminer le teint, réduire les taches pigmentaires et améliorer l'apparence générale de la peau.\r\n\r\nGrâce à sa formule enrichie en Vitamine C pure, en extrait d'orange naturelle et en antioxydants puissants, ce sérum aide à protéger la peau contre les agressions extérieures telles que la pollution, les rayons UV et le stress environnemental.\r\n\r\nSa texture légère pénètre rapidement dans la peau sans laisser de film gras, offrant une sensation immédiate de fraîcheur et d'hydratation.\r\n\r\nAprès plusieurs semaines d'utilisation régulière, la peau paraît plus lumineuse, plus uniforme et visiblement plus jeune.\r\n\r\nComment ça fonctionne ?\r\n\r\nLa Vitamine C agit directement sur la production excessive de mélanine responsable des taches brunes.\r\n\r\nElle stimule également la production naturelle de collagène, une protéine essentielle qui maintient la fermeté et l'élasticité de la peau.\r\n\r\nLes antioxydants présents dans la formule neutralisent les radicaux libres responsables du vieillissement prématuré.\r\n\r\nBienfaits\r\nRéduit les taches pigmentaires\r\nIllumine le teint\r\nHydrate intensément\r\nStimule la production de collagène\r\nProtège contre les agressions extérieures\r\nAméliore la texture de la peau\r\nRend le visage plus éclatant\r\nComment utiliser ?\r\nNettoyer soigneusement le visage.\r\nAppliquer 2 à 3 gouttes de sérum sur une peau propre et sèche.\r\nMasser délicatement jusqu'à absorption complète.\r\nAppliquer ensuite une crème hydratante.\r\nUtiliser matin et soir pour de meilleurs résultats.\r\nType de peau\r\nPeau grasse\r\nPeau mixte\r\nPeau normale\r\nPeau terne\r\nRésultats attendus\r\nAprès 7 jours : peau plus fraîche et hydratée.\r\nAprès 14 jours : teint plus lumineux.\r\nAprès 30 jours : diminution visible des taches et amélioration globale de l'éclat du visage.\r\nIngrédients principaux\r\nVitamine C\r\nAcide Hyaluronique\r\nExtrait d'Orange\r\nAloe Vera",
+      "price": "12900.00",
+      "old_price": null,
+      "stock": 5,
+      "category": 7,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=mGsGlYBG6T8&pp=ygUgU8OpcnVtIFZpdGFtaW5lIEMgw4ljbGF0IEludGVuc2XSBwkJIwsBhyohjO8%3D",
+      "created_at": "2026-05-30T20:46:54.328Z",
+      "updated_at": "2026-05-30T20:47:18.779Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 13,
+    "fields": {
+      "name": "Crème Définition Boucles Afro Premium",
+      "slug": "creme-definition-boucles-afro-premium",
+      "description": "La Crème Définition Boucles Afro Premium est spécialement formulée pour les cheveux crépus, frisés et bouclés.\r\n\r\nElle nourrit intensément la fibre capillaire tout en définissant parfaitement les boucles sans effet cartonné.\r\n\r\nSa formule riche en beurre de karité, huile de coco et huile de ricin permet de maintenir l'hydratation des cheveux pendant plusieurs jours tout en réduisant les frisottis.\r\n\r\nLes cheveux deviennent plus souples, brillants et faciles à coiffer.\r\n\r\nComment ça fonctionne ?\r\n\r\nLe beurre de karité nourrit profondément les cheveux.\r\n\r\nL'huile de coco pénètre la fibre capillaire afin de limiter la casse.\r\n\r\nL'huile de ricin favorise la pousse et renforce les racines.\r\n\r\nEnsemble, ces actifs créent une protection naturelle qui maintient l'hydratation des boucles.\r\n\r\nBienfaits\r\nDéfinit les boucles\r\nRéduit les frisottis\r\nNourrit profondément\r\nFavorise la pousse\r\nApporte de la brillance\r\nProtège contre la casse\r\nComment utiliser ?\r\nAppliquer sur cheveux humides.\r\nRépartir uniformément mèche par mèche.\r\nScruncher les boucles avec les mains.\r\nLaisser sécher naturellement ou utiliser un diffuseur.\r\nType de cheveux\r\nCheveux crépus\r\nCheveux frisés\r\nCheveux bouclés\r\nRésultats attendus\r\nBoucles mieux définies dès la première utilisation.\r\nCheveux plus doux après quelques jours.\r\nRéduction visible de la casse après plusieurs semaines.\r\nIngrédients principaux\r\nBeurre de Karité\r\nHuile de Coco\r\nHuile de Ricin\r\nAloe Vera",
+      "price": "8500.00",
+      "old_price": null,
+      "stock": 6,
+      "category": 7,
+      "badge": "PROMO",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/uKTuZFt2m_8",
+      "created_at": "2026-05-30T20:49:01.843Z",
+      "updated_at": "2026-05-30T20:49:42.782Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 14,
+    "fields": {
+      "name": "Fond de Teint HD Longue Tenue",
+      "slug": "fond-de-teint-hd-longue-tenue",
+      "description": "Le Fond de Teint HD Longue Tenue offre une couvrance parfaite tout en conservant un rendu naturel et lumineux.\r\n\r\nSa formule légère unifie le teint, masque les imperfections et résiste à la chaleur ainsi qu'à l'humidité pendant toute la journée.\r\n\r\nConçu pour les peaux noires, métissées et mates, il s'adapte parfaitement aux différentes carnations pour un résultat homogène et sans effet masque.\r\n\r\nComment ça fonctionne ?\r\n\r\nLes pigments haute définition corrigent les irrégularités du teint.\r\n\r\nLes agents matifiants contrôlent l'excès de sébum tandis que les actifs hydratants empêchent la peau de se dessécher.\r\n\r\nBienfaits\r\nLongue tenue jusqu'à 24 heures\r\nHaute couvrance\r\nFini naturel\r\nRésistant à la transpiration\r\nHydratation continue\r\nComment utiliser ?\r\nAppliquer une base de maquillage.\r\nDéposer une petite quantité sur le visage.\r\nÉtaler avec une éponge ou un pinceau.\r\nFixer avec une poudre si nécessaire.\r\nRésultats attendus\r\nTeint uniforme immédiatement.\r\nPeau lumineuse toute la journée.\r\nFinition professionnelle.",
+      "price": "9900.00",
+      "old_price": null,
+      "stock": 3,
+      "category": 7,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=EVyKVLUjnCI&pp=ygUdRm9uZCBkZSBUZWludCBIRCBMb25ndWUgVGVudWU%3D",
+      "created_at": "2026-05-30T20:51:35.835Z",
+      "updated_at": "2026-05-30T20:51:35.835Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 15,
+    "fields": {
+      "name": "Huile de Ricin Croissance Extrême",
+      "slug": "huile-de-ricin-croissance-extreme",
+      "description": "L'Huile de Ricin Croissance Extrême est un soin naturel reconnu pour stimuler la pousse des cheveux, renforcer les racines et améliorer la densité capillaire.\r\n\r\nObtenue à partir de graines de ricin soigneusement sélectionnées, cette huile riche en acides gras essentiels nourrit intensément le cuir chevelu et protège les cheveux contre la casse.\r\n\r\nElle convient aussi aux cils, sourcils et barbe.\r\n\r\nComment ça fonctionne ?\r\n\r\nL'acide ricinoléique contenu dans l'huile améliore la circulation sanguine au niveau du cuir chevelu.\r\n\r\nCette stimulation favorise l'apport des nutriments nécessaires à la croissance des cheveux.\r\n\r\nBienfaits\r\nStimule la pousse\r\nRéduit la casse\r\nRenforce les racines\r\nÉpaissit les cheveux\r\nNourrit profondément\r\nComment utiliser ?\r\nAppliquer directement sur le cuir chevelu.\r\nMasser pendant 5 minutes.\r\nLaisser agir toute la nuit.\r\nRincer avec un shampoing doux.\r\nRésultats attendus\r\nCheveux plus forts après quelques semaines.\r\nRéduction de la chute.\r\nCroissance plus rapide et plus dense.\r\nIngrédients principaux\r\nHuile de Ricin 100 % Pure\r\nVitamine E",
+      "price": "6500.00",
+      "old_price": null,
+      "stock": 8,
+      "category": 3,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/TdidWyC1QeE",
+      "created_at": "2026-05-30T20:54:59.015Z",
+      "updated_at": "2026-05-30T20:54:59.015Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 16,
+    "fields": {
+      "name": "Gel Nettoyant Purifiant Anti-Imperfections",
+      "slug": "gel-nettoyant-purifiant-anti-imperfections",
+      "description": "Ce nettoyant élimine efficacement les impuretés, l'excès de sébum et les résidus de maquillage tout en respectant l'équilibre naturel de la peau.\r\n\r\nFonctionnement\r\n\r\nLes agents purifiants désobstruent les pores et réduisent les bactéries responsables des boutons.\r\n\r\nBienfaits\r\nRéduit les imperfections\r\nNettoie en profondeur\r\nLimite l'excès de sébum\r\nRafraîchit le visage\r\nUtilisation\r\nMouiller le visage.\r\nAppliquer une noisette.\r\nMasser pendant 1 minute.\r\nRincer abondamment.\r\nRésultats\r\n\r\nPeau propre, fraîche et plus nette.\r\n\r\n3. Crème Hydratante Aloe Vera Premium\r\nPrix : 9 900 FCFA\r\nDescription\r\n\r\nCrème riche en Aloe Vera qui nourrit intensément la peau tout en maintenant son hydratation pendant toute la journée.\r\n\r\nFonctionnement\r\n\r\nL'Aloe Vera retient l'eau dans les couches supérieures de la peau.\r\n\r\nBienfaits\r\nHydratation longue durée\r\nPeau douce\r\nRéduction des irritations\r\nUtilisation\r\n\r\nAppliquer matin et soir après le nettoyage.",
+      "price": "7500.00",
+      "old_price": null,
+      "stock": 8,
+      "category": 9,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/_MopTAPZiDY",
+      "created_at": "2026-05-30T20:57:51.650Z",
+      "updated_at": "2026-05-30T20:58:07.256Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 17,
+    "fields": {
+      "name": "Masque Purifiant Argile Détox",
+      "slug": "masque-purifiant-argile-detox",
+      "description": "Masque enrichi en argile naturelle permettant d'absorber les impuretés et purifier la peau.\r\n\r\nFonctionnement\r\n\r\nL'argile attire les toxines et absorbe l'excès de sébum.\r\n\r\nBienfaits\r\nRéduction des pores\r\nPeau plus nette\r\nEffet détoxifiant\r\nUtilisation\r\n\r\nAppliquer 15 minutes puis rincer.\r\n\r\n5. Fond de Teint HD Longue Tenue\r\nPrix : 9 900 FCFA\r\nDescription\r\n\r\nFond de teint haute couvrance offrant un rendu naturel adapté aux peaux noires et métissées.\r\n\r\nFonctionnement\r\n\r\nLes pigments HD uniformisent instantanément le teint.\r\n\r\nBienfaits\r\nLongue tenue\r\nEffet naturel\r\nHaute couvrance\r\nUtilisation\r\n\r\nAppliquer à l'éponge ou au pinceau.",
+      "price": "8500.00",
+      "old_price": null,
+      "stock": 6,
+      "category": 5,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=SBexPtFBnNs&pp=ygUeTWFzcXVlIFB1cmlmaWFudCBBcmdpbGUgRMOpdG94",
+      "created_at": "2026-05-30T21:01:05.081Z",
+      "updated_at": "2026-05-30T21:01:05.081Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 18,
+    "fields": {
+      "name": "Rouge à Lèvres Velvet Luxe",
+      "slug": "rouge-a-levres-velvet-luxe",
+      "description": "Rouge à lèvres mat offrant une couleur intense et une longue tenue.\r\n\r\nFonctionnement\r\n\r\nLes pigments adhèrent durablement aux lèvres.\r\n\r\nBienfaits\r\nCouleur intense\r\nLongue tenue\r\nHydratation\r\nUtilisation\r\n\r\nAppliquer directement sur les lèvres.\r\n\r\n7. Gloss Diamond Shine\r\nPrix : 3 900 FCFA\r\nDescription\r\n\r\nGloss brillant enrichi en huiles nourrissantes pour des lèvres lumineuses.\r\n\r\nBienfaits\r\nBrillance extrême\r\nHydratation\r\nEffet volume\r\nUtilisation\r\n\r\nAppliquer seul ou sur un rouge à lèvres.",
+      "price": "4500.00",
+      "old_price": null,
+      "stock": 2,
+      "category": 5,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/Y78psJ6qYFw",
+      "created_at": "2026-05-30T21:03:45.539Z",
+      "updated_at": "2026-05-30T21:03:45.539Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 19,
+    "fields": {
+      "name": "Mascara Volume Extrême",
+      "slug": "mascara-volume-extreme",
+      "description": "Mascara conçu pour allonger et épaissir les cils.\r\n\r\nFonctionnement\r\n\r\nLes fibres gainent chaque cil individuellement.\r\n\r\nBienfaits\r\nVolume immédiat\r\nRegard intense\r\nLongue tenue\r\nUtilisation\r\n\r\nAppliquer de la racine vers la pointe.",
+      "price": "5500.00",
+      "old_price": null,
+      "stock": 4,
+      "category": 2,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/cyqB8D1cX9U",
+      "created_at": "2026-05-30T21:06:25.509Z",
+      "updated_at": "2026-05-30T21:06:25.509Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 20,
+    "fields": {
+      "name": "Crème Définition Boucles Afro Premium",
+      "slug": "creme-definition-boucles-afro-premium-3f18",
+      "description": "Crème coiffante spécialement conçue pour les cheveux afro, bouclés et crépus.\r\n\r\nFonctionnement\r\n\r\nMaintient l'hydratation et définit les boucles.\r\n\r\nBienfaits\r\nBoucles définies\r\nRéduction des frisottis\r\nBrillance naturelle\r\nUtilisation\r\n\r\nAppliquer sur cheveux humides.",
+      "price": "8500.00",
+      "old_price": null,
+      "stock": 20,
+      "category": 1,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=nLhrVJ02WNU&pp=ygUnQ3LDqG1lIETDqWZpbml0aW9uIEJvdWNsZXMgQWZybyBQcmVtaXVt",
+      "created_at": "2026-05-30T21:09:02.258Z",
+      "updated_at": "2026-05-30T21:09:02.258Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 21,
+    "fields": {
+      "name": "Leave-In Hydratation Intense",
+      "slug": "leave-in-hydratation-intense",
+      "description": "Soin sans rinçage nourrissant les cheveux en profondeur.\r\n\r\nBienfaits\r\nHydratation durable\r\nProtection contre la casse\r\nCheveux plus souples\r\nUtilisation\r\n\r\nAppliquer après le lavage.",
+      "price": "9500.00",
+      "old_price": null,
+      "stock": 30,
+      "category": 8,
+      "badge": "PROMO",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/VxzP3oKWOpI",
+      "created_at": "2026-05-30T21:12:06.635Z",
+      "updated_at": "2026-05-30T21:12:06.635Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 22,
+    "fields": {
+      "name": "Shampoing Réparateur Karité & Coco",
+      "slug": "shampoing-reparateur-karite-coco",
+      "description": "Nettoie les cheveux tout en réparant les fibres capillaires fragilisées.\r\n\r\nBienfaits\r\nRéparation intense\r\nHydratation\r\nDouceur\r\nUtilisation\r\n\r\nAppliquer puis masser avant rinçage.",
+      "price": "7900.00",
+      "old_price": null,
+      "stock": 12,
+      "category": 1,
+      "badge": "PROMO",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=SFH3RqOfEeU&pp=ygUkU2hhbXBvaW5nIFLDqXBhcmF0ZXVyIEthcml0w6kgJiBDb2Nv",
+      "created_at": "2026-05-30T21:14:03.564Z",
+      "updated_at": "2026-05-30T21:14:03.564Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 23,
+    "fields": {
+      "name": "Lace Wig Naturelle",
+      "slug": "lace-wig-naturelle",
+      "description": "Solutions élégantes pour changer de style tout en conservant un aspect naturel.",
+      "price": "12000.00",
+      "old_price": null,
+      "stock": 14,
+      "category": 10,
+      "badge": "BEST",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=qlfTXugL1xM&pp=ygUSTGFjZSBXaWcgTmF0dXJlbGxl",
+      "created_at": "2026-05-30T21:19:05.016Z",
+      "updated_at": "2026-05-30T21:20:42.365Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 24,
+    "fields": {
+      "name": "Perruque Bouclée Premium",
+      "slug": "perruque-bouclee-premium",
+      "description": "Solutions élégantes pour changer de style tout en conservant un aspect naturel.",
+      "price": "25000.00",
+      "old_price": null,
+      "stock": 23,
+      "category": 10,
+      "badge": "BEST",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/8TURwhgV4Nc",
+      "created_at": "2026-05-30T21:20:33.059Z",
+      "updated_at": "2026-05-30T21:20:33.059Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 25,
+    "fields": {
+      "name": "Extensions Brésiliennes",
+      "slug": "extensions-bresiliennes",
+      "description": "Solutions élégantes pour changer de style tout en conservant un aspect naturel.",
+      "price": "50000.00",
+      "old_price": null,
+      "stock": 25,
+      "category": 10,
+      "badge": "BEST",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/xRKscZz7uWE",
+      "created_at": "2026-05-30T21:22:46.661Z",
+      "updated_at": "2026-05-30T21:22:46.661Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 26,
+    "fields": {
+      "name": "Mascara Volume Extrême",
+      "slug": "mascara-volume-extreme-8f4e",
+      "description": "Permet de sublimer le regard avec des finitions naturelles ou glamour.",
+      "price": "3000.00",
+      "old_price": null,
+      "stock": 2,
+      "category": 5,
+      "badge": "BEST",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=abOGK6ZGqhY&pp=ygUObWFzY2FyYSB2b2x1bWU%3D",
+      "created_at": "2026-05-30T21:26:59.434Z",
+      "updated_at": "2026-05-30T21:26:59.434Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 27,
+    "fields": {
+      "name": "Eyeliner Waterproof",
+      "slug": "eyeliner-waterproof",
+      "description": "Permet de sublimer le regard avec des finitions naturelles ou glamour.",
+      "price": "12000.00",
+      "old_price": null,
+      "stock": 7,
+      "category": 5,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=d8V9cNWiqsc&pp=ygUTZXllbGluZXIgd2F0ZXJwcm9vZg%3D%3D",
+      "created_at": "2026-05-30T21:28:59.727Z",
+      "updated_at": "2026-05-30T21:28:59.727Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 28,
+    "fields": {
+      "name": "Palette Smoky Eyes",
+      "slug": "palette-smoky-eyes",
+      "description": "Permet de sublimer le regard avec des finitions naturelles ou glamour.",
+      "price": "12000.00",
+      "old_price": null,
+      "stock": 10,
+      "category": 5,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/w7SW8XSWEMk",
+      "created_at": "2026-05-30T21:32:20.709Z",
+      "updated_at": "2026-05-30T21:32:20.709Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 29,
+    "fields": {
+      "name": "Kit de Pinceaux Professionnels",
+      "slug": "kit-de-pinceaux-professionnels",
+      "description": "Accessoires indispensables pour une application parfaite du maquillage.",
+      "price": "25000.00",
+      "old_price": null,
+      "stock": 23,
+      "category": 6,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=zTWlHaMKRw0&pp=ygUeS2l0IGRlIFBpbmNlYXV4IFByb2Zlc3Npb25uZWxz",
+      "created_at": "2026-05-30T21:34:20.120Z",
+      "updated_at": "2026-05-30T21:34:20.120Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 30,
+    "fields": {
+      "name": "Beauty Blender",
+      "slug": "beauty-blender",
+      "description": "Accessoires indispensables pour une application parfaite du maquillage.",
+      "price": "2000.00",
+      "old_price": null,
+      "stock": 3,
+      "category": 6,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/YRDgR0RjJUY",
+      "created_at": "2026-05-30T21:43:53.831Z",
+      "updated_at": "2026-05-30T21:43:53.831Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 31,
+    "fields": {
+      "name": "Miroir LED",
+      "slug": "miroir-led",
+      "description": "Accessoires indispensables pour une application parfaite du maquillage.",
+      "price": "15000.00",
+      "old_price": null,
+      "stock": 6,
+      "category": 6,
+      "badge": "BEST",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/O4DPE5L9J5I",
+      "created_at": "2026-05-30T21:46:40.499Z",
+      "updated_at": "2026-05-30T21:46:40.499Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 32,
+    "fields": {
+      "name": "Trousse Cosmétique",
+      "slug": "trousse-cosmetique",
+      "description": "Accessoires indispensables pour une application parfaite du maquillage.",
+      "price": "16000.00",
+      "old_price": null,
+      "stock": 40,
+      "category": 6,
+      "badge": "NEW",
+      "rating_avg": 0.0,
+      "is_active": true,
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=owbOVm5IW48&pp=ygUTVHJvdXNzZSBDb3Ntw6l0aXF1ZQ%3D%3D",
+      "created_at": "2026-05-30T21:48:22.730Z",
+      "updated_at": "2026-05-31T14:50:29.081Z"
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "image": "products/beurre_karite_brut_1773185667118.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 2,
+    "fields": {
+      "product": 2,
+      "image": "products/huile_avocat_pure_1773185688071.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 3,
+    "fields": {
+      "product": 3,
+      "image": "products/shampooing_solide_hibiscus_1773185717660.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 4,
+    "fields": {
+      "product": 4,
+      "image": "products/kit_pinceaux_bambou_1773185763634.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 5,
+    "fields": {
+      "product": 5,
+      "image": "products/hero_woman_hair_touch_1773231294569.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 6,
+    "fields": {
+      "product": 6,
+      "image": "products/woman_braiding_hair_1773231371852.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 7,
+    "fields": {
+      "product": 7,
+      "image": "products/applying_hair_product_1773231491698.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 8,
+    "fields": {
+      "product": 8,
+      "image": "products/premium_hair_oil_mockup_1773231641737.png",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 9,
+    "fields": {
+      "product": 9,
+      "image": "products/79b0b8e2b6c48ef389a313562560eb89.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 10,
+    "fields": {
+      "product": 10,
+      "image": "products/519dd7f64baab738edc62227b8074ddd.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 11,
+    "fields": {
+      "product": 11,
+      "image": "products/aa6b4d28be3aeb8e06bc3c5b05c5b442.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 12,
+    "fields": {
+      "product": 12,
+      "image": "products/9ca25eba8ee3c37b6638048c42f2a4fe.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 13,
+    "fields": {
+      "product": 13,
+      "image": "products/939d17990e95c416c123de34330c8310.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 14,
+    "fields": {
+      "product": 14,
+      "image": "products/470915d82b4a2842e15aaff5cf96e0c6.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 15,
+    "fields": {
+      "product": 15,
+      "image": "products/4aeab30d5360d76c46cf919ff4fd01cd.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 16,
+    "fields": {
+      "product": 16,
+      "image": "products/068e4c4eed8a05f98c6cc4716c080e1e.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 17,
+    "fields": {
+      "product": 17,
+      "image": "products/4cf3b614bfd1edb483a0abda82aebe7f.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 18,
+    "fields": {
+      "product": 18,
+      "image": "products/674c4b8cf2c6ad42cfde620f0fb0ddad.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 19,
+    "fields": {
+      "product": 19,
+      "image": "products/0e76c9d4a91d0eaa936ea9e8f853b72c.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 20,
+    "fields": {
+      "product": 20,
+      "image": "products/b4ca756c2f0bc1970aaa691116ff68ee.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 21,
+    "fields": {
+      "product": 21,
+      "image": "products/a2c72f1f1f91423076d455ddf029f837.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 22,
+    "fields": {
+      "product": 22,
+      "image": "products/711c4b08c566623e05e75ad7da594abd.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 23,
+    "fields": {
+      "product": 23,
+      "image": "products/1c6c25e8f9117d157e63e730afb1b597.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 24,
+    "fields": {
+      "product": 24,
+      "image": "products/e5f04db4c4599f3b5b0dcc4cea059a05.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 25,
+    "fields": {
+      "product": 25,
+      "image": "products/f87c96e2e6eaed3224f052d36e1e38df.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 26,
+    "fields": {
+      "product": 26,
+      "image": "products/bb0a3b2a99a0d370c1cbbfa13ff2ed5b.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 27,
+    "fields": {
+      "product": 27,
+      "image": "products/27a4f93cf5a33bbf62f4518f72df860e.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 28,
+    "fields": {
+      "product": 28,
+      "image": "products/bf5206eeceeaa4b176f1f7c907d20edf.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 29,
+    "fields": {
+      "product": 29,
+      "image": "products/dbfb9645025f07466ce5131844f53a21.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 30,
+    "fields": {
+      "product": 30,
+      "image": "products/b6658279a48e7238010c263b2b9bda7e.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 31,
+    "fields": {
+      "product": 31,
+      "image": "products/650a50a95c28b0175b66bc8f80793eaf.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 34,
+    "fields": {
+      "product": 32,
+      "image": "products/0e76c9d4a91d0eaa936ea9e8f853b72c_Mb7Tyqb.jpg",
+      "is_feature": true
+    }
+  },
+  {
+    "model": "blog.blogpost",
+    "pk": 1,
+    "fields": {
+      "title": "Comment Construire Une Routine Beauté Complète Pour Une Peau Éclatante ?",
+      "slug": "comment-construire-une-routine-beaute-complete-pour-une-peau-eclatante",
+      "content": "Introduction\r\n\r\nAvoir une belle peau ne dépend pas uniquement des produits utilisés. Une routine adaptée à votre type de peau est essentielle pour obtenir un teint lumineux, uniforme et en bonne santé.\r\n\r\nDe nombreuses personnes utilisent plusieurs produits sans connaître leur rôle exact, ce qui peut parfois provoquer des irritations ou limiter les résultats.\r\n\r\nDans cet article, découvrez les étapes essentielles d'une routine beauté efficace.\r\n\r\nÉtape 1 : Nettoyer La Peau\r\n\r\nLe nettoyage permet d'éliminer :\r\n\r\nLes impuretés\r\nL'excès de sébum\r\nLa pollution\r\nLes résidus de maquillage\r\n\r\nUn bon nettoyant prépare la peau à recevoir les soins suivants.\r\n\r\nÉtape 2 : Appliquer Un Sérum\r\n\r\nLes sérums contiennent des actifs concentrés capables de cibler des besoins précis :\r\n\r\nTaches pigmentaires\r\nDéshydratation\r\nRides\r\nManque d'éclat\r\n\r\nLa vitamine C et l'acide hyaluronique sont parmi les ingrédients les plus recherchés.\r\n\r\nÉtape 3 : Hydrater\r\n\r\nMême les peaux grasses ont besoin d'hydratation.\r\n\r\nUne bonne crème hydratante aide à protéger la barrière cutanée et à maintenir le confort de la peau.\r\n\r\nÉtape 4 : Utiliser Une Protection Solaire\r\n\r\nLe soleil est l'une des principales causes du vieillissement prématuré et des taches pigmentaires.\r\n\r\nL'application quotidienne d'un écran solaire reste indispensable.\r\n\r\nConclusion\r\n\r\nUne routine simple mais régulière est souvent plus efficace qu'une accumulation de produits. La clé est de choisir des soins adaptés à votre peau et de maintenir une utilisation constante.",
+      "author": 1,
+      "image": "blog/db1b2bac8f83349733108cc34a4b407c.jpg",
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=249f7umBw1Y&pp=ygUlc2tpbmNhcmUtcm91dGluZS1hZnJvLWJlYXV0eS1nbG93LmpwZw%3D%3D",
+      "published_at": "2026-05-31T14:15:54.795Z",
+      "is_published": true,
+      "created_at": "2026-05-31T14:15:54.813Z",
+      "tags": []
+    }
+  },
+  {
+    "model": "blog.blogpost",
+    "pk": 2,
+    "fields": {
+      "title": "Les Secrets Pour Des Cheveux Afro Forts, Hydratés Et En Bonne Santé",
+      "slug": "les-secrets-pour-des-cheveux-afro-forts-hydrates-et-en-bonne-sante",
+      "content": "Introduction\r\n\r\nLes cheveux afro possèdent une structure unique qui nécessite des soins spécifiques.\r\n\r\nNaturellement plus secs, ils ont besoin d'une hydratation régulière et de produits adaptés afin d'éviter la casse et préserver leur beauté.\r\n\r\nPourquoi Les Cheveux Afro Sont Plus Fragiles ?\r\n\r\nLa forme en spirale du cheveu rend la circulation du sébum plus difficile sur toute la longueur de la fibre capillaire.\r\n\r\nRésultat :\r\n\r\nSécheresse\r\nCasses fréquentes\r\nPointes fragiles\r\nPerte de définition des boucles\r\nLes Produits Essentiels\r\nHuile de Ricin\r\n\r\nFavorise la pousse et renforce les racines.\r\n\r\nBeurre de Karité\r\n\r\nNourrit profondément les cheveux.\r\n\r\nAloe Vera\r\n\r\nHydrate et apaise le cuir chevelu.\r\n\r\nLeave-In Conditioner\r\n\r\nMaintient l'hydratation pendant plusieurs jours.\r\n\r\nLes Erreurs À Éviter\r\nUtiliser trop de chaleur\r\nNégliger l'hydratation\r\nUtiliser des produits agressifs\r\nDormir sans protection en satin\r\nLes Coiffures Protectrices\r\n\r\nLes coiffures protectrices permettent de réduire la manipulation quotidienne :\r\n\r\nVanilles\r\nBox Braids\r\nCornrows\r\nFaux Locks\r\nConclusion\r\n\r\nDes cheveux afro en bonne santé reposent sur trois piliers :\r\n\r\nHydratation\r\nNutrition\r\nProtection\r\n\r\nUne routine adaptée permet de conserver des cheveux plus forts, plus brillants et plus résistants.",
+      "author": 1,
+      "image": "blog/c2a94e900b6c605b5865802b659cec95.jpg",
+      "video": "",
+      "video_url": "https://www.youtube.com/watch?v=hS6bgW4tN6c&pp=ygVFTGVzIFNlY3JldHMgUG91ciBEZXMgQ2hldmV1eCBBZnJvIEZvcnRzLCBIeWRyYXTDqXMgRXQgRW4gQm9ubmUgU2FudMOp0gcJCSMLAYcqIYzv",
+      "published_at": "2026-05-31T14:22:09.979Z",
+      "is_published": true,
+      "created_at": "2026-05-31T14:22:09.987Z",
+      "tags": []
+    }
+  },
+  {
+    "model": "blog.blogpost",
+    "pk": 3,
+    "fields": {
+      "title": "Les Tendances Beauté Afro Qui Vont Dominer Cette Année",
+      "slug": "les-tendances-beaute-afro-qui-vont-dominer-cette-annee",
+      "content": "Introduction\r\n\r\nLa beauté afro continue d'évoluer avec de nouvelles tendances qui mettent en avant les textures naturelles, les ingrédients authentiques et les routines personnalisées.\r\n\r\nVoici les tendances les plus populaires du moment.\r\n\r\n1. Le Retour Aux Ingrédients Naturels\r\n\r\nLes consommateurs recherchent davantage :\r\n\r\nHuile de Baobab\r\nBeurre de Karité\r\nAloe Vera\r\nSavon Noir Africain\r\n\r\nCes ingrédients sont appréciés pour leurs propriétés nourrissantes et leur origine naturelle.\r\n\r\n2. Les Produits Multifonctions\r\n\r\nLes clientes privilégient désormais des soins capables de :\r\n\r\nHydrater\r\nNourrir\r\nProtéger\r\n\r\ndans un seul produit.\r\n\r\n3. Les Coiffures Protectrices Modernes\r\n\r\nLes tendances actuelles incluent :\r\n\r\nBox Braids\r\nVanilles XXL\r\nCornrows créatives\r\nWash & Go\r\n4. Les Soins Personnalisés\r\n\r\nLes routines sur mesure gagnent en popularité.\r\n\r\nChaque type de peau ou de cheveux nécessite désormais des produits adaptés à ses besoins spécifiques.\r\n\r\n5. Les Accessoires Beauté Premium\r\n\r\nLes accessoires deviennent des éléments essentiels :\r\n\r\nBonnets en satin\r\nBrosses spécialisées\r\nPinceaux professionnels\r\nMiroirs LED\r\nConclusion\r\n\r\nLa beauté afro moderne repose sur l'équilibre entre innovation, naturalité et valorisation de la beauté authentique.",
+      "author": 1,
+      "image": "blog/1b2941574526e2e689448ca40d9ea564.jpg",
+      "video": "",
+      "video_url": "https://www.youtube.com/shorts/oaE7gYEzAxI",
+      "published_at": "2026-05-31T14:32:46.107Z",
+      "is_published": true,
+      "created_at": "2026-05-31T14:32:46.115Z",
+      "tags": []
+    }
+  },
+  {
+    "model": "marketing.testimonial",
+    "pk": 1,
+    "fields": {
+      "name": "Aminata K.",
+      "city": "Paris",
+      "photo": "",
+      "rating": 5,
+      "comment": "Enfin des produits qui comprennent vraiment les besoins des cheveux crépus. Mon beurre de karité est magique !",
+      "is_visible": true,
+      "created_at": "2026-03-10T22:24:40.553Z"
+    }
+  },
+  {
+    "model": "marketing.testimonial",
+    "pk": 2,
+    "fields": {
+      "name": "Sarah M.",
+      "city": "Lyon",
+      "photo": "",
+      "rating": 5,
+      "comment": "L'huile d'avocat a transformé ma routine. Mes cheveux sont plus souples et brillants. Livraison super rapide.",
+      "is_visible": true,
+      "created_at": "2026-03-10T22:24:40.560Z"
+    }
+  },
+  {
+    "model": "marketing.testimonial",
+    "pk": 3,
+    "fields": {
+      "name": "Léa D.",
+      "city": "Marseille",
+      "photo": "",
+      "rating": 5,
+      "comment": "Superbe sélection de soins bio. Le site est magnifique et les conseils sont au top. Je recommande à 100%.",
+      "is_visible": true,
+      "created_at": "2026-03-10T22:24:40.564Z"
+    }
+  }
+]
