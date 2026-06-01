@@ -8,7 +8,6 @@ python manage.py collectstatic --no-input
 python manage.py migrate
 
 # Load initial data only if the database is empty (no categories exist)
-# The || true ensures the build never fails even if loaddata has an issue
 python manage.py shell -c "
 from products.models import Category
 from django.core.management import call_command
@@ -25,7 +24,13 @@ python manage.py shell -c "
 from django.contrib.auth import get_user_model
 User = get_user_model()
 if not User.objects.filter(email='admin@magicafro.com').exists():
-    User.objects.create_superuser('admin@magicafro.com', 'admin12345', first_name='Admin', last_name='MagicAfro')
+    User.objects.create_superuser(
+        username='admin',
+        email='admin@magicafro.com',
+        password='admin12345',
+        first_name='Admin',
+        last_name='MagicAfro'
+    )
     print('Superuser cree.')
 else:
     print('Superuser deja existant.')
