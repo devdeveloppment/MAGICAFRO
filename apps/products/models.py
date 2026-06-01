@@ -120,8 +120,10 @@ class ProductImage(models.Model):
         """Return a reliable URL for the image.
         If the image exists (local or Cloudinary) return its URL.
         Otherwise return a placeholder hosted on Cloudinary.
-        """\n        if self.image and hasattr(self.image, "url"):\n            return self.image.url\n        return "https://res.cloudinary.com/dtenc1xut/image/upload/v1/media/placeholder.png"
-
+        """
+        if self.image and hasattr(self.image, "url"):
+            return self.image.url
+        return "https://res.cloudinary.com/dtenc1xut/image/upload/v1/media/placeholder.png"
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
