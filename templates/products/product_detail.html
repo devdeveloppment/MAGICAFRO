@@ -38,8 +38,8 @@
                     <!-- Thumbnails -->
                     <div class="flex flex-wrap gap-4 mt-6">
                         {% for img in product.images.all %}
-                        <div class="w-20 h-20 rounded-2xl border-2 {% if img.is_feature %}border-accent active{% else %}border-transparent{% endif %} p-1 cursor-pointer bg-white transition product-thumb hover:border-accent/30" onclick="document.getElementById('main-product-image').src='{{ img.image.url }}'; document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active', 'border-accent')); this.classList.add('active', 'border-accent');">
-                            <img src="{{ img.image.url }}" class="w-full h-full object-contain rounded-xl">
+                        <div class="w-20 h-20 rounded-2xl border-2 {% if img.is_feature %}border-accent active{% else %}border-transparent{% endif %} p-1 cursor-pointer bg-white transition product-thumb hover:border-accent/30" onclick="document.getElementById('main-product-image').src='{{ img.safe_url }}'; document.querySelectorAll('.product-thumb').forEach(t => t.classList.remove('active', 'border-accent')); this.classList.add('active', 'border-accent');">
+                            <img src="{{ img.safe_url }}" class="w-full h-full object-contain rounded-xl">
                         </div>
                         {% endfor %}
                     </div>

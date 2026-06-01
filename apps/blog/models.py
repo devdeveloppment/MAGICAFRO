@@ -20,7 +20,13 @@ class BlogPost(models.Model):
     content = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
-    image = models.ImageField(upload_to='blog/')
+    image = models.ImageField(upload_to='blog/', null=True, blank=True)
+    @property
+    def safe_image_url(self):
+        """Return a reliable URL for the blog post image, falling back to a placeholder if missing."""
+        if self.image and hasattr(self.image, "url"):
+            return self.image.url
+        return "https://res.cloudinary.com/dtenc1xut/image/upload/v1/media/placeholder.png"
     video = models.FileField(upload_to='blog/videos/', null=True, blank=True)
     video_url = models.URLField(max_length=500, null=True, blank=True, help_text="Lien YouTube, TikTok, etc.")
     published_at = models.DateTimeField(null=True, blank=True)

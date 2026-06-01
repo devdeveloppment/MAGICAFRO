@@ -63,7 +63,7 @@
             <div class="bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-gray-100 flex flex-col">
                 <div class="relative h-72 overflow-hidden bg-gray-100">
                     {% if post.image %}
-                    <img src="{{ post.image.url }}" class="w-full h-full object-contain group-hover:scale-110 transition duration-700">
+                    <img src="{{ post.safe_image_url }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     {% else %}
                     <div class="w-full h-full bg-gray-200 group-hover:scale-110 transition duration-700"></div>
                     {% endif %}

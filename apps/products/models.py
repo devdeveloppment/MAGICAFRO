@@ -108,8 +108,19 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to='products/')
     is_feature = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"Image for {self.product.name}"
+    @property
+    def safe_image_url(self):
+        """Return a reliable URL for the blog post image."""
+        if self.image and hasattr(self.image, "url"):
+            return self.image.url
+        return "https://res.cloudinary.com/dtenc1xut/image/upload/v1/media/placeholder.png"
+
+    @property
+    def safe_url(self):
+        """Return a reliable URL for the image.
+        If the image exists (local or Cloudinary) return its URL.
+        Otherwise return a placeholder hosted on Cloudinary.
+        """\n        if self.image and hasattr(self.image, "url"):\n            return self.image.url\n        return "https://res.cloudinary.com/dtenc1xut/image/upload/v1/media/placeholder.png"
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
