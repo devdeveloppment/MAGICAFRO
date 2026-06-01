@@ -40,7 +40,7 @@
     </div>
     {% elif post.image %}
     <div class="rounded-[40px] overflow-hidden premium-shadow flex justify-center bg-gray-100">
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full max-h-[80vh] object-contain">
+        <img src="{{ post.safe_image_url }}" alt="{{ post.title }}" class="w-full max-h-[80vh] object-contain">
     </div>
     {% endif %}
 </div>
