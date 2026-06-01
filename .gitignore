@@ -14,9 +14,12 @@ env/
 venv/
 ENV/
 
-# Media
-media/
+# Media (inclus dans git - images du projet)
+# media/ - inclus volontairement
+
+# Static (fichiers auto-générés Django - exclus)
 staticfiles/
+!staticfiles/img/
 
 # IDE
 .vscode/
