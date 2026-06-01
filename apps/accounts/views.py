@@ -42,3 +42,18 @@ def rewards(request):
         'recent_orders': recent_orders,
     }
     return render(request, 'accounts/rewards.html', context)
+
+
+def register(request):
+    from .forms import CustomUserCreationForm
+    from django.contrib.auth import login
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Inscription réussie ! Bienvenue sur MagicAfro.')
+            return redirect('accounts:profile')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
