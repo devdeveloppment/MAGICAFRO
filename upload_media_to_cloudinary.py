@@ -27,7 +27,8 @@ def upload_folder(root_path, prefix=""):
             file_path = os.path.join(root, filename)
             # Build public_id relative to media root
             rel_path = os.path.relpath(file_path, media_root).replace('\\', '/')
-            public_id = f"media/{rel_path}"  # optional folder prefix
+            base_name, _ = os.path.splitext(rel_path)
+            public_id = f"media/{base_name}"  # optional folder prefix
             try:
                 cloudinary.uploader.upload(file_path, public_id=public_id, overwrite=True, resource_type='auto')
                 print(f"Uploaded: {public_id}")
