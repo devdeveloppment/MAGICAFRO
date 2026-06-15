@@ -70,33 +70,37 @@
     <div class="py-24 bg-white">
         <div class="container mx-auto px-4">
             {% if products %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 lg:gap-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {% for product in products %}
                 <div class="group" data-aos="fade-up">
-                    <div class="bg-white rounded-[50px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100">
-                        <div class="relative aspect-[4/5] overflow-hidden bg-gray-50">
-                            <img src="{{ product.get_primary_image }}" alt="{{ product.name }}" class="absolute inset-0 w-full h-full object-contain p-6 transition duration-700 group-hover:scale-110">
+                    <div class="bg-white rounded-[30px] p-6 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col items-center text-center h-full border border-gray-100 relative">
+                        {% if product.badge %}
+                        <div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.2em] shadow-md z-10">
+                            {{ product.get_badge_display }}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden bg-gray-50 mb-6 flex-shrink-0 group-hover:shadow-lg transition-all duration-500 border border-gray-100">
+                            <img src="{{ product.get_primary_image }}" alt="{{ product.name }}" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110">
                             
                             <!-- Actions Overlay -->
-                            <div class="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black/20 to-transparent translate-y-12 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                                <div class="flex space-x-3">
-                                    <a href="{% url 'products:product_detail' product.slug %}" class="flex-grow h-14 bg-white text-primary rounded-[20px] font-black text-[10px] uppercase tracking-widest flex items-center justify-center shadow-xl hover:bg-primary hover:text-white transition">Détails</a>
-                                    <button onclick="addToCart('{{ product.id }}')" class="w-14 h-14 bg-accent text-white rounded-[20px] shadow-xl flex items-center justify-center hover:scale-110 transition"><i class="fa-solid fa-cart-shopping"></i></button>
-                                </div>
+                            <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-[2px] flex items-center justify-center space-x-3">
+                                <a href="{% url 'products:product_detail' product.slug %}" class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center shadow-xl hover:bg-accent hover:text-white transition transform translate-y-4 group-hover:translate-y-0 duration-500">
+                                    <i class="fa-solid fa-eye text-sm"></i>
+                                </a>
+                                <button onclick="addToCart('{{ product.id }}')" class="w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition transform translate-y-4 group-hover:translate-y-0 duration-500">
+                                    <i class="fa-solid fa-cart-shopping text-sm"></i>
+                                </button>
                             </div>
-
-                            {% if product.badge %}
-                            <div class="absolute top-8 left-8 bg-accent text-white px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-accent/20">
-                                {{ product.get_badge_display }}
-                            </div>
-                            {% endif %}
                         </div>
-                        <div class="p-10 flex flex-col flex-grow">
-                            <p class="text-[10px] font-black text-accent uppercase tracking-[0.4em] mb-4">{{ product.category.name }}</p>
-                            <h3 class="text-2xl font-black text-primary mb-6 group-hover:text-accent transition-colors leading-tight">{{ product.name }}</h3>
-                            <div class="flex items-center justify-between mt-auto pt-8 border-t border-gray-50">
-                                <span class="text-2xl font-black text-primary">{{ product.price }} FCFA</span>
-                                <button class="w-12 h-12 rounded-2xl bg-gray-50 text-gray-300 hover:text-red-500 hover:bg-red-50 transition-all transform hover:scale-110">
+                        
+                        <div class="flex-grow flex flex-col items-center w-full">
+                            <p class="text-[9px] text-accent font-black uppercase tracking-[0.2em] mb-2">{{ product.category.name }}</p>
+                            <h3 class="text-lg md:text-xl font-black text-primary mb-4 group-hover:text-accent transition-colors leading-tight line-clamp-2">{{ product.name }}</h3>
+                            
+                            <div class="flex items-center justify-between w-full mt-auto pt-4 border-t border-gray-50">
+                                <span class="text-lg md:text-xl font-black text-primary">{{ product.price }} FCFA</span>
+                                <button class="text-gray-300 hover:text-red-500 transition-all duration-300 transform hover:scale-125">
                                     <i class="fa-regular fa-heart text-xl"></i>
                                 </button>
                             </div>

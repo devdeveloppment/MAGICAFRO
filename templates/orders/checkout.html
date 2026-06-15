@@ -81,11 +81,11 @@
                     <div class="max-h-60 overflow-y-auto mb-8 pr-2 space-y-4 custom-scrollbar">
                         {% for item in cart %}
                         <div class="flex items-center space-x-4">
-                            <div class="w-16 h-16 bg-white/5 rounded-xl p-2 flex-shrink-0">
+                            <div class="w-16 h-16 bg-white/5 rounded-full overflow-hidden p-1 flex-shrink-0 border border-white/10">
                                 {% if item.product.get_primary_image %}
-                                    <img src="{{ item.product.get_primary_image }}" class="w-full h-full object-contain">
+                                    <img src="{{ item.product.get_primary_image }}" class="w-full h-full object-cover rounded-full">
                                 {% else %}
-                                    <div class="w-full h-full bg-white/10 rounded flex items-center justify-center text-[10px]">Image</div>
+                                    <div class="w-full h-full rounded-full bg-white/10 flex items-center justify-center text-[8px] uppercase font-bold tracking-widest text-white/50">Image</div>
                                 {% endif %}
                             </div>
                             <div class="flex-grow">

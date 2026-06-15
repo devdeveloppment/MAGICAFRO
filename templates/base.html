@@ -288,8 +288,8 @@
                     <div class="space-y-6">
                         {% for item in cart %}
                         <div class="flex space-x-4 border-b border-gray-100 pb-6">
-                            <div class="w-20 h-20 bg-gray-50 rounded-xl p-2 flex-shrink-0">
-                                <img src="{{ item.product.get_primary_image|default:'https://via.placeholder.com/80' }}" class="w-full h-full object-contain">
+                            <div class="w-20 h-20 bg-gray-50 rounded-full overflow-hidden p-1 flex-shrink-0 border border-gray-100">
+                                <img src="{{ item.product.get_primary_image|default:'https://via.placeholder.com/80' }}" class="w-full h-full object-cover rounded-full">
                             </div>
                             <div class="flex-grow">
                                 <h4 class="font-bold text-sm">{{ item.product.name }}</h4>
@@ -471,6 +471,16 @@
                 addToCart(productId, quantity);
             });
         }
+
+        // Global Broken Image Fallback
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                if (!this.dataset.fallbackApplied) {
+                    this.dataset.fallbackApplied = 'true';
+                    this.src = 'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=600&q=80';
+                }
+            });
+        });
     </script>
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>

@@ -123,8 +123,8 @@
                                 <div class="p-6">
                                     {% for item in order.items.all %}
                                     <div class="flex items-center space-x-4 {% if not forloop.last %}mb-4 pb-4 border-b border-gray-50{% endif %}">
-                                        <div class="w-16 h-16 bg-gray-50 rounded-xl p-2 flex-shrink-0">
-                                            <img src="{{ item.product.get_primary_image|default:'https://via.placeholder.com/80' }}" class="w-full h-full object-contain">
+                                        <div class="w-16 h-16 bg-gray-50 rounded-full overflow-hidden p-1 flex-shrink-0 border border-gray-100">
+                                            <img src="{{ item.product.get_primary_image|default:'https://via.placeholder.com/80' }}" class="w-full h-full object-cover rounded-full">
                                         </div>
                                         <div class="flex-grow">
                                             <p class="font-bold text-sm">{{ item.product.name }}</p>

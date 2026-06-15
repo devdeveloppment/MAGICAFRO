@@ -31,9 +31,9 @@
                         {{ forloop.counter }}
                     </div>
                     
-                    <div class="bg-gray-50 rounded-[30px] p-6 text-center h-full flex flex-col items-center border border-transparent group-hover:border-accent/30 transition-all duration-300">
-                        <div class="w-32 h-32 mb-6 relative">
-                            <img src="{{ product.get_primary_image }}" alt="{{ product.name }}" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-500">
+                    <div class="bg-gray-50 rounded-[30px] p-6 text-center h-full flex flex-col items-center border border-transparent group-hover:shadow-xl transition-all duration-300">
+                        <div class="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-white mb-6 flex-shrink-0 group-hover:shadow-md transition-all duration-500 border border-gray-100">
+                            <img src="{{ product.get_primary_image }}" alt="{{ product.name }}" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110">
                         </div>
                         <span class="text-[9px] font-black uppercase tracking-[0.2em] text-accent mb-2">{{ product.category.name }}</span>
                         <h3 class="font-bold text-dark text-sm mb-4">{{ product.name }}</h3>

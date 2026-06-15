@@ -88,19 +88,13 @@
 
         <div class="flex space-x-5 overflow-x-auto no-scrollbar pb-8 -mx-4 px-4" data-aos="fade-up" data-aos-delay="200">
             {% for cat in categories %}
-            <a href="{% url 'products:product_list_by_category' cat.slug %}" class="flex-shrink-0 w-40 md:w-48 group relative h-56 md:h-64 rounded-[30px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 border border-gray-100">
-                <!-- Background - Try to use a placeholder or category image -->
-                <div class="absolute inset-0 bg-primary">
-                    <img src="{% if cat.image %}{{ cat.image.url }}{% else %}https://res.cloudinary.com/dtenc1xut/image/upload/v1/media/placeholder.png{% endif %}" class="w-full h-full object-cover opacity-50 group-hover:scale-110 transition duration-700" alt="{{ cat.name }}">
+            <a href="{% url 'products:product_list_by_category' cat.slug %}" class="flex-shrink-0 flex flex-col items-center group w-28 md:w-32">
+                <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-cream flex items-center justify-center text-3xl md:text-4xl text-primary shadow-sm group-hover:shadow-lg group-hover:bg-primary group-hover:text-white transition-all duration-500 border-2 border-transparent group-hover:border-accent group-hover:-translate-y-2 mb-4 relative overflow-hidden">
+                    <i class="fa-solid {{ cat.icon|default:'fa-star' }} z-10 transition-transform duration-500 group-hover:scale-110"></i>
+                    <div class="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80"></div>
-                <div class="absolute inset-x-0 bottom-0 p-5 flex flex-col items-start z-10">
-                    <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center text-sm md:text-base mb-3 shadow-lg border border-white/30 group-hover:bg-accent group-hover:border-accent transition duration-500">
-                        <i class="fa-solid {{ cat.icon|default:'fa-star' }}"></i>
-                    </div>
-                    <h3 class="text-white font-black text-lg md:text-xl leading-tight">{{ cat.name }}</h3>
-                    <p class="text-white/80 text-[9px] md:text-[10px] font-bold uppercase tracking-widest mt-1">{{ cat.products.count }} produits</p>
-                </div>
+                <h3 class="text-dark font-black text-xs md:text-sm text-center leading-tight group-hover:text-accent transition-colors">{{ cat.name }}</h3>
+                <p class="text-gray-400 text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] mt-2">{{ cat.products.count }} produits</p>
             </a>
             {% endfor %}
         </div>
@@ -252,14 +246,14 @@
             </div>
         </div>
         <div class="flex-shrink-0 w-72 aspect-square rounded-[40px] overflow-hidden relative group">
-            <img src="https://images.unsplash.com/photo-1595475824519-75894f275e53?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white text-3xl">
                 <i class="fa-brands fa-instagram"></i>
             </div>
         </div>
         <!-- Extra images -->
         <div class="flex-shrink-0 w-72 aspect-square rounded-[40px] overflow-hidden relative group">
-            <img src="https://images.unsplash.com/photo-1596755389334-48398c2534f3?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+            <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center text-white text-3xl">
                 <i class="fa-brands fa-instagram"></i>
             </div>
